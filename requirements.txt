@@ -1,0 +1,2 @@
+cherrypy>=18.2.0
+ibm-watson>=3.4.0

@@ -1,7 +1,34 @@
 # I've Been Misled - Toboggan
-CSE 5914 Knowledge Systems Capstone Project
+A CSE 5914 Knowledge Systems Capstone Project
 
-Team Members
+## Requirements
+
+- Python 3.7 or later
+
+## How to Run
+
+Broad instructions in the comments followed by example commands. May vary
+depending on your system.
+
+```sh
+# clone the repository
+git clone https://github.com/Ive-Been-Misled/Toboggan.git
+cd Toboggan
+
+# setup and activate a Python virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# install dependencies
+pip install -r requirements.txt
+
+# launch a local web server
+python3 server.py
+
+# visit the server with a browser at http://127.0.0.1:8080
+```
+
+## Team Members
 - JS Teoh
 - Tom Paoloni
 - Jonathan Karkour

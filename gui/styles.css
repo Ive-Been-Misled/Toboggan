@@ -1,6 +1,8 @@
 body {
   background-image: url("forest.png");
   background-size: cover;
+  height: 100vh;
+  margin: 0;
 }
 
 @keyframes pulse {

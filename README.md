@@ -7,8 +7,8 @@ A CSE 5914 Knowledge Systems Capstone Project
 
 ## How to Run
 
-Broad instructions in the comments followed by example commands. May vary
-depending on your system.
+Broad instructions in the comments followed by example commands, which may vary
+depending on your system
 
 ```sh
 # clone the repository

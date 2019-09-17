@@ -21,3 +21,4 @@ class Toboggan:
 cherrypy.tree.mount(Toboggan(), "/", "server.ini")
 cherrypy.engine.start()
 cherrypy.engine.block()
+# Hello tests

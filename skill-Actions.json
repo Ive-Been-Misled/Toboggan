@@ -1,0 +1,300 @@
+{
+  "name": "Actions",
+  "intents": [
+    {
+      "intent": "speak_nothing",
+      "examples": [
+        {
+          "text": "I voice my opinion"
+        },
+        {
+          "text": "I would like to speak"
+        },
+        {
+          "text": "I talk"
+        }
+      ]
+    },
+    {
+      "intent": "move_south",
+      "examples": [
+        {
+          "text": "make my way backward"
+        },
+        {
+          "text": "go backward"
+        },
+        {
+          "text": "head backward"
+        },
+        {
+          "text": "I would live to move backward"
+        },
+        {
+          "text": "move backward"
+        },
+        {
+          "text": "walk back"
+        },
+        {
+          "text": "start heading back"
+        },
+        {
+          "text": "make my way back"
+        },
+        {
+          "text": "move south"
+        },
+        {
+          "text": "I would live to move south"
+        },
+        {
+          "text": "head south"
+        },
+        {
+          "text": "go south"
+        },
+        {
+          "text": "make my way south"
+        },
+        {
+          "text": "start heading south"
+        },
+        {
+          "text": "walk south"
+        },
+        {
+          "text": "move back"
+        },
+        {
+          "text": "I would live to move back"
+        },
+        {
+          "text": "go back"
+        },
+        {
+          "text": "head back"
+        },
+        {
+          "text": "walk backward"
+        },
+        {
+          "text": "start heading backward"
+        }
+      ]
+    },
+    {
+      "intent": "check_self",
+      "examples": [
+        {
+          "text": "what do I have"
+        },
+        {
+          "text": "where's my stuff"
+        },
+        {
+          "text": "do I have anything"
+        },
+        {
+          "text": "inventory check"
+        },
+        {
+          "text": "am I ok"
+        },
+        {
+          "text": "who am I"
+        }
+      ]
+    },
+    {
+      "intent": "move_west",
+      "examples": [
+        {
+          "text": "go west"
+        },
+        {
+          "text": "head west"
+        },
+        {
+          "text": "I would live to move west"
+        },
+        {
+          "text": "move west"
+        },
+        {
+          "text": "head left"
+        },
+        {
+          "text": "go left"
+        },
+        {
+          "text": "make my way left"
+        },
+        {
+          "text": "start heading left"
+        },
+        {
+          "text": "walk left"
+        },
+        {
+          "text": "I would live to move left"
+        },
+        {
+          "text": "move left"
+        },
+        {
+          "text": "walk west"
+        },
+        {
+          "text": "start heading west"
+        },
+        {
+          "text": "make my way west"
+        }
+      ]
+    },
+    {
+      "intent": "move_east",
+      "examples": [
+        {
+          "text": "walk right"
+        },
+        {
+          "text": "move east"
+        },
+        {
+          "text": "I would live to move east"
+        },
+        {
+          "text": "head east"
+        },
+        {
+          "text": "go east"
+        },
+        {
+          "text": "make my way east"
+        },
+        {
+          "text": "start heading east"
+        },
+        {
+          "text": "walk east"
+        },
+        {
+          "text": "move right"
+        },
+        {
+          "text": "I would live to move right"
+        },
+        {
+          "text": "head right"
+        },
+        {
+          "text": "go right"
+        },
+        {
+          "text": "make my way right"
+        },
+        {
+          "text": "start heading right"
+        }
+      ]
+    },
+    {
+      "intent": "speak_thing",
+      "examples": [
+        {
+          "text": "I would like to speak to her"
+        },
+        {
+          "text": "I talk to him"
+        },
+        {
+          "text": "I voice my opinion towards the child"
+        },
+        {
+          "text": "I address the warrior"
+        },
+        {
+          "text": "I would like to speak to him"
+        }
+      ]
+    },
+    {
+      "intent": "speak_things",
+      "examples": [
+        {
+          "text": "I address the crowd"
+        },
+        {
+          "text": "I would like to speak to them"
+        }
+      ]
+    },
+    {
+      "intent": "move_north",
+      "examples": [
+        {
+          "text": "move forward"
+        },
+        {
+          "text": "walk north"
+        },
+        {
+          "text": "start heading north"
+        },
+        {
+          "text": "make my way north"
+        },
+        {
+          "text": "go north"
+        },
+        {
+          "text": "head north"
+        },
+        {
+          "text": "move north"
+        },
+        {
+          "text": "I would live to move north"
+        },
+        {
+          "text": "walk forward"
+        },
+        {
+          "text": "start heading forward"
+        },
+        {
+          "text": "make my way forward"
+        },
+        {
+          "text": "go forward"
+        },
+        {
+          "text": "head forward"
+        },
+        {
+          "text": "I would live to move forward"
+        }
+      ]
+    }
+  ],
+  "entities": [],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "skill_id": "24064407-1b91-4e8c-9e0b-b77fe9bbfeaf",
+  "description": "",
+  "dialog_nodes": [],
+  "workspace_id": "24064407-1b91-4e8c-9e0b-b77fe9bbfeaf",
+  "counterexamples": [],
+  "system_settings": {
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "status": "Training"
+}

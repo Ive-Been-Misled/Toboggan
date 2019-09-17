@@ -17,7 +17,7 @@ cd Toboggan
 
 # setup and activate a Python virtual environment
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # `source venv/Scripts/activate` on Windows
 
 # install dependencies
 pip install -r requirements.txt

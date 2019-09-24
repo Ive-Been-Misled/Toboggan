@@ -1,5 +1,8 @@
 # I've Been Misled - Toboggan
+
 A CSE 5914 Knowledge Systems Capstone Project
+
+[![Build Status](https://travis-ci.org/Ive-Been-Misled/Toboggan.svg?branch=master)](https://travis-ci.org/Ive-Been-Misled/Toboggan)
 
 ## Requirements
 

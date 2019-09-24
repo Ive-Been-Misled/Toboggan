@@ -1,4 +1,5 @@
 """Describe discrete actions that can be carried out by the player"""
+import sys
 from dataclasses import dataclass
 from typing import Any
 import atexit
@@ -23,7 +24,23 @@ class ActionMapper:
         atexit.register(self.cleanup)
 
     def map(self, input_string):
-        pass
+        result = self._assistant.message(
+            workspace_id=self._workspace_id,
+            input={'text': input_string}
+        ).get_result()
+
+        intents = result['intents']
+
+        if not intents:
+            return None
+
+        action_class = intents[0]['intent'].split('_')[0].capitalize()
+
+        if len(intents[0]['intent'].split('_')) > 1:
+            param = intents[0]['intent'].split('_')[1]
+            return vars(sys.modules[__name__])[action_class](param)
+
+        return vars(sys.modules[__name__])[action_class]
 
     @staticmethod
     def get_intents():
@@ -37,7 +54,7 @@ class ActionMapper:
 @dataclass
 class Move:
     direction: Any
-    distance: int
+    distance: int=0
 
     def execute(self, game, character):
         pass
@@ -46,7 +63,7 @@ class Move:
 @dataclass
 class Interact:
     interaction: Any
-    thing: Any
+    thing: Any=None
 
     def execute(self, game, character):
         pass
@@ -55,7 +72,7 @@ class Interact:
 @dataclass
 class Percieve:
     location: Any
-    sense: Any
+    sense: Any=None
 
     def execute(self, game, character):
         pass
@@ -72,14 +89,14 @@ class Attack:
 @dataclass
 class Speak:
     target: Any
-    dialouge: str
+    dialouge: str=''
 
     def execute(self, game, character):
         pass
 
 
 @dataclass
-class CheckSelf:
+class Introspect:
 
     def execute(self, game, character):
         pass

@@ -84,7 +84,7 @@
       ]
     },
     {
-      "intent": "check_self",
+      "intent": "introspect",
       "examples": [
         {
           "text": "what do I have"

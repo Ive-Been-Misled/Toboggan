@@ -13,5 +13,5 @@ class Calvin:
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
-        print(self._game.player.current_room.title)
+        print(self._ac.map(input_string))
         return f'You typed the magical word(s):<br><br> {input_string}'

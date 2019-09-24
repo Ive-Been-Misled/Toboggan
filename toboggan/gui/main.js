@@ -32,10 +32,6 @@ This is not that story.
 `
 
 async function initiateGUI() {
-  var input = document.getElementById('input');
-  var scenario = document.getElementById('scenario');
-  var iprompt = document.getElementById('iprompt');
-  var card = document.getElementById('card');
   var skipTextCrawl = false;
 
   input.value = '';  // clear input textarea
@@ -76,16 +72,15 @@ async function sendInput(inputText) {
     No response from server.
     <br><br>
     The world is dead.
-    <br><br>
-    ...
-    <br><br>
-    You should close this tab now.
     `;
+    imprompt.innerHTML = "You should close this tab now";
     console.error(error)
   });
 }
 
 async function displayScenario(text) {
+  if (text === undefined) return;
+
   imprompt.classList.add("hidden");
   input.minLength = 0;
   input.maxLength = 0;

@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "toboggan"
+version = "0.1.0"
+description = "A text-based game generator"
+authors = [
+  "Jonathan Karkour <greshbolt@gmail.com>",
+  "Tom Paoloni <paoloni.6@buckeyemail.osu.edu>",
+  "JS Teoh <teoh.15@osu.edu>",
+  "Em Zhan <zqianem@gmail.com>",
+]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+CherryPy = "^18.2"
+ibm-watson = "^3.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

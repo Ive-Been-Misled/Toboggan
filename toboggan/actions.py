@@ -1,4 +1,6 @@
 """Describe discrete actions that can be carried out by the player"""
+from dataclasses import dataclass
+from typing import Any
 import atexit
 import json
 from os import environ, path
@@ -6,7 +8,7 @@ from datetime import datetime
 from ibm_watson import AssistantV1
 
 
-class ActionMapper():
+class ActionMapper:
     def __init__(self):
         self._assistant = AssistantV1(
             version='2019-02-28',
@@ -32,26 +34,52 @@ class ActionMapper():
         self._assistant.delete_workspace(workspace_id=self._workspace_id)
 
 
+@dataclass
 class Move:
-  def __init__(self, direction, distance):
-    self.direction = direction
-    self.distance = distance
+    direction: Any
+    distance: int
+
+    def execute(self, game, character):
+        pass
+
+
+@dataclass
 class Interact:
-  def __init__(self, interaction, thing):
-    self.interaction = interaction
-    self.thing = thing
+    interaction: Any
+    thing: Any
+
+    def execute(self, game, character):
+        pass
+
+
+@dataclass
 class Percieve:
-  def __init__(self, location, sense):
-    self.location = location
-    self.sense = sense
+    location: Any
+    sense: Any
+
+    def execute(self, game, character):
+        pass
+
+
+@dataclass
 class Attack:
-  def __init__(self, target, player):
-    self.target = target
-    self.player = player
+    target: Any
+
+    def execute(self, game, character):
+        pass
+
+
+@dataclass
 class Speak:
-  def __init__(self, target, dialogue):
-    self.target = target
-    self.dialogue = dialogue
+    target: Any
+    dialouge: str
+
+    def execute(self, game, character):
+        pass
+
+
+@dataclass
 class CheckSelf:
-  def __init__(self, player):
-    self.player = player
+
+    def execute(self, game, character):
+        pass

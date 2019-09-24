@@ -23,7 +23,7 @@ source venv/bin/activate  # `source venv/Scripts/activate` on Windows
 pip install .
 
 # launch a local web server
-python3 toboggan/server.py
+python3 -m toboggan.server
 
 # visit the server with a browser at http://127.0.0.1:8080
 ```

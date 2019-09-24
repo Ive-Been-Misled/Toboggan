@@ -1,7 +1,7 @@
 import cherrypy
 import textwrap
 import os.path
-import game_components as gc
+from .game_components import Game
 
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "server.ini")
 
@@ -27,7 +27,7 @@ def main():
     cherrypy.engine.start()
 
     # Test Code
-    g = gc.Game()
+    g = Game()
 
     print(g.player.current_room.title)
     print(g.player.current_room.characters)

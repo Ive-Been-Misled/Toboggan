@@ -36,22 +36,6 @@ def main():
         }
     })
     cherrypy.engine.start()
-
-    # Test Code
-    g = Game()
-
-    print(g.player.current_room.title)
-    print(g.player.current_room.characters)
-    moved = g.player.move_to(g.player.current_room.north_room)
-    print(moved)
-    print(g.player.current_room.title)
-
-    goblin = g.player.current_room.characters['Goblin']
-    print(goblin.hit_points)
-    g.player.attack(goblin, 20)
-    print(goblin.hit_points)
-    # Test Code
-
     webbrowser.open('localhost:8080/gui')
     cherrypy.engine.block()
 

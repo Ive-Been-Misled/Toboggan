@@ -1,5 +1,8 @@
 # I've Been Misled - Toboggan
+
 A CSE 5914 Knowledge Systems Capstone Project
+
+[![Build Status](https://travis-ci.org/Ive-Been-Misled/Toboggan.svg?branch=master)](https://travis-ci.org/Ive-Been-Misled/Toboggan)
 
 ## Requirements
 
@@ -20,10 +23,10 @@ python3 -m venv venv
 source venv/bin/activate  # `source venv/Scripts/activate` on Windows
 
 # install dependencies
-pip install -r requirements.txt
+pip install .
 
 # launch a local web server
-python3 server.py
+python3 -m toboggan.server
 
 # visit the server with a browser at http://127.0.0.1:8080
 ```

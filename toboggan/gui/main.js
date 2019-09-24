@@ -32,10 +32,6 @@ This is not that story.
 `
 
 async function initiateGUI() {
-  var input = document.getElementById('input');
-  var scenario = document.getElementById('scenario');
-  var iprompt = document.getElementById('iprompt');
-  var card = document.getElementById('card');
   var skipTextCrawl = false;
 
   input.value = '';  // clear input textarea
@@ -71,21 +67,26 @@ async function sendInput(inputText) {
     }
   })
   .then(response => response.text())
-  .catch(error => console.error(error));
+  .catch(function(error) {
+    scenario.innerHTML = `
+    No response from server.
+    <br><br>
+    The world is dead.
+    `;
+    imprompt.innerHTML = "You should close this tab now";
+    console.error(error)
+  });
 }
 
 async function displayScenario(text) {
+  if (text === undefined) return;
+
   imprompt.classList.add("hidden");
   input.minLength = 0;
   input.maxLength = 0;
 
   imprompt.innerHTML = "What do you do?";
   skipTextCrawl = false;
-
-  if (text === undefined) {
-    scenario.innerHTML = 'undefined';
-    return;
-  }
 
   let len = text.length;
 

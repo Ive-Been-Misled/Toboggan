@@ -2,10 +2,14 @@ import cherrypy
 import textwrap
 import os.path
 import webbrowser
-from .game_components import Game
+
+from .calvin_and_hobbes import Calvin
 
 
-class Toboggan:
+class Server:
+    def __init__(self):
+        self._calvin = Calvin()
+
     @cherrypy.expose
     def index(self):
         return textwrap.dedent("""\
@@ -18,12 +22,11 @@ class Toboggan:
 
     @cherrypy.expose
     def api(self):
-        input_text = cherrypy.request.body.read().decode()
-        response = f'You typed the magical word(s):<br><br> {input_text}'
-        return response
+        input_string = cherrypy.request.body.read().decode()
+        return self._calvin.generate_response(input_string)
 
 def main():
-    cherrypy.tree.mount(Toboggan(), "/", config={
+    cherrypy.tree.mount(Server(), "/", config={
         '/':
         {
             'tools.staticdir.root': os.path.abspath(os.path.dirname(__file__))

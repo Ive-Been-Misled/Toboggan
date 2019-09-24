@@ -1,6 +1,7 @@
 import cherrypy
 import textwrap
 import os.path
+import webbrowser
 from .game_components import Game
 
 
@@ -51,6 +52,7 @@ def main():
     print(goblin.hit_points)
     # Test Code
 
+    webbrowser.open('localhost:8080/gui')
     cherrypy.engine.block()
 
 if __name__ == '__main__':

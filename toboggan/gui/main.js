@@ -71,7 +71,18 @@ async function sendInput(inputText) {
     }
   })
   .then(response => response.text())
-  .catch(error => console.error(error));
+  .catch(function(error) {
+    scenario.innerHTML = `
+    No response from server.
+    <br><br>
+    The world is dead.
+    <br><br>
+    ...
+    <br><br>
+    You should close this tab now.
+    `;
+    console.error(error)
+  });
 }
 
 async function displayScenario(text) {
@@ -81,11 +92,6 @@ async function displayScenario(text) {
 
   imprompt.innerHTML = "What do you do?";
   skipTextCrawl = false;
-
-  if (text === undefined) {
-    scenario.innerHTML = 'undefined';
-    return;
-  }
 
   let len = text.length;
 

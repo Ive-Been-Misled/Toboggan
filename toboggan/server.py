@@ -1,6 +1,9 @@
 import cherrypy
 import textwrap
+import os.path
 import game_components as gc
+
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "server.ini")
 
 class Toboggan:
     @cherrypy.expose
@@ -19,7 +22,7 @@ class Toboggan:
         response = f'You typed the magical word(s):<br><br> {input_text}'
         return response
 
-cherrypy.tree.mount(Toboggan(), "/", "server.ini")
+cherrypy.tree.mount(Toboggan(), "/", CONFIG_FILE)
 cherrypy.engine.start()
 
 # Test Code

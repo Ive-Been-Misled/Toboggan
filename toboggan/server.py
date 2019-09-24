@@ -3,7 +3,6 @@ import textwrap
 import os.path
 from .game_components import Game
 
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "server.ini")
 
 class Toboggan:
     @cherrypy.expose
@@ -23,7 +22,18 @@ class Toboggan:
         return response
 
 def main():
-    cherrypy.tree.mount(Toboggan(), "/", CONFIG_FILE)
+    cherrypy.tree.mount(Toboggan(), "/", config={
+        '/':
+        {
+            'tools.staticdir.root': os.path.abspath(os.path.dirname(__file__))
+        },
+        '/gui':
+        {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': "gui",
+            'tools.staticdir.index': 'index.html'
+        }
+    })
     cherrypy.engine.start()
 
     # Test Code

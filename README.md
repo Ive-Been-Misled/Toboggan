@@ -7,6 +7,7 @@ A CSE 5914 Knowledge Systems Capstone Project
 ## Requirements
 
 - Python 3.7 or later
+- IBM Cloud account (free)
 
 ## How to Run
 
@@ -25,10 +26,11 @@ source venv/bin/activate  # `source venv/Scripts/activate` on Windows
 # install dependencies
 pip install .
 
-# launch a local web server
-python3 -m toboggan.server
+# set api key environment variable
+export API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-# visit the server with a browser at http://127.0.0.1:8080
+# launch a local web server and open the browser window
+python3 -m toboggan.server
 ```
 
 ## Team Members

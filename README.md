@@ -14,6 +14,7 @@ A CSE 5914 Knowledge Systems Capstone Project
 Broad instructions in the comments followed by example commands, which may vary
 depending on your system
 
+### Linux
 ```sh
 # clone the repository
 git clone https://github.com/Ive-Been-Misled/Toboggan.git
@@ -21,7 +22,7 @@ cd Toboggan
 
 # setup and activate a Python virtual environment
 python3 -m venv venv
-source venv/bin/activate  # `source venv/Scripts/activate` on Windows
+source venv/bin/activate
 
 # install dependencies
 pip install .
@@ -31,6 +32,26 @@ export API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 # launch a local web server and open the browser window
 python3 -m toboggan.server
+```
+### Windows
+```sh
+# clone the repository
+git clone https://github.com/Ive-Been-Misled/Toboggan.git
+cd Toboggan
+
+# setup and activate a Python virtual environment
+python -m venv venv
+. venv/Scripts/activate  # Be sure to include the '.'
+
+# install dependencies
+pip install poetry
+poetry install
+
+# set api key environment variable
+$env:API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# launch a local web server and open the browser window
+python -m toboggan.server
 ```
 
 ## Team Members

@@ -7,6 +7,7 @@ from os import environ, path
 from datetime import datetime
 from ibm_watson import AssistantV1
 import spacy
+from difflib import get_close_matches
 
 
 class ActionMapper:
@@ -107,7 +108,11 @@ class Move:
     distance: int=0
 
     def execute(self, game, character):
-        pass
+        moved = character.move_to(character.current_room.connected_rooms[self.direction])
+        if moved:
+            return str(character.current_room)
+        else:
+            return f'You cannot move {self.direction}'
 
 
 @dataclass
@@ -116,7 +121,7 @@ class Interact:
     thing: Any=None
 
     def execute(self, game, character):
-        pass
+        return 'Interact not yet implemented.'
 
 
 @dataclass
@@ -125,7 +130,7 @@ class Percieve:
     sense: Any=None
 
     def execute(self, game, character):
-        pass
+        return str(character.current_room)
 
 
 @dataclass
@@ -133,8 +138,14 @@ class Attack:
     target: Any=None
 
     def execute(self, game, character):
-        pass
-
+        room_characters = character.current_room.characters
+        if self.target is not None:
+            target_key = get_close_matches(self.target, room_characters.keys())[0]
+            target_obj = room_characters[target_key]
+            character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
+            return 'You attacked the ' + target_key + ' for 20 damage!'
+        else:
+            return 'There is no ' + str(self.target) + ' to attack'
 
 @dataclass
 class Speak:
@@ -142,11 +153,11 @@ class Speak:
     dialouge: str=''
 
     def execute(self, game, character):
-        pass
+        return 'Speak not yet implemented'
 
 
 @dataclass
 class Introspect:
 
     def execute(self, game, character):
-        pass
+        return str(character)

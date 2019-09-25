@@ -54,6 +54,14 @@ $env:API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 python -m toboggan.server
 ```
 
+Note: Exporting the `API_KEY` environment variable is only needed for the first
+run. Subsequent runs will use the API key and workspace ID saved in
+`toboggan/watson_api.json` (ignored by Git). When making changes to
+`actions.json`, delete `toboggan/watson_api.json` in order to generate a new
+workspace with the updated intents. When a new workspace is generated, it may
+take a while to train -- calls to `ActionMapper#map` will return `None` for all
+input until the training is complete.
+
 ## Team Members
 - JS Teoh
 - Tom Paoloni

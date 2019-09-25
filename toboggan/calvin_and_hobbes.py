@@ -13,5 +13,14 @@ class Calvin:
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
-        print(self._ac.map(input_string))
-        return f'You typed the magical word(s):<br><br> {input_string}'
+        paragraphs = []
+        paragraphs.append('You typed the magical word(s):')
+        paragraphs.append(input_string)
+
+        action = self._ac.map(input_string)
+        if action:
+            paragraphs.append(f'The mapped action was {action}.')
+        else:
+            paragraphs.append('The input was not understood.')
+
+        return '<br><br>'.join(paragraphs)

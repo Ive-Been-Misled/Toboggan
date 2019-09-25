@@ -71,7 +71,7 @@ class Interact:
 
 @dataclass
 class Percieve:
-    location: Any
+    location: Any=None
     sense: Any=None
 
     def execute(self, game, character):
@@ -80,7 +80,7 @@ class Percieve:
 
 @dataclass
 class Attack:
-    target: Any
+    target: Any=None
 
     def execute(self, game, character):
         pass

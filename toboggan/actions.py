@@ -6,6 +6,7 @@ import json
 from os import environ, path
 from datetime import datetime
 from ibm_watson import AssistantV1
+import spacy
 
 
 class ActionMapper:
@@ -21,6 +22,8 @@ class ActionMapper:
             self._workspace_id = ActionMapper.create_workspace(self._assistant)
             ActionMapper.save_api_and_workspace_info(api_key, self._workspace_id)
 
+        self._nlp = spacy.load('en_core_web_sm')
+
     def map(self, input_string):
         result = self._assistant.message(
             workspace_id=self._workspace_id,
@@ -31,6 +34,13 @@ class ActionMapper:
 
         if not intents:
             return None
+
+        doc = self._nlp(input_string)
+        for token in doc:
+            if token.dep_ == 'dobj':
+                print(f'direct object: {token.text}')
+            if token.dep_ == 'pobj':
+                print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
 

@@ -26,6 +26,7 @@ source venv/bin/activate
 
 # install dependencies
 pip install .
+spacy download en_core_web_sm
 
 # set api key environment variable
 export API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -46,6 +47,7 @@ python -m venv venv
 # install dependencies
 pip install poetry
 poetry install
+spacy download en_core_web_sm
 
 # set api key environment variable
 $env:API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

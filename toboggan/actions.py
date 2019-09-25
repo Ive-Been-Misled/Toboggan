@@ -40,7 +40,7 @@ class ActionMapper:
             param = intents[0]['intent'].split('_')[1]
             return vars(sys.modules[__name__])[action_class](param)
 
-        return vars(sys.modules[__name__])[action_class]
+        return vars(sys.modules[__name__])[action_class]()
 
     @staticmethod
     def get_intents():

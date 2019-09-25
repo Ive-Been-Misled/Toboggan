@@ -1,8 +1,8 @@
 class Game:
     def __init__(self):
-        north_room = Room('North Room', 'North Room Desc', (None, None, None, None), {}, {})
-        self.starting_room = Room('Starting Room', 'Starting Room Desc', (north_room, None, None, None), {}, {})
-        north_room.south_room = self.starting_room
+        north_room = Room('North Room', 'You are in a small room. There is a sword on the ground and a goblin standing in front of you. There is an exit south of you.', (None, None, None, None), {}, {})
+        self.starting_room = Room('Starting Room', 'You are in an empty room. There is an exit to the north.', (north_room, None, None, None), {}, {})
+        north_room.connected_rooms['south'] = self.starting_room
         self.player = Player(self.starting_room)
 
         enemy = Character('Goblin', north_room)
@@ -13,10 +13,10 @@ class Game:
     def update(self, action):
         pass
 
-    def save():
+    def save(self):
         pass
 
-    def get_state():
+    def get_state(self):
         pass
 
 class Character:
@@ -25,6 +25,13 @@ class Character:
         self.hit_points = hit_points
         self.current_room = starting_room
         self.current_room.enter(self)
+   
+    def __str__(self):
+        return (
+            f'Name: {self.title}\n'            
+            f'HP: {self.hit_points}\n'
+            f'Current Location: {self.current_room.title}\n'
+        )
 
     def move_to(self, room):
         if room != None:
@@ -46,7 +53,7 @@ class Character:
 
 class Player(Character):
     def __init__(self, starting_room, hit_points=100):
-        super().__init__('Player', starting_room, hit_points)
+        super().__init__('You', starting_room, hit_points)
 
 class Item:
     def __init__(self):
@@ -56,13 +63,18 @@ class Room:
     def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
         self.title = title
         self.description = description
-        self.north_room = connected_rooms[0]
-        self.south_room = connected_rooms[1]
-        self.east_room = connected_rooms[2]
-        self.west_room = connected_rooms[3]
+        self.connected_rooms = { 'north': connected_rooms[0], 'south': connected_rooms[1], 'east': connected_rooms[2], 'west': connected_rooms[3] }
         self.characters = init_characters
         self.items = init_items
-        self.description = ''
+    
+    def __str__(self):
+        chars = ', '.join(self.characters.keys())
+        return (
+            f'{self.title} \n\n'
+            f'{self.description} \n\n'
+            f'The following characters are in the room: \n'
+            f'{chars}'
+        )
 
     def add_item(self, item):
         self.items.add(item)

@@ -70,9 +70,9 @@ class Room:
     def __str__(self):
         chars = ', '.join(self.characters.keys())
         return (
-            f'{self.title} \n\n'
+            f'[{self.title}] \n\n'
             f'{self.description} \n\n'
-            f'The following characters are in the room: \n'
+            f'The following characters are in the room: '
             f'{chars}'
         )
 

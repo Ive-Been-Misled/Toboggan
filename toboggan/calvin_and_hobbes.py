@@ -14,13 +14,17 @@ class Calvin:
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
         paragraphs = []
-        paragraphs.append('> ' + input_string)
+        paragraphs.append(f'You {input_string}.')
 
         action = self._ac.map(input_string)
         if action:
-            output = action.execute(self._game, self._game.player).replace('\n', '<br>')
+            output = action.execute(self._game, self._game.player) \
+                           .replace('\n', '<br>')
             paragraphs.append(output)
         else:
-            paragraphs.append('The input was not understood.')
+            paragraphs.append(
+                'The universe does not understand your action. '
+                'Nothing happens.'
+            )
 
         return '<br><br>'.join(paragraphs)

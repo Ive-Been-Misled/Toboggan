@@ -26,24 +26,29 @@ class ActionMapper:
         self._nlp = spacy.load('en_core_web_sm')
 
     def map(self, input_string):
-        result = self._assistant.message(
+        intents = self._assistant.message(
             workspace_id=self._workspace_id,
             input={'text': input_string}
-        ).get_result()
-
-        intents = result['intents']
+        ).get_result()['intents']
 
         if not intents:
             return None
 
         doc = self._nlp(input_string)
+        direct_object = None
+        prep_object = None
         for token in doc:
             if token.dep_ == 'dobj':
+                direct_object = token.text
                 print(f'direct object: {token.text}')
             if token.dep_ == 'pobj':
+                prep_object = token.text
                 print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
+
+        if action_class == 'Attack' and direct_object:
+            return vars(sys.modules[__name__])[action_class](direct_object)
 
         if len(intents[0]['intent'].split('_')) > 1:
             param = intents[0]['intent'].split('_')[1]
@@ -112,7 +117,7 @@ class Move:
         if moved:
             return str(character.current_room)
         else:
-            return f'You cannot move {self.direction}'
+            return f'You cannot move {self.direction}.'
 
 
 @dataclass
@@ -139,13 +144,14 @@ class Attack:
 
     def execute(self, game, character):
         room_characters = character.current_room.characters
-        if self.target is not None:
-            target_key = get_close_matches(self.target, room_characters.keys())[0]
+        targets = get_close_matches(self.target, room_characters.keys())
+        if self.target is not None and targets:
+            target_key = targets[0]
             target_obj = room_characters[target_key]
             character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
             return 'You attacked the ' + target_key + ' for 20 damage!'
         else:
-            return 'There is no ' + str(self.target) + ' to attack'
+            return 'There is no ' + str(self.target) + ' to attack.'
 
 @dataclass
 class Speak:
@@ -153,7 +159,7 @@ class Speak:
     dialouge: str=''
 
     def execute(self, game, character):
-        return 'Speak not yet implemented'
+        return 'Speak not yet implemented.'
 
 
 @dataclass

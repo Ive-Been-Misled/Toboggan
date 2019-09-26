@@ -37,8 +37,8 @@ async function initiateGUI() {
   input.value = '';  // clear input textarea
   input.addEventListener('keydown', processEnter);
   text = await sendInput('look around')
-  await displayScenario('Welcome to Toboggan <br><br>' + text);
-  imprompt.innerHTML = "Enter anything below to continue";
+  await displayScenario('[Welcome to Toboggan] <br><br>' + text);
+  imprompt.innerHTML = "What do you do?";
 }
 
 async function processEnter(e) {

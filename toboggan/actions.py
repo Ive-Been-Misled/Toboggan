@@ -112,7 +112,7 @@ class Move:
         if moved:
             return str(character.current_room)
         else:
-            return f'You cannot move {self.direction}'
+            return f'You cannot move {self.direction}.'
 
 
 @dataclass
@@ -145,7 +145,7 @@ class Attack:
             character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
             return 'You attacked the ' + target_key + ' for 20 damage!'
         else:
-            return 'There is no ' + str(self.target) + ' to attack'
+            return 'There is no ' + str(self.target) + ' to attack.'
 
 @dataclass
 class Speak:
@@ -153,7 +153,7 @@ class Speak:
     dialouge: str=''
 
     def execute(self, game, character):
-        return 'Speak not yet implemented'
+        return 'Speak not yet implemented.'
 
 
 @dataclass

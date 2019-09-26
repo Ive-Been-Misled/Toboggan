@@ -25,12 +25,14 @@ class Character:
         self.hit_points = hit_points
         self.current_room = starting_room
         self.current_room.enter(self)
+        self.inventory = {}
    
     def __str__(self):
         return (
             f'Name: {self.title}\n'            
             f'HP: {self.hit_points}\n'
             f'Current Location: {self.current_room.title}\n'
+            f'Inventory: {self.inventory}\n'
         )
 
     def move_to(self, room):
@@ -56,8 +58,12 @@ class Player(Character):
         super().__init__('You', starting_room, hit_points)
 
 class Item:
-    def __init__(self):
+    def __init__(self, weight, itemType):
         self.description = ''
+        self.weight = weight
+        self.itemType = itemType
+    def __str__(self):
+        return ('This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.itemType)
 
 class Room:
     def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
@@ -65,7 +71,7 @@ class Room:
         self.description = description
         self.connected_rooms = { 'north': connected_rooms[0], 'south': connected_rooms[1], 'east': connected_rooms[2], 'west': connected_rooms[3] }
         self.characters = init_characters
-        self.items = init_items
+        self.item_list = init_items
     
     def __str__(self):
         chars = ', '.join(self.characters.keys())

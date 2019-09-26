@@ -126,7 +126,14 @@ class Interact:
     thing: Any=None
 
     def execute(self, game, character):
-        return 'Interact not yet implemented.'
+        if len(character.current_room.item_list) >0:
+            for x,y in character.current_room.item_list.items():
+                character.inventory.add((x,y))
+                character.current_room.item_list.pop(x)
+                return f'You picked up a {x}'
+        else:
+            return 'There are nothing to pick up in this room.'
+
 
 
 @dataclass

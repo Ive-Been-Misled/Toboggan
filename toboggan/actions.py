@@ -46,7 +46,6 @@ class ActionMapper:
                 print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
-
         if action_class == 'Attack' and direct_object:
             return vars(sys.modules[__name__])[action_class](direct_object)
 
@@ -126,7 +125,14 @@ class Interact:
     thing: Any=None
 
     def execute(self, game, character):
-        return 'Interact not yet implemented.'
+        if len(character.current_room.item_list) >0:
+            for x,y in character.current_room.item_list.items():
+                character.inventory[x] = y
+                character.current_room.item_list.pop(x)
+                return f'You picked up a {x}'
+        else:
+            return 'There are nothing to pick up in this room.'
+
 
 
 @dataclass
@@ -149,7 +155,11 @@ class Attack:
             target_key = targets[0]
             target_obj = room_characters[target_key]
             character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
-            return 'You attacked the ' + target_key + ' for 20 damage!'
+            if target_obj.hit_points > 0:
+                return 'You attacked the ' + target_key + ' for 20 damage!'
+            else:
+                character.current_room.characters.pop(target_key)
+                return 'You killed the ' + target_key + '!'
         else:
             return 'There is no ' + str(self.target) + ' to attack.'
 

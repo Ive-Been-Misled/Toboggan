@@ -1,11 +1,23 @@
 class Game:
     def __init__(self):
-        north_room = Room('North Room', 'You are in a small room. There is a sword on the ground and a goblin standing in front of you. There is an exit south of you.', (None, None, None, None), {}, {})
-        self.starting_room = Room('Starting Room', 'You are in an empty room. There is an exit to the north.', (north_room, None, None, None), {}, {})
+        
+        apple = Item('Apple', 'A tasty red fruit', 0.1, 'food item')
+        sword = Item('Sword', 'A sharp metal pointy thing.', 10, 'sword')
+        north_room = Room('North Room', 'You are in a small room. There is a sword on the ground and a goblin standing in front of you. There is an exit south of you.', (None, None, None, None), {}, {sword.title: sword})
+        south_room = Room('Fields', 'You are in a field. There is an apple tree. It looks like one of the apples has fallen on the ground. There is an open door north of you and a forest to the west.', (None, None, None, None), {}, {apple.title: apple})
+        south_west_room = Room('Forest', 'You are in a forest. There is a goblin guarding a cave entrance to the west. There is a clearing to the east.', (None, None, None, None), {}, {} )
+        cave_room = Room('Cave', 'Inside the cave, you find a chest filled with gold.\n\nYou Win!', (None, None, None, None), {}, {})
+        self.starting_room = Room('Starting Room', 'You are in an empty room. There are exits to the north and south.', (north_room, south_room, None, None), {}, {})
         north_room.connected_rooms['south'] = self.starting_room
+        south_room.connected_rooms['north'] = self.starting_room
+        south_room.connected_rooms['west'] = south_west_room
+        south_west_room.connected_rooms['east'] = south_room
+        south_west_room.connected_rooms['west'] = cave_room
+        cave_room.connected_rooms['east'] = south_west_room
         self.player = Player(self.starting_room)
 
-        enemy = Character('Goblin', north_room)
+        Character('Goblin', north_room, hit_points=60)
+        Character('Goblin', south_west_room, hit_points=60)
 
     def generate_storyboard(self):
         pass
@@ -25,12 +37,15 @@ class Character:
         self.hit_points = hit_points
         self.current_room = starting_room
         self.current_room.enter(self)
+        self.inventory = {}
    
     def __str__(self):
+        inv = ', '.join(self.inventory.keys())
         return (
             f'Name: {self.title}\n'            
             f'HP: {self.hit_points}\n'
             f'Current Location: {self.current_room.title}\n'
+            f'Inventory: {inv}\n'
         )
 
     def move_to(self, room):
@@ -56,8 +71,13 @@ class Player(Character):
         super().__init__('You', starting_room, hit_points)
 
 class Item:
-    def __init__(self):
-        self.description = ''
+    def __init__(self, title, description, weight, itemType):
+        self.title = title
+        self.description = description
+        self.weight = weight
+        self.itemType = itemType
+    def __str__(self):
+        return ('This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.itemType)
 
 class Room:
     def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
@@ -65,15 +85,16 @@ class Room:
         self.description = description
         self.connected_rooms = { 'north': connected_rooms[0], 'south': connected_rooms[1], 'east': connected_rooms[2], 'west': connected_rooms[3] }
         self.characters = init_characters
-        self.items = init_items
+        self.item_list = init_items
     
     def __str__(self):
         chars = ', '.join(self.characters.keys())
+        items = ', '.join(self.item_list.keys())
         return (
             f'[{self.title}] \n\n'
             f'{self.description} \n\n'
             f'The following characters are in the room: '
-            f'{chars}'
+            f'{chars}\n\n'
         )
 
     def add_item(self, item):

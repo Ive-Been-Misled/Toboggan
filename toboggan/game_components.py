@@ -72,7 +72,7 @@ class Room:
         return (
             f'[{self.title}] \n\n'
             f'{self.description} \n\n'
-            f'The following characters are in the room: \n'
+            f'The following characters are in the room: '
             f'{chars}'
         )
 

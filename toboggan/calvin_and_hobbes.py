@@ -18,7 +18,8 @@ class Calvin:
 
         action = self._ac.map(input_string)
         if action:
-            output = action.execute(self._game, self._game.player).replace('\n', '<br>')
+            output = action.execute(self._game, self._game.player) \
+                           .replace('\n', '<br>')
             paragraphs.append(output)
         else:
             paragraphs.append(

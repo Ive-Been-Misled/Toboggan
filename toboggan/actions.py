@@ -26,12 +26,10 @@ class ActionMapper:
         self._nlp = spacy.load('en_core_web_sm')
 
     def map(self, input_string):
-        result = self._assistant.message(
+        intents = self._assistant.message(
             workspace_id=self._workspace_id,
             input={'text': input_string}
-        ).get_result()
-
-        intents = result['intents']
+        ).get_result()['intents']
 
         if not intents:
             return None

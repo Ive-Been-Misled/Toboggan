@@ -56,8 +56,12 @@ class Player(Character):
         super().__init__('You', starting_room, hit_points)
 
 class Item:
-    def __init__(self):
+    def __init__(self, weight, itemType):
         self.description = ''
+        self.weight = weight
+        self.itemType = itemType
+    def __str__(self):
+        return ('This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.itemType)
 
 class Room:
     def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):

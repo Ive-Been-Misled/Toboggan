@@ -35,6 +35,8 @@ class ActionMapper:
             return None
 
         doc = self._nlp(input_string)
+        direct_object = None
+        prep_object = None
         for token in doc:
             if token.dep_ == 'dobj':
                 direct_object = token.text
@@ -142,8 +144,9 @@ class Attack:
 
     def execute(self, game, character):
         room_characters = character.current_room.characters
-        if self.target is not None:
-            target_key = get_close_matches(self.target, room_characters.keys())[0]
+        targets = get_close_matches(self.target, room_characters.keys())
+        if self.target is not None and targets:
+            target_key = targets[0]
             target_obj = room_characters[target_key]
             character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
             return 'You attacked the ' + target_key + ' for 20 damage!'

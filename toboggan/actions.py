@@ -37,11 +37,16 @@ class ActionMapper:
         doc = self._nlp(input_string)
         for token in doc:
             if token.dep_ == 'dobj':
+                direct_object = token.text
                 print(f'direct object: {token.text}')
             if token.dep_ == 'pobj':
+                prep_object = token.text
                 print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
+
+        if action_class == 'Attack' and direct_object:
+            return vars(sys.modules[__name__])[action_class](direct_object)
 
         if len(intents[0]['intent'].split('_')) > 1:
             param = intents[0]['intent'].split('_')[1]

@@ -89,7 +89,7 @@ class Room:
     
     def __str__(self):
         chars = ', '.join(self.characters.keys())
-        items = ', '.join(self.item_list.keys())
+        #items = ', '.join(self.item_list.keys())
         return (
             f'[{self.title}] \n\n'
             f'{self.description} \n\n'
@@ -98,10 +98,10 @@ class Room:
         )
 
     def add_item(self, item):
-        self.items.add(item)
+        self.item_list.add(item)
 
     def remove_item(self, item):
-        self.items.remove(item)
+        self.item_list.remove(item)
 
     def enter(self, character):
         self.characters[character.title] = character

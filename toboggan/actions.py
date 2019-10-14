@@ -112,7 +112,10 @@ class Move:
     distance: int=0
 
     def execute(self, game, character):
-        moved = character.move_to(character.current_room.connected_rooms[self.direction])
+        if self.direction in character.current_room.connected_rooms:
+            moved = character.move_to(character.current_room.connected_rooms[self.direction])
+        else:
+            moved = False
         if moved:
             return str(character.current_room)
         else:

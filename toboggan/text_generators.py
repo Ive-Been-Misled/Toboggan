@@ -1,5 +1,5 @@
 from .gpt2 import GPT2
-
+import spacy
 
 def describe_location(location: str) -> str:
     prompt = f"""\
@@ -15,4 +15,10 @@ def describe_location(location: str) -> str:
     return description
 
 def room_title_generator(text: str) -> list:
-    pass
+    nlp = spacy.load('en_core_web_sm')
+    doc = nlp(text)
+    title_list = []
+    for token in doc:
+        if token.pos_ == 'NOUN':
+            title_list.append(token.text)
+    return title_list

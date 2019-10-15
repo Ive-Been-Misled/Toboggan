@@ -7,14 +7,11 @@ def describe_location(location: str) -> str:
     """
     description = 'You see'
 
-    sentence_count = 0
 
     for token in GPT2.sample_sequence(prompt):
         description += token
         if token == '.':
-            sentence_count += 1
-            if sentence_count > 3:
-                break
+            break
 
     return description
 

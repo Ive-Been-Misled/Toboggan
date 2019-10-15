@@ -23,13 +23,14 @@ class RoomGenerator:
 
     @staticmethod
     def generate_connected_rooms(current_room, connected_room_titles):
-        for title in connected_room_titles:
-            desc = generate_description(title)
-            connected_room = RoomGenerator.Room(title, desc, {})
-            current_room.connected_rooms[title] = connected_room
+        if not current_room.entered:
+            for title in connected_room_titles:
+                desc = generate_description(title)
+                connected_room = RoomGenerator.Room(title, desc, {})
+                current_room.connected_rooms[title] = connected_room
 
-            # TODO: change this to "back" later
-            connected_room.connected_rooms["south"] = current_room
+                # TODO: change this to "back" later
+                connected_room.connected_rooms["south"] = current_room
     
     class Room:
         def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
@@ -39,6 +40,7 @@ class RoomGenerator:
             #self.connected_rooms = { 'north': connected_rooms[0], 'south': connected_rooms[1], 'east': connected_rooms[2], 'west': connected_rooms[3] }
             self.characters = init_characters
             self.item_list = init_items
+            self.entered = False
         
         def __str__(self):
             chars = ', '.join(self.characters.keys())
@@ -60,6 +62,7 @@ class RoomGenerator:
             self.characters[character.title] = character
             connected_room_titles = generate_connected_titles(self.title)
             RoomGenerator.generate_connected_rooms(self, connected_room_titles)
+            self.entered = True
 
         def exit(self, character):
             self.characters.pop(character.title, None)

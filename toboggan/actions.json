@@ -5,10 +5,10 @@
       "intent": "speak_nothing",
       "examples": [
         {
-          "text": "I voice my opinion"
+          "text": "I would like to speak"
         },
         {
-          "text": "I would like to speak"
+          "text": "I voice my opinion"
         },
         {
           "text": "I talk"
@@ -16,105 +16,34 @@
       ]
     },
     {
-      "intent": "move_south",
-      "examples": [
-        {
-          "text": "make my way backward"
-        },
-        {
-          "text": "go backward"
-        },
-        {
-          "text": "head backward"
-        },
-        {
-          "text": "I would live to move backward"
-        },
-        {
-          "text": "move backward"
-        },
-        {
-          "text": "walk back"
-        },
-        {
-          "text": "start heading back"
-        },
-        {
-          "text": "make my way back"
-        },
-        {
-          "text": "move south"
-        },
-        {
-          "text": "I would live to move south"
-        },
-        {
-          "text": "head south"
-        },
-        {
-          "text": "go south"
-        },
-        {
-          "text": "make my way south"
-        },
-        {
-          "text": "start heading south"
-        },
-        {
-          "text": "walk south"
-        },
-        {
-          "text": "move back"
-        },
-        {
-          "text": "I would live to move back"
-        },
-        {
-          "text": "go back"
-        },
-        {
-          "text": "head back"
-        },
-        {
-          "text": "walk backward"
-        },
-        {
-          "text": "start heading backward"
-        }
-      ]
-    },
-    {
       "intent": "attack",
       "examples": [
-        {
-          "text": "I force the creature back"
-        },
         {
           "text": "I punch a lot"
         },
         {
-          "text": "I attack it"
-        },
-        {
-          "text": "I brandish my weapon and attack"
-        },
-        {
-          "text": "I assault it"
+          "text": "I attack"
         },
         {
           "text": "I strike the creature"
         },
         {
-          "text": "I attack"
+          "text": "I assault it"
+        },
+        {
+          "text": "I brandish my weapon and attack"
+        },
+        {
+          "text": "I force the creature back"
+        },
+        {
+          "text": "I attack it"
         }
       ]
     },
     {
       "intent": "percieve",
       "examples": [
-        {
-          "text": "What is around me"
-        },
         {
           "text": "I smell the thing"
         },
@@ -125,10 +54,13 @@
           "text": "I look around"
         },
         {
-          "text": "I inspect the door"
+          "text": "What is around me"
         },
         {
           "text": "Where am I"
+        },
+        {
+          "text": "I inspect the door"
         }
       ]
     },
@@ -136,10 +68,13 @@
       "intent": "interact_pickup",
       "examples": [
         {
-          "text": "I acquire the jewels"
+          "text": "I pick up the thing"
         },
         {
-          "text": "I pick up the thing"
+          "text": "I grab the object"
+        },
+        {
+          "text": "I grab the thing"
         },
         {
           "text": "I pick up the object"
@@ -148,19 +83,13 @@
           "text": "I take the thing"
         },
         {
-          "text": "I grab the thing"
-        },
-        {
-          "text": "I grab the object"
+          "text": "I acquire the jewels"
         }
       ]
     },
     {
       "intent": "interact_drop",
       "examples": [
-        {
-          "text": "I throw away my object"
-        },
         {
           "text": "I give up my thing"
         },
@@ -169,21 +98,15 @@
         },
         {
           "text": "I drop the thing"
+        },
+        {
+          "text": "I throw away my object"
         }
       ]
     },
     {
-      "intent": "introspect",
+      "intent": "check_self",
       "examples": [
-        {
-          "text": "who am I"
-        },
-        {
-          "text": "where's my stuff"
-        },
-        {
-          "text": "do I have anything"
-        },
         {
           "text": "inventory check"
         },
@@ -191,101 +114,16 @@
           "text": "am I ok"
         },
         {
+          "text": "who am I"
+        },
+        {
           "text": "what do I have"
-        }
-      ]
-    },
-    {
-      "intent": "move_west",
-      "examples": [
-        {
-          "text": "head west"
         },
         {
-          "text": "move west"
+          "text": "where's my stuff"
         },
         {
-          "text": "I would live to move west"
-        },
-        {
-          "text": "go west"
-        },
-        {
-          "text": "make my way west"
-        },
-        {
-          "text": "start heading west"
-        },
-        {
-          "text": "walk west"
-        },
-        {
-          "text": "move left"
-        },
-        {
-          "text": "I would live to move left"
-        },
-        {
-          "text": "head left"
-        },
-        {
-          "text": "go left"
-        },
-        {
-          "text": "make my way left"
-        },
-        {
-          "text": "start heading left"
-        },
-        {
-          "text": "walk left"
-        }
-      ]
-    },
-    {
-      "intent": "move_east",
-      "examples": [
-        {
-          "text": "I would live to move east"
-        },
-        {
-          "text": "walk right"
-        },
-        {
-          "text": "move right"
-        },
-        {
-          "text": "walk east"
-        },
-        {
-          "text": "start heading east"
-        },
-        {
-          "text": "make my way east"
-        },
-        {
-          "text": "go east"
-        },
-        {
-          "text": "head east"
-        },
-        {
-          "text": "move east"
-        },
-        {
-          "text": "start heading right"
-        },
-        {
-          "text": "make my way right"
-        },
-        {
-          "text": "go right"
-        },
-        {
-          "text": "head right"
-        },
-        {
-          "text": "I would live to move right"
+          "text": "do I have anything"
         }
       ]
     },
@@ -293,19 +131,19 @@
       "intent": "speak_thing",
       "examples": [
         {
-          "text": "I would like to speak to him"
-        },
-        {
-          "text": "I would like to speak to her"
+          "text": "I voice my opinion towards the child"
         },
         {
           "text": "I talk to him"
         },
         {
-          "text": "I address the warrior"
+          "text": "I would like to speak to her"
         },
         {
-          "text": "I voice my opinion towards the child"
+          "text": "I would like to speak to him"
+        },
+        {
+          "text": "I address the warrior"
         }
       ]
     },
@@ -321,49 +159,196 @@
       ]
     },
     {
-      "intent": "move_north",
+      "intent": "move",
       "examples": [
         {
+          "text": "go backward"
+        },
+        {
+          "text": "walk backward"
+        },
+        {
+          "text": "start heading backward"
+        },
+        {
+          "text": "start heading back"
+        },
+        {
+          "text": "make my way south"
+        },
+        {
+          "text": "make my way back"
+        },
+        {
+          "text": "I would live to move back"
+        },
+        {
+          "text": "head backward"
+        },
+        {
+          "text": "make my way backward"
+        },
+        {
+          "text": "head south"
+        },
+        {
+          "text": "move left"
+        },
+        {
+          "text": "head west"
+        },
+        {
+          "text": "I would live to move right"
+        },
+        {
+          "text": "go west"
+        },
+        {
+          "text": "start heading west"
+        },
+        {
+          "text": "move west"
+        },
+        {
+          "text": "I would live to move west"
+        },
+        {
+          "text": "go left"
+        },
+        {
+          "text": "I would live to move left"
+        },
+        {
+          "text": "make my way left"
+        },
+        {
+          "text": "walk west"
+        },
+        {
+          "text": "walk left"
+        },
+        {
+          "text": "start heading left"
+        },
+        {
+          "text": "make my way west"
+        },
+        {
+          "text": "head left"
+        },
+        {
+          "text": "head east"
+        },
+        {
+          "text": "walk east"
+        },
+        {
+          "text": "move right"
+        },
+        {
+          "text": "move east"
+        },
+        {
+          "text": "start heading east"
+        },
+        {
+          "text": "I would live to move east"
+        },
+        {
+          "text": "go right"
+        },
+        {
+          "text": "walk right"
+        },
+        {
+          "text": "start heading right"
+        },
+        {
+          "text": "make my way right"
+        },
+        {
+          "text": "make my way east"
+        },
+        {
+          "text": "head right"
+        },
+        {
+          "text": "go east"
+        },
+        {
+          "text": "go back"
+        },
+        {
+          "text": "walk back"
+        },
+        {
+          "text": "I would live to move backward"
+        },
+        {
+          "text": "head back"
+        },
+        {
+          "text": "move south"
+        },
+        {
+          "text": "move backward"
+        },
+        {
+          "text": "I would live to move south"
+        },
+        {
+          "text": "walk south"
+        },
+        {
+          "text": "move north"
+        },
+        {
           "text": "I would live to move north"
-        },
-        {
-          "text": "walk forward"
-        },
-        {
-          "text": "start heading forward"
-        },
-        {
-          "text": "make my way forward"
-        },
-        {
-          "text": "go forward"
-        },
-        {
-          "text": "head forward"
-        },
-        {
-          "text": "I would live to move forward"
-        },
-        {
-          "text": "move forward"
-        },
-        {
-          "text": "walk north"
-        },
-        {
-          "text": "start heading north"
-        },
-        {
-          "text": "make my way north"
-        },
-        {
-          "text": "go north"
         },
         {
           "text": "head north"
         },
         {
-          "text": "move north"
+          "text": "go north"
+        },
+        {
+          "text": "make my way north"
+        },
+        {
+          "text": "start heading north"
+        },
+        {
+          "text": "walk north"
+        },
+        {
+          "text": "move forward"
+        },
+        {
+          "text": "I would live to move forward"
+        },
+        {
+          "text": "head forward"
+        },
+        {
+          "text": "go forward"
+        },
+        {
+          "text": "make my way forward"
+        },
+        {
+          "text": "start heading forward"
+        },
+        {
+          "text": "walk forward"
+        },
+        {
+          "text": "start heading south"
+        },
+        {
+          "text": "move back"
+        },
+        {
+          "text": "go south"
         }
       ]
     }

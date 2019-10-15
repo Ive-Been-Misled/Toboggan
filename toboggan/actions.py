@@ -46,6 +46,10 @@ class ActionMapper:
                 print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
+        if action_class == 'Move' and direct_object:
+            return vars(sys.modules[__name__])[action_class](direct_object)
+        #TODO implement case for both attack and move where no direct object is given
+
         if action_class == 'Attack' and direct_object:
             return vars(sys.modules[__name__])[action_class](direct_object)
 
@@ -108,18 +112,17 @@ class ActionMapper:
 
 @dataclass
 class Move:
-    direction: Any
-    distance: int=0
+    destination: Any
 
     def execute(self, game, character):
-        if self.direction in character.current_room.connected_rooms:
-            moved = character.move_to(character.current_room.connected_rooms[self.direction])
+        if self.destination in character.current_room.connected_rooms:
+            moved = character.move_to(character.current_room.connected_rooms[self.destination])
         else:
             moved = False
         if moved:
             return str(character.current_room)
         else:
-            return f'You cannot move {self.direction}.'
+            return f'You cannot move to {self.destination}.'
 
 
 @dataclass

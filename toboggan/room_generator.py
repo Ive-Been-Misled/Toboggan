@@ -1,11 +1,8 @@
+from .text_generators import describe_location
+
 # TODO: remove this test code, replace with actual functions
 # # # # 
 i = 0
-
-def generate_description(title):
-    global i
-    i += 1
-    return title + " " + str(i)
 
 def generate_connected_titles(desc):
     return ["north", "east", "west"]
@@ -14,7 +11,7 @@ def generate_connected_titles(desc):
 class RoomGenerator:
 
     def __init__(self, starting_room_title):
-        starting_room_desc = generate_description(starting_room_title)
+        starting_room_desc = describe_location(starting_room_title)
         self.starting_room = RoomGenerator.Room(starting_room_title, starting_room_desc, {})
 
         connected_room_titles = generate_connected_titles(starting_room_desc)
@@ -25,7 +22,7 @@ class RoomGenerator:
     def generate_connected_rooms(current_room, connected_room_titles):
         if not current_room.entered:
             for title in connected_room_titles:
-                desc = generate_description(title)
+                desc = describe_location(title)
                 connected_room = RoomGenerator.Room(title, desc, {})
                 current_room.connected_rooms[title] = connected_room
 

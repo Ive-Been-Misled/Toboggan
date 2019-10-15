@@ -38,7 +38,7 @@ class ActionMapper:
         direct_object = None
         prep_object = None
         for token in doc:
-            if token.dep_ == 'dobj':
+            if token.dep_ == 'dobj' or token.dep_ == 'advmod':
                 direct_object = token.text
                 print(f'direct object: {token.text}')
             if token.dep_ == 'pobj':

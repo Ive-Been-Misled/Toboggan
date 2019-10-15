@@ -30,7 +30,7 @@ class RoomGenerator:
                 current_room.connected_rooms[title] = connected_room
 
                 # TODO: change this to "back" later
-                connected_room.connected_rooms["south"] = current_room
+                connected_room.connected_rooms["back"] = current_room
     
     class Room:
         def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
@@ -60,7 +60,7 @@ class RoomGenerator:
 
         def enter(self, character):
             self.characters[character.title] = character
-            connected_room_titles = generate_connected_titles(self.title)
+            connected_room_titles = generate_connected_titles(self.description)
             RoomGenerator.generate_connected_rooms(self, connected_room_titles)
             self.entered = True
 

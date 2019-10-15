@@ -13,3 +13,6 @@ def describe_location(location: str) -> str:
         description += token
 
     return description
+
+def room_title_generator(text: str) -> list:
+    pass

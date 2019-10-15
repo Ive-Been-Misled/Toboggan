@@ -7,10 +7,13 @@ def describe_location(location: str) -> str:
     """
     description = 'You see'
 
+    current_length = 0
+    min_length =  20
 
     for token in GPT2.sample_sequence(prompt):
         description += token
-        if token == '.':
+        current_length += 1
+        if current_length >= min_length and token == '.':
             break
 
     return description

@@ -16,8 +16,7 @@ class RoomGenerator:
     def generate_connected_rooms(current_room, connected_room_titles):
         if not current_room.entered:
             for title in connected_room_titles:
-                desc = describe_location(title)
-                connected_room = RoomGenerator.Room(title, desc, {})
+                connected_room = RoomGenerator.Room(title, None, {})
                 current_room.connected_rooms[title] = connected_room
 
                 # TODO: change this to "back" later
@@ -50,6 +49,8 @@ class RoomGenerator:
             self.item_list.remove(item)
 
         def enter(self, character):
+            if self.description is None:
+                self.description = describe_location(self.title)
             self.characters[character.title] = character
             connected_room_titles = room_title_generator(self.description)
             RoomGenerator.generate_connected_rooms(self, connected_room_titles)

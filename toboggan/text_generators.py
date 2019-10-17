@@ -23,6 +23,6 @@ def room_title_generator(text: str) -> list:
     doc = nlp(text)
     title_list = []
     for token in doc:
-        if token.pos_ == 'NOUN':
+        if token.pos_ == 'NOUN' and token.text != 'back':
             title_list.append(token.text)
     return title_list

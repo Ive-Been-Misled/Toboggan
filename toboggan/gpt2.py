@@ -5,8 +5,8 @@ import numpy as np
 from transformers import GPT2Config, GPT2LMHeadModel, GPT2Tokenizer
 
 
-_MODEL_NAME = "distilgpt2" # other options: "gpt2", "gpt2-large", etc.
-_SEED = 42
+_MODEL_NAME = "gpt2-large" # other options: "gpt2", "gpt2-large", etc.
+_SEED = 3189
 
 
 class _GPT2:
@@ -24,8 +24,8 @@ class _GPT2:
     def sample_sequence(self, input_text: str):
         num_samples = 1
         repetition_penalty = 1
-        top_k = 0
-        top_p = 0.9
+        top_k = 40
+        top_p = 1
 
         context_tokens = self.tokenizer.encode(input_text)
         context = torch.tensor(context_tokens, dtype=torch.long, device=self.device)

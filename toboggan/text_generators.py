@@ -13,6 +13,7 @@ def describe_location(location: str) -> str:
     for token in GPT2.sample_sequence(prompt):
         description += token
         current_length += 1
+        print(f"DEBUG: {token}")
         if current_length >= min_length and token == '.':
             break
 

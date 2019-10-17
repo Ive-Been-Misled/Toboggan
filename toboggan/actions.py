@@ -26,6 +26,21 @@ class ActionMapper:
         self._nlp = spacy.load('en_core_web_sm')
 
     def map(self, input_string):
+        if input_string == 'look around':
+            return Percieve()
+
+        doc = self._nlp(input_string)
+        obj = "nothing"
+        for token in doc:
+            if (token.dep_ == 'dobj' or
+                token.dep_ == 'advmod' or
+                token.dep_ == 'pobj'):
+                obj = token.text
+
+        return Move(destination=obj)
+
+    # use a simpler map for demo purposes until assistant can be retrained
+    def _map(self, input_string):
         intents = self._assistant.message(
             workspace_id=self._workspace_id,
             input={'text': input_string}

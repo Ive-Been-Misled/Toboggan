@@ -36,10 +36,10 @@ class RoomGenerator:
             chars = ', '.join(self.characters.keys())
             #items = ', '.join(self.item_list.keys())
             return (
-                f'[{self.title}] \n\n'
+                f'[{self.title.capitalize()}] \n\n'
                 f'{self.description} \n\n'
-                f'The following characters are in the room: '
-                f'{chars}\n\n'
+                #f'The following characters are in the room: '
+                #f'{chars}\n\n'
             )
 
         def add_item(self, item):

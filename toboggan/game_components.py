@@ -20,7 +20,9 @@ class Game:
         # Character('Goblin', north_room, hit_points=60)
         # Character('Goblin', south_west_room, hit_points=60)
 
-        self.starting_room = RoomGenerator("Starting Room").starting_room
+        first_room = "A Lovecraftian Horror Story"
+
+        self.starting_room = RoomGenerator(first_room).starting_room
         self.player = Player(self.starting_room)
 
     def generate_storyboard(self):

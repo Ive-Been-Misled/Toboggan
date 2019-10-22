@@ -3,10 +3,13 @@ import torch.nn.functional as F
 import numpy as np
 
 from transformers import GPT2Config, GPT2LMHeadModel, GPT2Tokenizer
+import random
 
 
 _MODEL_NAME = "gpt2-large" # other options: "gpt2", "gpt2-large", etc.
-_SEED = 3189
+#_SEED = random.randint(0, 100000)
+_SEED = 91263
+print(f"SEED: {_SEED}")
 
 
 class _GPT2:

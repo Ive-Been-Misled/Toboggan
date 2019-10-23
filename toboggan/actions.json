@@ -16,74 +16,6 @@
       ]
     },
     {
-      "intent": "move_south",
-      "examples": [
-        {
-          "text": "make my way backward"
-        },
-        {
-          "text": "go backward"
-        },
-        {
-          "text": "head backward"
-        },
-        {
-          "text": "I would live to move backward"
-        },
-        {
-          "text": "move backward"
-        },
-        {
-          "text": "walk back"
-        },
-        {
-          "text": "start heading back"
-        },
-        {
-          "text": "make my way back"
-        },
-        {
-          "text": "move south"
-        },
-        {
-          "text": "I would live to move south"
-        },
-        {
-          "text": "head south"
-        },
-        {
-          "text": "go south"
-        },
-        {
-          "text": "make my way south"
-        },
-        {
-          "text": "start heading south"
-        },
-        {
-          "text": "walk south"
-        },
-        {
-          "text": "move back"
-        },
-        {
-          "text": "I would live to move back"
-        },
-        {
-          "text": "go back"
-        },
-        {
-          "text": "head back"
-        },
-        {
-          "text": "walk backward"
-        },
-        {
-          "text": "start heading backward"
-        }
-      ]
-    },
-    {
       "intent": "attack",
       "examples": [
         {
@@ -196,100 +128,6 @@
       ]
     },
     {
-      "intent": "move_west",
-      "examples": [
-        {
-          "text": "head west"
-        },
-        {
-          "text": "move west"
-        },
-        {
-          "text": "I would live to move west"
-        },
-        {
-          "text": "go west"
-        },
-        {
-          "text": "make my way west"
-        },
-        {
-          "text": "start heading west"
-        },
-        {
-          "text": "walk west"
-        },
-        {
-          "text": "move left"
-        },
-        {
-          "text": "I would live to move left"
-        },
-        {
-          "text": "head left"
-        },
-        {
-          "text": "go left"
-        },
-        {
-          "text": "make my way left"
-        },
-        {
-          "text": "start heading left"
-        },
-        {
-          "text": "walk left"
-        }
-      ]
-    },
-    {
-      "intent": "move_east",
-      "examples": [
-        {
-          "text": "I would live to move east"
-        },
-        {
-          "text": "walk right"
-        },
-        {
-          "text": "move right"
-        },
-        {
-          "text": "walk east"
-        },
-        {
-          "text": "start heading east"
-        },
-        {
-          "text": "make my way east"
-        },
-        {
-          "text": "go east"
-        },
-        {
-          "text": "head east"
-        },
-        {
-          "text": "move east"
-        },
-        {
-          "text": "start heading right"
-        },
-        {
-          "text": "make my way right"
-        },
-        {
-          "text": "go right"
-        },
-        {
-          "text": "head right"
-        },
-        {
-          "text": "I would live to move right"
-        }
-      ]
-    },
-    {
       "intent": "speak_thing",
       "examples": [
         {
@@ -321,49 +159,199 @@
       ]
     },
     {
-      "intent": "move_north",
+      "intent": "move",
       "examples": [
         {
-          "text": "I would live to move north"
+          "text": "go backward"
         },
         {
-          "text": "walk forward"
+          "text": "walk backward"
         },
         {
-          "text": "start heading forward"
+          "text": "start heading backward"
         },
         {
-          "text": "make my way forward"
+          "text": "start heading back"
         },
         {
-          "text": "go forward"
+          "text": "make my way south"
         },
         {
-          "text": "head forward"
+          "text": "make my way back"
         },
         {
-          "text": "I would live to move forward"
+          "text": "head backward"
         },
         {
-          "text": "move forward"
+          "text": "make my way backward"
         },
         {
-          "text": "walk north"
+          "text": "head south"
         },
         {
-          "text": "start heading north"
+          "text": "move left"
         },
         {
-          "text": "make my way north"
+          "text": "head west"
         },
         {
-          "text": "go north"
+          "text": "head left"
+        },
+        {
+          "text": "go west"
+        },
+        {
+          "text": "start heading west"
+        },
+        {
+          "text": "move west"
+        },
+        {
+          "text": "go left"
+        },
+        {
+          "text": "make my way left"
+        },
+        {
+          "text": "walk west"
+        },
+        {
+          "text": "walk left"
+        },
+        {
+          "text": "start heading left"
+        },
+        {
+          "text": "make my way west"
+        },
+        {
+          "text": "I would like to move back"
+        },
+        {
+          "text": "I would like to move forward"
+        },
+        {
+          "text": "I would like to move left"
+        },
+        {
+          "text": "head east"
+        },
+        {
+          "text": "I would like to move west"
+        },
+        {
+          "text": "walk east"
+        },
+        {
+          "text": "move right"
+        },
+        {
+          "text": "move east"
+        },
+        {
+          "text": "start heading east"
+        },
+        {
+          "text": "go right"
+        },
+        {
+          "text": "walk right"
+        },
+        {
+          "text": "start heading right"
+        },
+        {
+          "text": "make my way right"
+        },
+        {
+          "text": "make my way east"
+        },
+        {
+          "text": "head right"
+        },
+        {
+          "text": "go east"
+        },
+        {
+          "text": "I would like to move east"
+        },
+        {
+          "text": "I would like to move right"
+        },
+        {
+          "text": "go back"
+        },
+        {
+          "text": "walk back"
+        },
+        {
+          "text": "head back"
+        },
+        {
+          "text": "move south"
+        },
+        {
+          "text": "move backward"
+        },
+        {
+          "text": "walk south"
+        },
+        {
+          "text": "I would like to move backward"
+        },
+        {
+          "text": "I would like to move south"
+        },
+        {
+          "text": "I go the the fountain"
+        },
+        {
+          "text": "I would like to move north"
+        },
+        {
+          "text": "move north"
         },
         {
           "text": "head north"
         },
         {
-          "text": "move north"
+          "text": "go north"
+        },
+        {
+          "text": "make my way north"
+        },
+        {
+          "text": "start heading north"
+        },
+        {
+          "text": "walk north"
+        },
+        {
+          "text": "move forward"
+        },
+        {
+          "text": "head forward"
+        },
+        {
+          "text": "go forward"
+        },
+        {
+          "text": "make my way forward"
+        },
+        {
+          "text": "start heading forward"
+        },
+        {
+          "text": "walk forward"
+        },
+        {
+          "text": "start heading south"
+        },
+        {
+          "text": "move back"
+        },
+        {
+          "text": "go south"
         }
       ]
     }
@@ -385,5 +373,5 @@
     "spelling_auto_correct": true
   },
   "learning_opt_out": false,
-  "status": "Training"
+  "status": "Available"
 }

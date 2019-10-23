@@ -26,6 +26,21 @@ class ActionMapper:
         self._nlp = spacy.load('en_core_web_sm')
 
     def map(self, input_string):
+        if input_string == 'look around':
+            return Percieve()
+
+        doc = self._nlp(input_string)
+        obj = "nothing"
+        for token in doc:
+            if (token.dep_ == 'dobj' or
+                token.dep_ == 'advmod' or
+                token.dep_ == 'pobj'):
+                obj = token.text
+
+        return Move(destination=obj)
+
+    # use a simpler map for demo purposes until assistant can be retrained
+    def _map(self, input_string):
         intents = self._assistant.message(
             workspace_id=self._workspace_id,
             input={'text': input_string}
@@ -38,7 +53,7 @@ class ActionMapper:
         direct_object = None
         prep_object = None
         for token in doc:
-            if token.dep_ == 'dobj':
+            if token.dep_ == 'dobj' or token.dep_ == 'advmod':
                 direct_object = token.text
                 print(f'direct object: {token.text}')
             if token.dep_ == 'pobj':
@@ -46,6 +61,10 @@ class ActionMapper:
                 print(f'prepositional object: {token.text}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
+        if action_class == 'Move' and direct_object:
+            return vars(sys.modules[__name__])[action_class](direct_object)
+        #TODO implement case for both attack and move where no direct object is given
+
         if action_class == 'Attack' and direct_object:
             return vars(sys.modules[__name__])[action_class](direct_object)
 
@@ -108,15 +127,17 @@ class ActionMapper:
 
 @dataclass
 class Move:
-    direction: Any
-    distance: int=0
+    destination: Any
 
     def execute(self, game, character):
-        moved = character.move_to(character.current_room.connected_rooms[self.direction])
+        if self.destination in character.current_room.connected_rooms:
+            moved = character.move_to(character.current_room.connected_rooms[self.destination])
+        else:
+            moved = False
         if moved:
             return str(character.current_room)
         else:
-            return f'You cannot move {self.direction}.'
+            return f'You cannot move to {self.destination}.'
 
 
 @dataclass

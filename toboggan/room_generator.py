@@ -1,12 +1,14 @@
 from .text_generators import describe_location
 from .text_generators import room_title_generator
+from .game_components import Character, Item
+from .noun_key import NounKey
 
 
 class RoomGenerator:
 
     def __init__(self, starting_room_title):
         starting_room_desc = describe_location(starting_room_title)
-        self.starting_room = RoomGenerator.Room(starting_room_title, starting_room_desc, {})
+        self.starting_room = RoomGenerator.Room(starting_room_title, starting_room_desc)
 
         connected_room_titles = room_title_generator(starting_room_desc)
 
@@ -16,18 +18,15 @@ class RoomGenerator:
     def generate_connected_rooms(current_room, connected_room_titles):
         if not current_room.entered:
             for title in connected_room_titles:
-                connected_room = RoomGenerator.Room(title, None, {})
+                connected_room = RoomGenerator.Room(title, None)
                 current_room.connected_rooms[title] = connected_room
-
-                # TODO: change this to "back" later
                 connected_room.connected_rooms["back"] = current_room
     
     class Room:
-        def __init__(self, title, description, connected_rooms, init_characters={}, init_items={}):
+        def __init__(self, title, description, init_characters={}, init_items={}):
             self.title = title
             self.description = description
             self.connected_rooms = {}
-            #self.connected_rooms = { 'north': connected_rooms[0], 'south': connected_rooms[1], 'east': connected_rooms[2], 'west': connected_rooms[3] }
             self.characters = init_characters
             self.item_list = init_items
             self.entered = False
@@ -42,6 +41,16 @@ class RoomGenerator:
                 #f'{chars}\n\n'
             )
 
+        def generate_room_characters(self, char_name_list):
+            for char_name in char_name_list:
+                Character(char_name, self)
+
+        def generate_room_items(self, item_name_list):
+            for item_name in item_name_list:
+                #TODO: generate item description, weight and type
+                item = Item(item_name, '', 1, 1)
+                self.item_list[item_name] = item
+
         def add_item(self, item):
             self.item_list.add(item)
 
@@ -49,12 +58,16 @@ class RoomGenerator:
             self.item_list.remove(item)
 
         def enter(self, character):
-            if self.description is None:
-                self.description = describe_location(self.title)
             self.characters[character.title] = character
-            connected_room_titles = room_title_generator(self.description)
-            RoomGenerator.generate_connected_rooms(self, connected_room_titles)
-            self.entered = True
+            
+            if not entered:
+                if self.description is None:
+                    self.description = describe_location(self.title)
+                room_entities = room_title_generator(self.description)
+                RoomGenerator.generate_connected_rooms(self, room_entities[NounKey.LOCATIONS])
+                self.generate_room_characters(room_entities[NounKey.CHARACTERS])
+                self.generate_room_items(room_entities[NounKey.ITEMS])
+                self.entered = True
 
         def exit(self, character):
             self.characters.pop(character.title, None)

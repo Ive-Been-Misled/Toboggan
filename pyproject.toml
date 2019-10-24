@@ -24,6 +24,7 @@ transformers = "^2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.1"
+pylint = "^2.4"
 
 [tool.poetry.scripts]
 tobo = 'toboggan.server:main'

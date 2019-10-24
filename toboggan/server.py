@@ -26,6 +26,7 @@ class Server:
         return self._calvin.generate_response(input_string)
 
 def main():
+    cherrypy.server.socket_host = '0.0.0.0'
     cherrypy.tree.mount(Server(), "/", config={
         '/':
         {

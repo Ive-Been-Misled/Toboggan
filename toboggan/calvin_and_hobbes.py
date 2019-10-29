@@ -1,6 +1,6 @@
 """Declare some top-level classes for managing all other objects."""
 from .game_components import Game
-from .actions import ActionMapper
+from .watson_action_mapper import ActionMapper
 
 
 class Calvin:

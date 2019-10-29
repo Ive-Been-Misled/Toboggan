@@ -1,5 +1,6 @@
 """Stateless NLP utility functions"""
 from os import environ
+from typing import Iterator
 import spacy
 
 if 'FAKE_GPT2' in environ:
@@ -26,6 +27,13 @@ def describe_location(location: str) -> str:
             break
 
     return description
+
+def noun_chunks(text: str) -> Iterator[str]:
+    """Given some text, return the noun chunks"""
+    nlp = spacy.load('en_core_web_sm')
+    doc = nlp(text)
+    return doc.noun_chunks
+
 
 def room_title_generator(text: str) -> list:
     """Given a description, return a list of mentioned locations"""

@@ -1,4 +1,10 @@
-from .gpt2 import GPT2
+from os import environ
+
+if 'FAKE_GPT2' in environ:
+    from .gpt2_fake import GPT2
+else:
+    from .gpt2 import GPT2
+
 import spacy
 
 def describe_location(location: str) -> str:

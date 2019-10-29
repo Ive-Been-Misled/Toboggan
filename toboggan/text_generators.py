@@ -8,6 +8,8 @@ if 'FAKE_GPT2' in environ:
 else:
     from .gpt2 import GPT2
 
+_nlp = spacy.load('en_core_web_lg')
+
 
 def describe_location(location: str) -> str:
     """Given a location, returns a description of location"""
@@ -30,15 +32,13 @@ def describe_location(location: str) -> str:
 
 def noun_chunks(text: str) -> Iterator[str]:
     """Given some text, return the noun chunks"""
-    nlp = spacy.load('en_core_web_sm')
-    doc = nlp(text)
+    doc = _nlp(text)
     return doc.noun_chunks
 
 
 def room_title_generator(text: str) -> list:
     """Given a description, return a list of mentioned locations"""
-    nlp = spacy.load('en_core_web_sm')
-    doc = nlp(text)
+    doc = _nlp(text)
     title_list = []
     for token in doc:
         if token.pos_ == 'NOUN' and token.text != 'back':

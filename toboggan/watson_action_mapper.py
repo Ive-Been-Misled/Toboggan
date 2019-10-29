@@ -21,7 +21,7 @@ class ActionMapper:
             self._workspace_id = ActionMapper.create_workspace(self._assistant)
             ActionMapper.save_api_and_workspace_info(api_key, self._workspace_id)
 
-        self._nlp = spacy.load('en_core_web_sm')
+        self._nlp = spacy.load('en_core_web_lg')
 
     def map(self, input_string):
         if input_string == 'look around':

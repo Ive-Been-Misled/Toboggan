@@ -1,24 +1,24 @@
+import random
+
 import torch
 import torch.nn.functional as F
 import numpy as np
-
-from transformers import GPT2Config, GPT2LMHeadModel, GPT2Tokenizer
-import random
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 
 _MODEL_NAME = "gpt2-large" # other options: "gpt2", "gpt2-large", etc.
-#_SEED = random.randint(0, 100000)
-_SEED = 91263
+_SEED = random.randint(0, 100000)
+#_SEED = 91263
 print(f"SEED: {_SEED}")
 
 
 class _GPT2:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        
+
         np.random.seed(_SEED)
         torch.manual_seed(_SEED)
-        
+
         self.tokenizer = GPT2Tokenizer.from_pretrained(_MODEL_NAME)
         self.model = GPT2LMHeadModel.from_pretrained(_MODEL_NAME)
         self.model.to(self.device)
@@ -44,14 +44,16 @@ class _GPT2:
                 # reptition penalty from CTRL (https://arxiv.org/abs/1909.05858)
                 for _ in set(generated):
                     next_token_logits[_] /= repetition_penalty
-                
-                filtered_logits = _top_k_top_p_filtering(next_token_logits, top_k=top_k, top_p=top_p)
+
+                filtered_logits = _top_k_top_p_filtering(next_token_logits,
+                                                         top_k=top_k,
+                                                         top_p=top_p)
                 next_token = torch.multinomial(F.softmax(filtered_logits, dim=-1), num_samples=1)
 
                 generated = torch.cat((generated, next_token.unsqueeze(0)), dim=1)
 
-                yield self.tokenizer.decode(generated[0,
-                    len(context_tokens):].tolist()[-1], True, True)
+                yield self.tokenizer.decode(generated[0, len(context_tokens):].tolist()[-1],
+                                            True, True)
 
 
 

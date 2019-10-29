@@ -44,6 +44,9 @@ cd Toboggan
 python -m venv venv
 . venv/Scripts/activate  # Be sure to include the '.'
 
+# install pytorch as this must be installed manually on windows
+pip3 install torch==1.3.0+cpu torchvision==0.4.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
 # install dependencies
 pip install poetry
 poetry install

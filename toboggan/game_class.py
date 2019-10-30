@@ -1,5 +1,22 @@
+from .room_generator import RoomGenerator
+class Game:
+    def __init__(self):
+        first_room = "A Lovecraftian Horror Story"
 
+        self.starting_room = RoomGenerator(first_room).starting_room
+        self.player = Player(self.starting_room)
 
+    def generate_storyboard(self):
+        pass
+
+    def update(self, action):
+        pass
+
+    def save(self):
+        pass
+
+    def get_state(self):
+        pass
 class Character:
     def __init__(self, title, starting_room, hit_points=100):
         self.title = title
@@ -38,12 +55,3 @@ class Character:
 class Player(Character):
     def __init__(self, starting_room, hit_points=100):
         super().__init__('You', starting_room, hit_points)
-
-class Item:
-    def __init__(self, title, description, weight, itemType):
-        self.title = title
-        self.description = description
-        self.weight = weight
-        self.itemType = itemType
-    def __str__(self):
-        return ('This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.itemType)

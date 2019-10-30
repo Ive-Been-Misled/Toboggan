@@ -1,5 +1,5 @@
 """Declare some top-level classes for managing all other objects."""
-from .game_components import Game
+from .game_class import Game
 from .watson_action_mapper import ActionMapper
 
 

@@ -3,13 +3,15 @@ from os import environ
 from typing import Iterator
 import spacy
 
+
+
 if 'FAKE_GPT2' in environ:
     from .gpt2_fake import GPT2
 else:
     from .gpt2 import GPT2
 
 _nlp = spacy.load('en_core_web_lg')
-
+COMPARE_WORDS = ['place', 'object', 'character']
 
 def describe_location(location: str) -> str:
     """Given a location, returns a description of location"""
@@ -36,11 +38,26 @@ def noun_chunks(text: str) -> Iterator[str]:
     return doc.noun_chunks
 
 
-def room_title_generator(text: str) -> list:
-    """Given a description, return a list of mentioned locations"""
+def room_noun_generator(text: str) -> dict:
+    """Given a description, return a list of mentioned nouns and their type"""
     doc = _nlp(text)
-    title_list = []
+    title_list = {'place':[], 'object':[], 'character':[]}
     for token in doc:
         if token.pos_ == 'NOUN' and token.text != 'back':
-            title_list.append(token.text)
+            title_list[noun_classifier(token.text)].append(token.text)
     return title_list
+
+
+
+def noun_classifier(word: str) -> str:
+    """Determines what type of noun a passed noun is."""
+    tokens = _nlp(' '.join(COMPARE_WORDS))
+    word_token = _nlp(word)
+    max_score = 0
+    best_class = ''
+    for token in tokens:
+        temp_score = token.similarity(word_token)
+        if temp_score > max_score:
+            max_score = temp_score
+            best_class = token.text
+    return best_class

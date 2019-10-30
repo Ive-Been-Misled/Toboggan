@@ -9,8 +9,7 @@ class RoomGenerator:
     def __init__(self, starting_room_title):
         starting_room_desc = describe_location(starting_room_title)
         self.starting_room = RoomGenerator.Room(starting_room_title, starting_room_desc)
-
-        connected_room_titles = room_noun_generator(starting_room_desc)
+        connected_room_titles = room_noun_generator(starting_room_desc)['place']
 
         self.generate_connected_rooms(self.starting_room, connected_room_titles)
 
@@ -59,15 +58,14 @@ class RoomGenerator:
 
         def enter(self, character):
             self.characters[character.title] = character
-            
             if not self.entered:
+                self.entered = True
                 if self.description is None:
                     self.description = describe_location(self.title)
                 room_entities = room_noun_generator(self.description)
                 RoomGenerator.generate_connected_rooms(self, room_entities['place'])
                 self.generate_room_characters(room_entities['character'])
                 self.generate_room_items(room_entities['object'])
-                self.entered = True
 
         def exit(self, character):
             self.characters.pop(character.title, None)

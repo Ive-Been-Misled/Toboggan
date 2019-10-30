@@ -1,5 +1,3 @@
-
-
 class Character:
     def __init__(self, title, starting_room, hit_points=100):
         self.title = title

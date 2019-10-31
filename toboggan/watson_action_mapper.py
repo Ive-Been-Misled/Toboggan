@@ -53,10 +53,10 @@ class ActionMapper:
         for token in doc:
             if token.dep_ == 'dobj' or token.dep_ == 'advmod':
                 direct_object = token.text
-                print(f'direct object: {token.text}')
+                print(f'direct object: {direct_object}')
             if token.dep_ == 'pobj':
                 prep_object = token.text
-                print(f'prepositional object: {token.text}')
+                print(f'prepositional object: {prep_object}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
         if action_class == 'Move' and direct_object:

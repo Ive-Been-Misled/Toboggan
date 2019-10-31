@@ -10,7 +10,7 @@ if 'FAKE_GPT2' in environ:
 else:
     from .gpt2 import GPT2
 
-_nlp = spacy.load('en_core_web_lg')
+_NLP = spacy.load('en_core_web_lg')
 COMPARE_WORDS = ['place', 'object', 'character']
 
 def describe_location(location: str) -> str:
@@ -34,13 +34,13 @@ def describe_location(location: str) -> str:
 
 def noun_chunks(text: str) -> Iterator[str]:
     """Given some text, return the noun chunks"""
-    doc = _nlp(text)
+    doc = _NLP(text)
     return doc.noun_chunks
 
 
 def room_noun_generator(text: str) -> dict:
     """Given a description, return a list of mentioned nouns and their type"""
-    doc = _nlp(text)
+    doc = _NLP(text)
     title_list = {'place':[], 'object':[], 'character':[]}
     for token in doc:
         if token.pos_ == 'NOUN' and token.text != 'back':
@@ -51,8 +51,8 @@ def room_noun_generator(text: str) -> dict:
 
 def noun_classifier(word: str) -> str:
     """Determines what type of noun a passed noun is."""
-    tokens = _nlp(' '.join(COMPARE_WORDS))
-    word_token = _nlp(word)
+    tokens = _NLP(' '.join(COMPARE_WORDS))
+    word_token = _NLP(word)
     max_score = 0
     best_class = ''
     for token in tokens:

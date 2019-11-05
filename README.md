@@ -44,10 +44,14 @@ cd Toboggan
 python -m venv venv
 . venv/Scripts/activate  # Be sure to include the '.'
 
+# install pytorch as this must be installed manually on windows
+pip3 install torch==1.3.0+cpu torchvision==0.4.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
 # install dependencies
 pip install poetry
 poetry install
 spacy download en_core_web_sm
+spacy download en_core_web_lg
 
 # set api key environment variable
 $env:API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -63,6 +67,22 @@ run. Subsequent runs will use the API key and workspace ID saved in
 workspace with the updated intents. When a new workspace is generated, it may
 take a while to train -- calls to `ActionMapper#map` will return `None` for all
 input until the training is complete.
+
+### Fake GPT2 for testing
+Due to the fact that GPT2 takes a very long time to create descriptions on machines that don't have Nvidia graphics cards, we created a fake GPT2 tokenizer that returns descriptions made up of random words. Obviously this does not function in the same way as GPT2, but it works great for testing.
+#### To Enable run the following command:
+Windows:
+```$env:FAKE_GPT2='true'```
+
+Linux:
+```export FAKE_GPT2='true'```
+
+#### And to Disable, run:
+Windows:
+```Remove-Item Env:\FAKE_GPT2```
+
+Linux:
+```unset FAKE_GPT2```
 
 ## Team Members
 - JS Teoh

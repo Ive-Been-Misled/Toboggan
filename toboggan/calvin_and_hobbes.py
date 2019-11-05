@@ -1,6 +1,6 @@
 """Declare some top-level classes for managing all other objects."""
-from .game_components import Game
-from .actions import ActionMapper
+from .game_class import game_controller
+from .watson_action_mapper import ActionMapper
 
 
 class Calvin:
@@ -8,7 +8,7 @@ class Calvin:
 
     def __init__(self):
         """Initialize all other objects needed for the game."""
-        self._game = Game()
+        self._game = game_controller
         self._ac = ActionMapper()
 
     def generate_response(self, input_string):

@@ -1,106 +1,38 @@
 {
-  "name": "Actions",
+  "name": "Toboggan New",
   "intents": [
-    {
-      "intent": "speak_nothing",
-      "examples": [
-        {
-          "text": "I voice my opinion"
-        },
-        {
-          "text": "I would like to speak"
-        },
-        {
-          "text": "I talk"
-        }
-      ]
-    },
-    {
-      "intent": "attack",
-      "examples": [
-        {
-          "text": "I force the creature back"
-        },
-        {
-          "text": "I punch a lot"
-        },
-        {
-          "text": "I attack it"
-        },
-        {
-          "text": "I brandish my weapon and attack"
-        },
-        {
-          "text": "I assault it"
-        },
-        {
-          "text": "I strike the creature"
-        },
-        {
-          "text": "I attack"
-        }
-      ]
-    },
     {
       "intent": "percieve",
       "examples": [
         {
-          "text": "What is around me"
-        },
-        {
-          "text": "I smell the thing"
-        },
-        {
-          "text": "I check my surroundings"
-        },
-        {
-          "text": "I look around"
+          "text": "Where am I"
         },
         {
           "text": "I inspect the door"
         },
         {
-          "text": "Where am I"
-        }
-      ]
-    },
-    {
-      "intent": "interact_pickup",
-      "examples": [
-        {
-          "text": "I acquire the jewels"
+          "text": "I look around"
         },
         {
-          "text": "I pick up the thing"
+          "text": "I check my surroundings"
         },
         {
-          "text": "I pick up the object"
+          "text": "I smell the thing"
         },
         {
-          "text": "I take the thing"
+          "text": "What is around me"
         },
         {
-          "text": "I grab the thing"
+          "text": "search the chest"
         },
         {
-          "text": "I grab the object"
-        }
-      ]
-    },
-    {
-      "intent": "interact_drop",
-      "examples": [
-        {
-          "text": "I throw away my object"
+          "text": "find a way out"
         },
         {
-          "text": "I give up my thing"
+          "text": "look through the window"
         },
         {
-          "text": "I relinquish the thing"
-        },
-        {
-          "text": "I drop the thing"
+          "text": "percieve my environment"
         }
       ]
     },
@@ -108,53 +40,31 @@
       "intent": "introspect",
       "examples": [
         {
-          "text": "who am I"
-        },
-        {
-          "text": "where's my stuff"
-        },
-        {
-          "text": "do I have anything"
-        },
-        {
-          "text": "inventory check"
+          "text": "what do I have"
         },
         {
           "text": "am I ok"
         },
         {
-          "text": "what do I have"
-        }
-      ]
-    },
-    {
-      "intent": "speak_thing",
-      "examples": [
-        {
-          "text": "I would like to speak to him"
+          "text": "inventory check"
         },
         {
-          "text": "I would like to speak to her"
+          "text": "do I have anything"
         },
         {
-          "text": "I talk to him"
+          "text": "where's my stuff"
         },
         {
-          "text": "I address the warrior"
+          "text": "who am I"
         },
         {
-          "text": "I voice my opinion towards the child"
-        }
-      ]
-    },
-    {
-      "intent": "speak_things",
-      "examples": [
-        {
-          "text": "I would like to speak to them"
+          "text": "find my inner calm"
         },
         {
-          "text": "I address the crowd"
+          "text": "meditate"
+        },
+        {
+          "text": "display hp"
         }
       ]
     },
@@ -162,196 +72,319 @@
       "intent": "move",
       "examples": [
         {
-          "text": "go backward"
-        },
-        {
-          "text": "walk backward"
-        },
-        {
-          "text": "start heading backward"
-        },
-        {
-          "text": "start heading back"
-        },
-        {
-          "text": "make my way south"
-        },
-        {
-          "text": "make my way back"
-        },
-        {
-          "text": "head backward"
-        },
-        {
-          "text": "make my way backward"
-        },
-        {
-          "text": "head south"
-        },
-        {
-          "text": "move left"
-        },
-        {
-          "text": "head west"
-        },
-        {
-          "text": "head left"
-        },
-        {
-          "text": "go west"
-        },
-        {
-          "text": "start heading west"
-        },
-        {
-          "text": "move west"
-        },
-        {
-          "text": "go left"
-        },
-        {
-          "text": "make my way left"
-        },
-        {
-          "text": "walk west"
-        },
-        {
-          "text": "walk left"
-        },
-        {
-          "text": "start heading left"
-        },
-        {
-          "text": "make my way west"
-        },
-        {
-          "text": "I would like to move back"
-        },
-        {
-          "text": "I would like to move forward"
-        },
-        {
-          "text": "I would like to move left"
-        },
-        {
-          "text": "head east"
-        },
-        {
-          "text": "I would like to move west"
-        },
-        {
-          "text": "walk east"
-        },
-        {
-          "text": "move right"
-        },
-        {
-          "text": "move east"
-        },
-        {
-          "text": "start heading east"
-        },
-        {
-          "text": "go right"
-        },
-        {
-          "text": "walk right"
-        },
-        {
-          "text": "start heading right"
-        },
-        {
-          "text": "make my way right"
-        },
-        {
-          "text": "make my way east"
-        },
-        {
-          "text": "head right"
-        },
-        {
-          "text": "go east"
-        },
-        {
-          "text": "I would like to move east"
-        },
-        {
-          "text": "I would like to move right"
+          "text": "walk back"
         },
         {
           "text": "go back"
         },
         {
-          "text": "walk back"
+          "text": "go east"
         },
         {
-          "text": "head back"
+          "text": "head right"
         },
         {
-          "text": "move south"
+          "text": "make my way east"
         },
         {
-          "text": "move backward"
+          "text": "make my way right"
         },
         {
-          "text": "walk south"
+          "text": "start heading right"
         },
         {
-          "text": "I would like to move backward"
+          "text": "walk right"
         },
         {
-          "text": "I would like to move south"
+          "text": "go right"
         },
         {
-          "text": "I go the the fountain"
+          "text": "go south"
         },
         {
-          "text": "I would like to move north"
+          "text": "move east"
         },
         {
-          "text": "move north"
+          "text": "move right"
         },
         {
-          "text": "head north"
+          "text": "walk east"
         },
         {
-          "text": "go north"
+          "text": "head east"
         },
         {
-          "text": "make my way north"
+          "text": "make my way west"
         },
         {
-          "text": "start heading north"
+          "text": "start heading left"
         },
         {
-          "text": "walk north"
+          "text": "walk left"
         },
         {
-          "text": "move forward"
+          "text": "walk west"
         },
         {
-          "text": "head forward"
+          "text": "make my way left"
         },
         {
-          "text": "go forward"
+          "text": "go left"
         },
         {
-          "text": "make my way forward"
+          "text": "move west"
         },
         {
-          "text": "start heading forward"
+          "text": "start heading west"
         },
         {
-          "text": "walk forward"
+          "text": "go west"
         },
         {
-          "text": "start heading south"
+          "text": "head left"
+        },
+        {
+          "text": "head west"
+        },
+        {
+          "text": "move left"
+        },
+        {
+          "text": "head south"
+        },
+        {
+          "text": "make my way backward"
+        },
+        {
+          "text": "head backward"
+        },
+        {
+          "text": "make my way back"
+        },
+        {
+          "text": "make my way south"
+        },
+        {
+          "text": "start heading back"
+        },
+        {
+          "text": "start heading backward"
+        },
+        {
+          "text": "walk backward"
+        },
+        {
+          "text": "go backward"
+        },
+        {
+          "text": "board the ship"
+        },
+        {
+          "text": "jump off the cliff"
+        },
+        {
+          "text": "climb the staircase"
+        },
+        {
+          "text": "run away from the monster"
+        },
+        {
+          "text": "flee the crime scene"
+        },
+        {
+          "text": "disembark the cruise"
+        },
+        {
+          "text": "sail across the ocean"
+        },
+        {
+          "text": "descend the stairs"
+        },
+        {
+          "text": "dodge the attack"
+        },
+        {
+          "text": "sidestep the attack"
+        },
+        {
+          "text": "start heading east"
         },
         {
           "text": "move back"
         },
         {
-          "text": "go south"
+          "text": "start heading south"
+        },
+        {
+          "text": "walk forward"
+        },
+        {
+          "text": "start heading forward"
+        },
+        {
+          "text": "make my way forward"
+        },
+        {
+          "text": "go forward"
+        },
+        {
+          "text": "head forward"
+        },
+        {
+          "text": "move forward"
+        },
+        {
+          "text": "walk north"
+        },
+        {
+          "text": "start heading north"
+        },
+        {
+          "text": "make my way north"
+        },
+        {
+          "text": "go north"
+        },
+        {
+          "text": "head north"
+        },
+        {
+          "text": "move north"
+        },
+        {
+          "text": "walk south"
+        },
+        {
+          "text": "move backward"
+        },
+        {
+          "text": "move south"
+        },
+        {
+          "text": "head back"
+        }
+      ]
+    },
+    {
+      "intent": "pickup",
+      "examples": [
+        {
+          "text": "I pick up the object"
+        },
+        {
+          "text": "I pick up the thing"
+        },
+        {
+          "text": "I acquire the jewels"
+        },
+        {
+          "text": "remove the idol"
+        },
+        {
+          "text": "take the last cookie from the cookie jar"
+        },
+        {
+          "text": "eat a cucumber"
+        },
+        {
+          "text": "put the key in my pocket"
+        },
+        {
+          "text": "break the window"
+        },
+        {
+          "text": "attach bag to self"
+        },
+        {
+          "text": "drink soda"
+        },
+        {
+          "text": "I grab the object"
+        },
+        {
+          "text": "I grab the thing"
+        },
+        {
+          "text": "I take the thing"
+        }
+      ]
+    },
+    {
+      "intent": "drop",
+      "examples": [
+        {
+          "text": "I drop the thing"
+        },
+        {
+          "text": "I relinquish the thing"
+        },
+        {
+          "text": "I give up my thing"
+        },
+        {
+          "text": "I throw away my object"
+        },
+        {
+          "text": "throw away the toy"
+        },
+        {
+          "text": "push the box off the cliff"
+        },
+        {
+          "text": "toss the item"
+        },
+        {
+          "text": "destroy the ring"
+        },
+        {
+          "text": "remove sword from inventory"
+        },
+        {
+          "text": "clear inventory"
+        }
+      ]
+    },
+    {
+      "intent": "attack",
+      "examples": [
+        {
+          "text": "I attack"
+        },
+        {
+          "text": "I strike the creature"
+        },
+        {
+          "text": "I assault it"
+        },
+        {
+          "text": "I brandish my weapon and attack"
+        },
+        {
+          "text": "I attack it"
+        },
+        {
+          "text": "I punch a lot"
+        },
+        {
+          "text": "I force the creature back"
+        },
+        {
+          "text": "fight the monster"
+        },
+        {
+          "text": "cast a spell on the whale"
+        },
+        {
+          "text": "tackle the pope"
+        },
+        {
+          "text": "stab its eye"
+        },
+        {
+          "text": "shoot an arrow at its head"
+        },
+        {
+          "text": "use sword"
         }
       ]
     }
@@ -364,14 +397,18 @@
       "minor_version": "2018-09-20"
     }
   },
-  "skill_id": "24064407-1b91-4e8c-9e0b-b77fe9bbfeaf",
-  "description": "",
+  "skill_id": "e737958a-13cc-4fab-8c0b-bc5e50ea7cdb",
+  "description": "Created at Wed Oct 16 00:49:20 2019",
   "dialog_nodes": [],
-  "workspace_id": "24064407-1b91-4e8c-9e0b-b77fe9bbfeaf",
-  "counterexamples": [],
-  "system_settings": {
-    "spelling_auto_correct": true
-  },
+  "workspace_id": "e737958a-13cc-4fab-8c0b-bc5e50ea7cdb",
+  "counterexamples": [
+    {
+      "text": "dance around"
+    },
+    {
+      "text": "jump for joy"
+    }
+  ],
   "learning_opt_out": false,
   "status": "Available"
 }

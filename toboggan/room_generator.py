@@ -6,7 +6,6 @@ from .text_generators import room_noun_generator
 from .game_components import Character, Item
 #from .noun_key import NounKey
 
-
 class RoomGenerator:
     """
     Generates rooms and room connections.
@@ -33,6 +32,11 @@ class RoomGenerator:
 
         """
         for title in connected_room_titles:
+            current_room.description = current_room.description.replace(
+                title, 
+                "<font color=\"cyan\"><b>" + title + "</b></font>"
+            )
+
             connected_room = RoomGenerator.Room(self, title, None)
             current_room.connected_rooms[title] = connected_room
             connected_room.connected_rooms["back"] = current_room
@@ -74,7 +78,11 @@ class RoomGenerator:
                 None
             """
             for char_name in char_name_list:
-                Character(char_name, self)
+                    self.description = self.description.replace(
+                        char_name, 
+                        "<font color=\"green\"><b>" + char_name + "</b></font>"
+                    )
+                    Character(char_name, self)
 
         def generate_room_items(self, item_name_list: []) -> None:
             """
@@ -88,9 +96,14 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                #TODO: generate item description, weight and type
-                item = Item(item_name, '', 1, 1)
-                self.item_list[item_name] = item
+                    self.description = self.description.replace(
+                        item_name, 
+                        "<font color=\"green\"><b>" + item_name + "</b></font>"
+                    )
+                    item = Item(item_name, '', 1, 1)
+                    self.item_list[item_name] = item
+                
+                
 
         def add_item(self, item: object) -> None:
             """
@@ -103,6 +116,7 @@ class RoomGenerator:
                 None
             """
             self.item_list[item.title] = item
+            self.description = self.description.replace("<s>" + item.title + "</s>", item.title)
 
         def remove_item(self, item: object) -> None:
             """
@@ -115,6 +129,8 @@ class RoomGenerator:
                 None
             """
             del self.item_list[item.title]
+            self.description = self.description.replace(item.title, "<s>" + item.title + "</s>")
+
 
         def enter(self, character: object) -> None:
             """

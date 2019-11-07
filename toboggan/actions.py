@@ -5,6 +5,22 @@ from difflib import get_close_matches
 
 
 @dataclass
+class Percieve:
+    location: Any=None
+    sense: Any=None
+
+    def execute(self, game, character):
+        return str(character.current_room)
+
+
+@dataclass
+class Introspect:
+
+    def execute(self, game, character):
+        return str(character)
+
+
+@dataclass
 class Move:
     destination: Any
 
@@ -20,7 +36,7 @@ class Move:
 
 
 @dataclass
-class Interact:
+class Pickup:
     interaction: Any
     thing: Any=None
 
@@ -34,14 +50,12 @@ class Interact:
             return 'There are nothing to pick up in this room.'
 
 
-
 @dataclass
-class Percieve:
-    location: Any=None
-    sense: Any=None
+class Drop:
+    item: Any=None
 
     def execute(self, game, character):
-        return str(character.current_room)
+        return f'You drop the {self.item}'
 
 
 @dataclass
@@ -62,18 +76,3 @@ class Attack:
                 return 'You killed the ' + target_key + '!'
         else:
             return 'There is no ' + str(self.target) + ' to attack.'
-
-@dataclass
-class Speak:
-    target: Any
-    dialouge: str=''
-
-    def execute(self, game, character):
-        return 'Speak not yet implemented.'
-
-
-@dataclass
-class Introspect:
-
-    def execute(self, game, character):
-        return str(character)

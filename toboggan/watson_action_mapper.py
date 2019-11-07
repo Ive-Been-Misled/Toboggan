@@ -4,7 +4,7 @@ import json
 from os import environ, path
 from datetime import datetime
 from ibm_watson import AssistantV1
-from .actions import Move, Percieve
+from .actions import Percieve, Introspect, Move, Pickup, Drop, Attack
 from .text_generators import _NLP
 
 

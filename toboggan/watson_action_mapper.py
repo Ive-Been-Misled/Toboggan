@@ -35,8 +35,8 @@ class ActionMapper:
         obj = "nothing"
         for token in doc:
             if (token.dep_ == 'dobj' or
-                token.dep_ == 'advmod' or
-                token.dep_ == 'pobj'):
+                    token.dep_ == 'advmod' or
+                    token.dep_ == 'pobj'):
                 obj = token.text
 
         return Move(destination=obj)

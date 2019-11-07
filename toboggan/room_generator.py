@@ -31,12 +31,12 @@ class RoomGenerator:
             None
 
         """
+        current_room.formatted_desc = current_room.description
         for title in connected_room_titles:
-            current_room.description = current_room.description.replace(
-                title, 
+            current_room.formatted_desc = current_room.formatted_desc.replace(
+                title,
                 "<font color=\"cyan\"><b>" + title + "</b></font>"
             )
-
             connected_room = RoomGenerator.Room(self, title, None)
             current_room.connected_rooms[title] = connected_room
             connected_room.connected_rooms["back"] = current_room
@@ -50,8 +50,10 @@ class RoomGenerator:
         def __init__(self, room_generator, title, description):
             self.room_generator = room_generator
             self.title = title
+            self.formatted_desc = description
             self.description = description
             self.connected_rooms = {}
+            self.perceived_rooms = []
             self.characters = {}
             self.item_list = {}
             self.entered = False
@@ -61,7 +63,7 @@ class RoomGenerator:
             #items = ', '.join(self.item_list.keys())
             return (
                 f'[{self.title.capitalize()}] \n\n'
-                f'{self.description} \n\n'
+                f'{self.formatted_desc} \n\n'
                 #f'The following characters are in the room: '
                 #f'{chars}\n\n'
             )
@@ -78,7 +80,7 @@ class RoomGenerator:
                 None
             """
             for char_name in char_name_list:
-                    self.description = self.description.replace(
+                    self.formatted_desc = self.formatted_desc.replace(
                         char_name, 
                         "<font color=\"green\"><b>" + char_name + "</b></font>"
                     )
@@ -96,7 +98,7 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                    self.description = self.description.replace(
+                    self.formatted_desc = self.formatted_desc.replace(
                         item_name, 
                         "<font color=\"green\"><b>" + item_name + "</b></font>"
                     )
@@ -116,7 +118,7 @@ class RoomGenerator:
                 None
             """
             self.item_list[item.title] = item
-            self.description = self.description.replace("<s>" + item.title + "</s>", item.title)
+            self.formatted_desc = self.formatted_desc.replace("<s>" + item.title + "</s>", item.title)
 
         def remove_item(self, item: object) -> None:
             """
@@ -129,7 +131,7 @@ class RoomGenerator:
                 None
             """
             del self.item_list[item.title]
-            self.description = self.description.replace(item.title, "<s>" + item.title + "</s>")
+            self.formatted_desc = self.formatted_desc.replace(item.title, "<s>" + item.title + "</s>")
 
 
         def enter(self, character: object) -> None:

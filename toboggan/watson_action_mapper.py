@@ -5,7 +5,7 @@ from os import environ, path
 from datetime import datetime
 from ibm_watson import AssistantV1
 import spacy
-from .actions import Move, Percieve
+from .actions import Move, Perceive
 
 
 class ActionMapper:
@@ -25,7 +25,7 @@ class ActionMapper:
 
     def map(self, input_string):
         if input_string == 'look around':
-            return Percieve()
+            return Perceive()
 
         doc = self._nlp(input_string)
         obj = "nothing"

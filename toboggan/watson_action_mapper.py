@@ -9,6 +9,9 @@ from .text_generators import _NLP
 
 
 class ActionMapper:
+    """Utility to map natural language into a set of pre-defined action
+    classes.
+    """
     def __init__(self):
         if ActionMapper._has_previous_workspace():
             info = ActionMapper._get_api_and_workspace_info()
@@ -23,7 +26,8 @@ class ActionMapper:
 
         self._nlp = _NLP
 
-    def map(self, input_string):
+    def simple_map(self, input_string):
+        """Return only a Percieve or Move action."""
         if input_string == 'look around':
             return Percieve()
 
@@ -37,8 +41,10 @@ class ActionMapper:
 
         return Move(destination=obj)
 
-    # use a simpler map for demo purposes until assistant can be retrained
-    def _map(self, input_string):
+    def map(self, input_string):
+        """Return an action corresponding the input_string, or None if no
+        suitable match is found by Assistant.
+        """
         intents = self._assistant.message(
             workspace_id=self._workspace_id,
             input={'text': input_string}

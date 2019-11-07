@@ -4,7 +4,7 @@ import json
 from os import environ, path
 from datetime import datetime
 from ibm_watson import AssistantV1
-from .actions import Percieve, Introspect, Move, Pickup, Drop, Attack
+from .actions import Perceive, Introspect, Move, Pickup, Drop, Attack
 from .text_generators import _NLP
 
 
@@ -27,9 +27,9 @@ class ActionMapper:
         self._nlp = _NLP
 
     def simple_map(self, input_string):
-        """Return only a Percieve or Move action."""
+        """Return only a Perceive or Move action."""
         if input_string == 'look around':
-            return Percieve()
+            return Perceive()
 
         doc = self._nlp(input_string)
         obj = "nothing"

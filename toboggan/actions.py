@@ -5,7 +5,7 @@ from difflib import get_close_matches
 
 
 @dataclass
-class Percieve:
+class Perceive:
     location: Any=None
     sense: Any=None
 

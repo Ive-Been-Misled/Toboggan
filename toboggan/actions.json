@@ -2,7 +2,7 @@
   "name": "Toboggan New",
   "intents": [
     {
-      "intent": "percieve",
+      "intent": "perceive",
       "examples": [
         {
           "text": "Where am I"
@@ -32,7 +32,7 @@
           "text": "look through the window"
         },
         {
-          "text": "percieve my environment"
+          "text": "perceive my environment"
         }
       ]
     },

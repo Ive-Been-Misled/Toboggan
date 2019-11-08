@@ -47,7 +47,9 @@ def room_noun_generator(text: str) -> dict:
             title_list[noun_classifier(token.text)].append(token.text)
     return title_list
 
-
+def tokenize(text: str):
+    doc = _NLP(text)
+    return doc
 
 def noun_classifier(word: str) -> str:
     """Determines what type of noun a passed noun is."""

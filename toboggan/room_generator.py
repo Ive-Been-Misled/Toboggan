@@ -74,7 +74,7 @@ class RoomGenerator:
                 None
             """
             for char_name in char_name_list:
-                Character(char_name, self)
+                Character(char_name, self, 1, 1, 1)
 
         def generate_room_items(self, item_name_list: []) -> None:
             """

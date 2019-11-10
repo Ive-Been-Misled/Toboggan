@@ -1,6 +1,7 @@
 """Stateless NLP utility functions"""
 from os import environ
 from typing import Iterator
+from toboggan.noun_key import NounKey
 import spacy
 
 
@@ -41,25 +42,26 @@ def noun_chunks(text: str) -> Iterator[str]:
 def room_noun_generator(text: str) -> dict:
     """Given a description, return a list of mentioned nouns and their type"""
     doc = _NLP(text)
-    title_list = {'place':[], 'object':[], 'character':[]}
+    title_list = {noun:[] for noun in NounKey}
     for token in doc:
         if token.pos_ == 'NOUN' and token.text != 'back':
-            title_list[noun_classifier(token.text)].append(token.text)
+            noun = noun_classifier(token.text)
+            title_list[noun].append(token.text)
     return title_list
 
 def tokenize(text: str):
     doc = _NLP(text)
     return doc
 
-def noun_classifier(word: str) -> str:
+def noun_classifier(word: str) -> NounKey:
     """Determines what type of noun a passed noun is."""
-    tokens = _NLP(' '.join(COMPARE_WORDS))
+    tokens = _NLP(' '.join([' '.join(noun.value) for noun in NounKey]))
     word_token = _NLP(word)
     max_score = 0
-    best_class = ''
+    best_class = None
     for token in tokens:
         temp_score = token.similarity(word_token)
         if temp_score > max_score:
             max_score = temp_score
             best_class = token.text
-    return best_class
+    return NounKey.find_name(best_class)

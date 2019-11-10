@@ -5,7 +5,7 @@ from .text_generators import describe_location
 from .text_generators import room_noun_generator
 from .text_generators import tokenize
 from .game_components import Character, Item
-#from .noun_key import NounKey
+from .noun_key import NounKey
 
 class RoomGenerator:
     """
@@ -99,7 +99,7 @@ class RoomGenerator:
                 None
             """
             for char_name in char_name_list:
-                Character(char_name, self)
+                Character(char_name, self, 1, 1, 1)
 
         def generate_room_items(self, item_name_list: []) -> None:
             """
@@ -163,10 +163,9 @@ class RoomGenerator:
                     self.description = describe_location(self.title)
                 self.description_tokens = tokenize(self.description)
                 room_entities = room_noun_generator(self.description)
-                self.format_description(room_entities)
-                self.room_generator.generate_connected_rooms(self, room_entities['place'])
-                self.generate_room_characters(room_entities['character'])
-                self.generate_room_items(room_entities['object'])
+                self.room_generator.generate_connected_rooms(self, room_entities[NounKey.LOCATIONS])
+                self.generate_room_characters(room_entities[NounKey.CHARACTERS])
+                self.generate_room_items(room_entities[NounKey.ITEMS])
 
         def exit(self, character: object) -> None:
             """

@@ -90,9 +90,13 @@ async function displayScenario(text) {
   skipTextCrawl = false;
 
   let len = text.length;
-
+  
   for(let i = 1; i <= len + 1; i++) {
     if (skipTextCrawl) i = len + 1;
+    if (text[i] == '<') {
+      i = i + 3;
+      if (text[i + 1] == '/' || text[i + 1] == 'b') i = i + 1;
+    }
     scenario.innerHTML = text.substring(0, i);
     scenario.scrollIntoView(false); // make bottom of text visible
     await new Promise(resolve => setTimeout(resolve, 8)); // sleep for x ms

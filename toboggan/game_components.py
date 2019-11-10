@@ -9,8 +9,11 @@ class Character:
     (i.e. enemies, the player, npcs).
     """
 
-    def __init__(self, title, starting_room, hit_points=100):
+    def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points=100):
         self.title = title
+        self.combat_skill = combat_skill
+        self.defense = defense
+        self.speed = speed
         self.hit_points = hit_points
         self.current_room = starting_room
         self.current_room.enter(self)
@@ -20,6 +23,9 @@ class Character:
         inv = ', '.join(self.inventory.keys())
         return (
             f'Name: {self.title}\n'
+            f'Combat_skill: {self.combat_skill}\n'
+            f'Defense: {self.defense}\n'
+            f'Speed: {self.speed}\n'
             f'HP: {self.hit_points}\n'
             f'Current Location: {self.current_room.title}\n'
             f'Inventory: {inv}\n'

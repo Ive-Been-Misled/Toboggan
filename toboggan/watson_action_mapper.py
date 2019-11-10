@@ -7,7 +7,6 @@ from ibm_watson import AssistantV1
 from .actions import Perceive, Introspect, Move, Pickup, Drop, Attack
 from .text_generators import _NLP
 
-
 class ActionMapper:
     """Utility to map natural language into a set of pre-defined action
     classes.

@@ -1,5 +1,5 @@
 import random
-from game_components import Character
+from game_components import Character, Player
 from room_generator import RoomGenerator
 
 def stat_gen(stat_precedence: dict, level: int) -> dict:
@@ -44,5 +44,5 @@ def char_gen(stat_list: list, start_room: RoomGenerator.Room) -> Character:
     speed = 10-2*(stat_list.index('speed')+1)
     stat_prec = {'combat':combat, 'def':defense, 'speed':speed}
     stat_final = stat_gen(stat_prec, 1)
-    char = Character('You', start_room, stat_final['combat'], stat_final['def'], stat_final['speed'])
+    char = Player(start_room, stat_final['combat'], stat_final['def'], stat_final['speed'])
     return char

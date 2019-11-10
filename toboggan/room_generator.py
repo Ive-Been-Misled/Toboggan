@@ -69,9 +69,9 @@ class RoomGenerator:
         def format_description(self, room_entities):
             self.formatted_desc = ''
             seen_words = set([])
-            place_set = set(room_entities['place'])
-            character_set = set(room_entities['character'])
-            item_set = set(room_entities['object'])
+            place_set = set(room_entities[NounKey.LOCATIONS])
+            character_set = set(room_entities[NounKey.CHARACTERS])
+            item_set = set(room_entities[NounKey.ITEMS])
             
             for token in self.description_tokens:
                 if token.pos_ == 'NOUN' and token.text not in seen_words:
@@ -81,6 +81,8 @@ class RoomGenerator:
                         word = '<c>' + token.text_with_ws + '</c>'
                     elif token.text in item_set:
                         word = '<t>' + token.text_with_ws + '</t>'
+                    else:
+                        word = token.text_with_ws
                     seen_words.add(token.text)
                 else:
                     word = token.text_with_ws
@@ -166,6 +168,8 @@ class RoomGenerator:
                 self.room_generator.generate_connected_rooms(self, room_entities[NounKey.LOCATIONS])
                 self.generate_room_characters(room_entities[NounKey.CHARACTERS])
                 self.generate_room_items(room_entities[NounKey.ITEMS])
+
+                self.format_description(room_entities)
 
         def exit(self, character: object) -> None:
             """

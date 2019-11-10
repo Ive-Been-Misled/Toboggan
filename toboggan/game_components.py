@@ -9,7 +9,7 @@ class Character:
     (i.e. enemies, the player, npcs).
     """
 
-    def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points=100):
+    def __init__(self, title, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
         self.title = title
         self.combat_skill = combat_skill
         self.defense = defense
@@ -89,7 +89,7 @@ class Player(Character):
     """
     Character class specific to the player. Inherits Character.
     """
-    def __init__(self, starting_room, hit_points=100):
+    def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
         super().__init__('You', starting_room, hit_points)
 
 class Item:

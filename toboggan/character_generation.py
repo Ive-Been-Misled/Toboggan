@@ -12,7 +12,7 @@ def stat_gen(stat_precedence: dict, level: int) -> dict:
     combat_skill, defense, and speed with precedence as their
     value.  Precedence is a value determining how strong a
     statistic will be, the higher the better range should be
-    from 0-10.
+    from 0-10. 
     level: an int that helps balance character generation
     statistics and represents the level of the character being
     generated

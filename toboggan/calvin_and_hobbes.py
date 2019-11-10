@@ -10,9 +10,18 @@ class Calvin:
         """Initialize all other objects needed for the game."""
         self._game = game_controller
         self._ac = ActionMapper()
+        self.init = 0
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
+        if self.init < 3:
+
+
+
+
+
+            self.init += 1
+            return ''
         paragraphs = []
         paragraphs.append(f'You {input_string}.')
 

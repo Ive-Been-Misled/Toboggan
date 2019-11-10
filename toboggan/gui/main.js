@@ -76,7 +76,7 @@ async function sendInput(inputText) {
     `;
     imprompt.innerHTML = "You should close this tab now";
     console.error(error)
-  });
+  }); 
 }
 
 async function displayScenario(text) {

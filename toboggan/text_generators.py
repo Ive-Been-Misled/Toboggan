@@ -4,8 +4,6 @@ from typing import Iterator
 from toboggan.noun_key import NounKey
 import spacy
 
-
-
 if 'FAKE_GPT2' in environ:
     from .gpt2_fake import GPT2
 else:
@@ -36,7 +34,24 @@ def describe_location(location: str) -> str:
 def describe_item(item: str) -> str:
     prompt = f"You have a {item}. Here is a description of the {item}:"
 
-    description = '{item}:\n'
+    description = f'{item.capitalize()}:\n'
+    
+    current_length = 0
+    min_length = 42
+
+    for token in GPT2.sample_sequence(prompt):
+        description += token
+        current_length += 1
+        print(f"DEBUG: {token}")
+        if current_length >= min_length and token in ('.', '?', '#', '"'):
+            break
+
+    return description
+
+def describe_character(character: str) -> str:
+    prompt = f"You encounter a {character}. Here is a description of the {character}:"
+
+    description = f'{character.capitalize()}:\n'
     
     current_length = 0
     min_length = 42

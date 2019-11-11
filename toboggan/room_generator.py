@@ -6,6 +6,7 @@ from .text_generators import room_noun_generator
 from .text_generators import tokenize
 from .game_components import Character, Item
 from .noun_key import NounKey
+import re
 
 class RoomGenerator:
     """
@@ -54,16 +55,20 @@ class RoomGenerator:
             self.perceived_rooms = []
             self.characters = {}
             self.item_list = {}
+            self.original_items = set()
+            self.additional_items = set()
             self.entered = False
         
         def __str__(self):
             #chars = ', '.join(self.characters.keys())
             #items = ', '.join(self.item_list.keys())
+            addnl = ''
+            if len(self.additional_items) > 0:
+                addnl = f'The following additional items are in the room: {", ".join(self.additional_items)}'
+
             return (
                 f'[{self.title.capitalize()}] \n\n'
-                f'{self.formatted_desc} \n\n'
-                #f'The following characters are in the room: '
-                #f'{chars}\n\n'
+                f'{self.formatted_desc} \n\n {addnl}'
             )
 
         def format_description(self, room_entities):
@@ -115,8 +120,9 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                item = Item(item_name, '', 1, 1)
+                item = Item(item_name)
                 self.item_list[item_name] = item
+                self.original_items.add(item_name)
                 
                 
 
@@ -132,8 +138,10 @@ class RoomGenerator:
             """
             self.item_list[item.title] = item
             self.formatted_desc = self.formatted_desc.replace("<s>" + item.title + "</s>", "<t>" + item.title + "</t>")
+            if item.title not in self.original_items:
+                self.additional_items.add(item.title)
 
-        def remove_item(self, item: object) -> None:
+        def remove_item(self, item: str) -> None:
             """
             Removes a given item from the room.
 
@@ -144,7 +152,10 @@ class RoomGenerator:
                 None
             """
             del self.item_list[item.title]
-            self.formatted_desc = self.formatted_desc.replace("<t>" + item.title + "</t>", "<s>" + item.title + "</s>")
+            self.formatted_desc = re.sub(f'<t>( *)({item.title})( *)</t>', r'\1<s>\2</s>\3', self.formatted_desc)
+            if item.title in self.additional_items:
+                self.additional_items.remove(item.title)
+
 
 
         def enter(self, character: object) -> None:

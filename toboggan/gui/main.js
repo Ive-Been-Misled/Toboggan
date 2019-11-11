@@ -1,43 +1,12 @@
 window.addEventListener('DOMContentLoaded', initiateGUI);
 
-const OPENING_CRAWL =
-`
-It is a period of civil war.
-Rebel spaceships, striking
-from a hidden base, have won
-their first victory against
-the evil Galactic Empire.
-<br><br>
-During the battle, Rebel
-spies managed to steal secret
-plans to the Empire's
-ultimate weapon, the DEATH
-STAR, an armored space
-station with enough power to
-destroy an entire planet.
-<br><br>
-Pursued by the Empire's
-sinister agents, Princess
-Leia races home aboard her
-starship, custodian of the
-stolen plans that can save
-her people and restore
-freedom to the galaxy.....
-<br><br>
-...<br>
-...<br>
-...<br>
-<br>
-This is not that story.
-`
-
 async function initiateGUI() {
   var skipTextCrawl = false;
 
   input.value = '';  // clear input textarea
   input.addEventListener('keydown', processEnter);
   text = await sendInput('look around')
-  await displayScenario('[Welcome to Toboggan] <br><br>' + text);
+  await displayScenario('<center>[Welcome to Toboggan]</center> <br>' + text);
   imprompt.innerHTML = "What do you do?";
 }
 

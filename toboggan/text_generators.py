@@ -75,10 +75,12 @@ def room_noun_generator(text: str) -> dict:
     """Given a description, return a list of mentioned nouns and their type"""
     doc = _NLP(text)
     title_list = {noun:[] for noun in NounKey}
-    for token in doc:
-        if token.pos_ == 'NOUN' and token.text != 'back':
-            noun = noun_classifier(token.text)
-            title_list[noun].append(token.text)
+    for token in doc.noun_chunks:
+        for word in _NLP(token.text):
+            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back':
+                noun = noun_classifier(word.text)
+                title_list[noun].append(token.text)
+
     return title_list
 
 def tokenize(text: str):

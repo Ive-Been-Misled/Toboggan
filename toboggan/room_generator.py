@@ -8,6 +8,14 @@ from .game_components import Character, Item
 from .noun_key import NounKey
 import re
 
+def replacenth(string, sub, wanted, n):
+    where = [m.start() for m in re.finditer(sub, string)][n-1]
+    before = string[:where]
+    after = string[where:]
+    after = after.replace(sub, wanted, 1)
+    newString = before + after
+    return newString
+
 class RoomGenerator:
     """
     Generates rooms and room connections.
@@ -72,26 +80,57 @@ class RoomGenerator:
             )
 
         def format_description(self, room_entities):
-            self.formatted_desc = ''
-            seen_words = set([])
+            self.formatted_desc = self.description
+            word_occurances = {}
+            noun_occurance = {}
+            seen_words = set()
             place_set = set(room_entities[NounKey.LOCATIONS])
             character_set = set(room_entities[NounKey.CHARACTERS])
             item_set = set(room_entities[NounKey.ITEMS])
-            
+
             for token in self.description_tokens:
-                if token.pos_ == 'NOUN' and token.text not in seen_words:
-                    if token.text in place_set:
-                        word = '<r>' + token.text_with_ws + '</r>'
-                    elif token.text in character_set:
-                        word = '<c>' + token.text_with_ws + '</c>'
-                    elif token.text in item_set:
-                        word = '<t>' + token.text_with_ws + '</t>'
-                    else:
-                        word = token.text_with_ws
-                    seen_words.add(token.text)
+                if token.text in word_occurances.keys():
+                    word_occurances[token.text] += 1
                 else:
-                    word = token.text_with_ws
-                self.formatted_desc += word
+                    word_occurances[token.text] = 1
+
+                if token.pos_ == 'NOUN' and token.text not in seen_words:
+                    noun_occurance[token.text] = word_occurances[token.text]
+                    seen_words.add(token.text)
+            print(noun_occurance)
+            for chunk in self.description_tokens.noun_chunks:
+                found_root = False
+                for token in chunk:
+                    if token.text in set(noun_occurance.keys()):
+                        root = token.text
+                        found_root = True
+
+                if found_root:
+                    if chunk.text in place_set:
+                        self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<r>' + chunk.text + '</r>', noun_occurance[root])
+                    elif chunk.text in character_set:
+                        self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<c>' + chunk.text + '</c>', noun_occurance[root])
+                    elif chunk.text in item_set:
+                        self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<t>' + chunk.text + '</t>', noun_occurance[root])
+           
+            # self.formatted_desc = ''
+            # chunks = set(self.description_tokens.noun_chunks)
+            # for token in self.description_tokens.noun_chunks:
+            #     if token.text not in seen_words:
+            #         if token.text in place_set:
+            #             word = '<r>' + token.text_with_ws + '</r>'
+            #         elif token.text in character_set:
+            #             word = '<c>' + token.text_with_ws + '</c>'
+            #         elif token.text in item_set:
+            #             word = '<t>' + token.text_with_ws + '</t>'
+            #         else:
+            #             word = token.text_with_ws
+            #         seen_words.add(token.text)
+            #     else:
+            #         word = token.text_with_ws
+            #     self.formatted_desc += word
+            
+            # self.formatted_desc = re.sub('><', '> <', self.formatted_desc)
 
 
         def generate_room_characters(self, char_name_list: []) -> None:

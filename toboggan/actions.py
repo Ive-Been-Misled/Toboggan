@@ -7,6 +7,8 @@ from .text_generators import describe_location, describe_item
 
 @dataclass
 class Introspect:
+    placeholder: Any=None
+
     def execute(self, game, character):
         return str(character)
 

@@ -67,7 +67,7 @@ class RoomGenerator:
                 addnl = f'The following additional items are in the room: {", ".join(self.additional_items)}'
 
             return (
-                f'[{self.title.capitalize()}] \n\n'
+                f'<center>[{self.title.capitalize()}]</center>\n'
                 f'{self.formatted_desc} \n\n {addnl}'
             )
 

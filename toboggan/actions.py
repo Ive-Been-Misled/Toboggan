@@ -7,7 +7,6 @@ from .text_generators import describe_location, describe_item
 
 @dataclass
 class Introspect:
-
     def execute(self, game, character):
         return str(character)
 
@@ -18,14 +17,17 @@ class Move:
 
     def execute(self, game, character):
         rooms = character.current_room.connected_rooms
-        return_string = f'There is no {self.destination} to move to.<br><br>{str(character.current_room)}'
+        return_string = f'<center>There is no {self.destination} to move to.</center><br>{str(character.current_room)}'
         if self.destination is not None:
             destinations = get_close_matches(self.destination, rooms.keys())
             if len(destinations) > 0:
                 character.move_to(character.current_room.connected_rooms[destinations[0]])
-                return_string = f'You move to the {destinations[0]}.<br><br>{str(character.current_room)}'
+                if destinations[0] != 'back':
+                    return_string = f'<center>You move to the {destinations[0]}.</center><br>{str(character.current_room)}'
+                else:
+                    return_string = f'<center>You move back.</center><br>{str(character.current_room)}'
         else:
-            return_string = f'You must specify a location to move to.<br><br>{str(character.current_room)}'
+            return_string = f'<center>You must specify a location to move to.</center><br>{str(character.current_room)}'
         return return_string
 
 
@@ -35,16 +37,16 @@ class Pickup:
 
     def execute(self, game, character):
         items = character.current_room.item_list
-        return_string = f'You cannot pick up the {self.thing}.<br><br>{str(character.current_room)}'
+        return_string = f'<center>You cannot pick up the {self.thing}.</center><br>{str(character.current_room)}'
         if self.thing is not None:
             things = get_close_matches(self.thing, items.keys())
             if len(things) > 0:
                 item = character.current_room.item_list[things[0]]
                 character.inventory[things[0]] = item
                 character.current_room.remove_item(item)
-                return_string = f'You picked up the {things[0]}<br><br>{str(character.current_room)}'
+                return_string = f'<center>You picked up the {things[0]}</center><br>{str(character.current_room)}'
         else:
-            return_string = f'You must specifify an object to pick up.<br><br>{str(character.current_room)}'
+            return_string = f'<center>You must specifify an object to pick up.</center><br>{str(character.current_room)}'
         
         return return_string
 
@@ -55,16 +57,16 @@ class Drop:
 
     def execute(self, game, character):
         items = character.inventory
-        return_string = f'You don\'t have a {self.thing} to drop.<br><br>{str(character.current_room)}'
+        return_string = f'<center>You don\'t have a {self.thing} to drop.</center><br>{str(character.current_room)}'
         if self.thing is not None:
             things = get_close_matches(self.thing, items.keys())
             if len(things) > 0:
                 item = character.inventory[things[0]]
                 del character.inventory[things[0]]
                 character.current_room.add_item(item)
-                return_string = f'You dropped the {things[0]}.<br><br>{str(character.current_room)}'
+                return_string = f'<center>You dropped the {things[0]}.</center><br>{str(character.current_room)}'
         else:
-            return_string = f'You must specifiy an object to drop.<br><br>{str(character.current_room)}'
+            return_string = f'<center>You must specifiy an object to drop.</center><br>{str(character.current_room)}'
 
         return return_string
 
@@ -87,7 +89,7 @@ class Perceive:
 
     def execute(self, game, character):
         list_id = self.check_lists(self.target, character)
-        return_string = str(character.current_room)
+        return_string = f'<center>You look around.</center><br>{str(character.current_room)}'
         if (self.target is not None and
             list_id is not None and
             self.target not in character.current_room.perceived_rooms):
@@ -95,7 +97,7 @@ class Perceive:
                 character.current_room.perceived_rooms.append(self.target)
                 character.current_room.description = \
                     character.current_room.description + \
-                    "<br><br>" + \
+                    f"<br><br>You look at the {self.target}.<br><br>" + \
                     describe_location(self.target)
                 character.current_room.entered = False
                 character.current_room.enter(character)
@@ -107,7 +109,6 @@ class Perceive:
                     return_string = character.current_room.item_list[self.target].generate_description()
             elif list_id == 'character':
                 return_string = character.current_room.characters[self.target].generate_description()
-            
         return return_string
 
 

@@ -1,5 +1,5 @@
 import random
-from .game_components import Character, Player
+from .game_components import Player
 from .room_generator import RoomGenerator
 
 def stat_gen(stat_precedence: dict, level: int) -> dict:

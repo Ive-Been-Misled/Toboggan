@@ -79,7 +79,7 @@ class Character:
         """
         self.hit_points = self.hit_points + hit_points
 
-    def attack(self, target: object, damage: int) -> None:
+    def attack(self, target: object, weapon: object) -> str:
         """
         Inflicts damage on another given character.
 
@@ -90,7 +90,8 @@ class Character:
         Returns:
             None
         """
-        target.lose_hp(damage)
+        target.lose_hp(weapon.damage)
+        return ''
 
 class Player(Character):
     """
@@ -115,3 +116,28 @@ class Item:
 
     def __str__(self):
         return 'This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.item_type
+
+class Combat:
+    def __init__(self, participants: list):
+        self.participants = participants
+        self.initiative = list(self.participants.values())
+        self.turn = 0
+    def combat_start(self):
+        init_print = [char.title for char in self.initiative]
+        init_print.remove('You')
+        combat_str = ('COMBAT BEGINS:<br>'
+                      'You find yourself staring down '+ ', '.join(init_print) +
+                      '<br>They appear hostile and intent to attack you.'
+                     )
+        self.initiative.sort(key=lambda x: x.speed, reverse=True)
+        return combat_str
+    def enemies_attack(self):
+        combat_str = ''
+        if self.initiative[self.turn].title is 'You':
+            combat_str = 'You have a chance to act against the enemies.  What will you do?'
+        else:
+            combat_str = f'{self.initiative[self.turn].title} attacks you dealing alotta damage.'
+        self.turn += 1
+        self.turn %= len(self.initiative)
+        return combat_str
+        

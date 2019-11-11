@@ -3,7 +3,7 @@ Game module. Holds the Game class used for controlling game state.
 """
 
 from .room_generator import RoomGenerator
-from .game_components import Player
+from .game_components import Player, Combat
 
 class Game:
     """
@@ -21,6 +21,7 @@ class Game:
             'defense': 'Defense: This will determine how well you can block enemy attacks<br><br>'
         }
         self.stat_list = []
+        self.combat = None
 
     # def generate_storyboard(self):
     #     pass

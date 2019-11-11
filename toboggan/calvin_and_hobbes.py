@@ -2,6 +2,7 @@
 from .game_class import game_controller
 from .watson_action_mapper import ActionMapper
 from .character_generation import char_gen
+from .game_components import Combat
 
 
 class Calvin:
@@ -11,6 +12,7 @@ class Calvin:
         """Initialize all other objects needed for the game."""
         self._game = game_controller
         self._ac = ActionMapper()
+        self.combat = False
 
     def generate_char_gen_response(self, input_string):
         skill_scores = {}
@@ -63,5 +65,13 @@ class Calvin:
                 'The universe does not understand your action. '
                 'Nothing happens.'
             )
+        if len(self._game.player.current_room.characters) > 1 and not self.combat:
+            self._game.combat = Combat(self._game.player.current_room.characters)
+            paragraphs.append(self._game.combat.combat_start())
+            self.combat = True
+        elif self.combat:
+            paragraphs.append(self._game.combat.enemies_attack())
+
+        
 
         return '<br><br>'.join(paragraphs)

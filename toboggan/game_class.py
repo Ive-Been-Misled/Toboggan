@@ -12,7 +12,15 @@ class Game:
     def __init__(self, first_room):
         self.room_controller = RoomGenerator(first_room)
         self.starting_room = self.room_controller.starting_room
-        self.player = Player(self.starting_room)
+        self.player = None
+        self.init = 0
+        self.skills = ['combat', 'speed', 'defense']
+        self.skill_definitions = {
+            'combat': 'Combat Skill: This will determine your attack accuracy<br><br>',
+            'speed': 'Speed: This will determine how fast you can attack and how easily you can evade enemies<br><br>',
+            'defense': 'Defense: This will determine how well you can block enemy attacks<br><br>'
+        }
+        self.stat_list = []
 
     # def generate_storyboard(self):
     #     pass

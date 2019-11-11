@@ -22,12 +22,10 @@ class Character:
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
         return (
-            f'Name: {self.title}\n'
-            f'Combat_skill: {self.combat_skill}\n'
+            f'HP: {self.hit_points}\n\n'
+            f'Combat Skill: {self.combat_skill}\n'
             f'Defense: {self.defense}\n'
             f'Speed: {self.speed}\n'
-            f'HP: {self.hit_points}\n'
-            f'Current Location: {self.current_room.title}\n'
             f'Inventory: {inv}\n'
         )
 
@@ -90,7 +88,7 @@ class Player(Character):
     Character class specific to the player. Inherits Character.
     """
     def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
-        super().__init__('You', starting_room, hit_points)
+        super().__init__('You', starting_room, combat_skill, defense, speed, hit_points)
 
 class Item:
     """

@@ -1,6 +1,6 @@
 import random
-from game_components import Character, Player
-from room_generator import RoomGenerator
+from .game_components import Character, Player
+from .room_generator import RoomGenerator
 
 def stat_gen(stat_precedence: dict, level: int) -> dict:
     """
@@ -24,11 +24,9 @@ def stat_gen(stat_precedence: dict, level: int) -> dict:
     stat_final = {}
     for stat in stat_precedence:
         prec = stat_precedence[stat]
-        if prec < 1:
-            prec = 1
-        stat_final[stat] = random.randrange(1, prec)+(level)
+        stat_final[stat] = random.randint(prec, int(prec * level * (1 + random.random())))
     return stat_final
-def char_gen(stat_list: list, start_room: RoomGenerator.Room) -> Character:
+def char_gen(stat_list: list, start_room: RoomGenerator.Room) -> Player:
     """
     Generates the character object for the player specifically
     and the statistics associated.

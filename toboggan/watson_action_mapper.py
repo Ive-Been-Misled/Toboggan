@@ -56,12 +56,9 @@ class ActionMapper:
         direct_object = None
         prep_object = None
         for token in doc:
-            if token.dep_ == 'dobj' or token.dep_ == 'advmod':
+            if token.dep_ == 'dobj' or token.dep_ == 'advmod' or token.dep_ == 'pobj':
                 direct_object = token.text
                 print(f'direct object: {direct_object}')
-            if token.dep_ == 'pobj':
-                prep_object = token.text
-                print(f'prepositional object: {prep_object}')
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
         if action_class == 'Move' and direct_object:
@@ -69,6 +66,9 @@ class ActionMapper:
         #TODO implement case for both attack and move where no direct object is given
 
         if action_class == 'Attack' and direct_object:
+            return vars(sys.modules[__name__])[action_class](direct_object)
+            
+        if action_class == 'Pickup' and direct_object:
             return vars(sys.modules[__name__])[action_class](direct_object)
 
         if len(intents[0]['intent'].split('_')) > 1:

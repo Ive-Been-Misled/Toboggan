@@ -14,32 +14,34 @@ class Introspect:
 
 @dataclass
 class Move:
-    destination: Any
+    destination: Any=None
 
     def execute(self, game, character):
-        if self.destination in character.current_room.connected_rooms:
-            moved = character.move_to(character.current_room.connected_rooms[self.destination])
-        else:
-            moved = False
-        if moved:
-            return str(character.current_room)
-        else:
-            return f'You cannot move to {self.destination}.'
+        rooms = character.current_room.connected_rooms
+        if self.destination is not None:
+            destinations = get_close_matches(self.destination, rooms.keys())
+            if len(destinations) > 0:
+                character.move_to(character.current_room.connected_rooms[destinations[0]])
+                return f'You move to the {destinations[0]}.<br><br>{str(character.current_room)}'
+
+        return f'You cannot move to the {self.destination}.<br><br>{str(character.current_room)}'
 
 
 @dataclass
 class Pickup:
-    interaction: Any
     thing: Any=None
 
     def execute(self, game, character):
-        if len(character.current_room.item_list) >0:
-            for x,y in character.current_room.item_list.items():
-                character.inventory[x] = y
-                character.current_room.item_list.pop(x)
-                return f'You picked up a {x}'
-        else:
-            return 'There are nothing to pick up in this room.'
+        items = character.current_room.item_list
+        print(items.keys())
+        if self.thing is not None:
+            things = get_close_matches(self.thing, items.keys())
+            if len(things) > 0:
+                character.inventory[things[0]] = character.current_room.item_list[things[0]]
+                del character.current_room.item_list[things[0]]
+                return f'You picked up the {things[0]}<br><br>{str(character.current_room)}'
+
+        return f'You cannot pick up the {self.thing}.<br><br>{str(character.current_room)}'
 
 
 @dataclass
@@ -92,7 +94,7 @@ class Attack:
     def execute(self, game, character):
         room_characters = character.current_room.characters
         targets = get_close_matches(self.target, room_characters.keys())
-        if self.target is not None and targets:
+        if self.target is not None and len(targets) > 0:
             target_key = targets[0]
             target_obj = room_characters[target_key]
             character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change

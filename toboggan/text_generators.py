@@ -33,6 +33,23 @@ def describe_location(location: str) -> str:
 
     return description
 
+def describe_item(item: str) -> str:
+    prompt = f"You have a {item}. Here is a description of the {item}:"
+
+    description = '{item}:\n'
+    
+    current_length = 0
+    min_length = 42
+
+    for token in GPT2.sample_sequence(prompt):
+        description += token
+        current_length += 1
+        print(f"DEBUG: {token}")
+        if current_length >= min_length and token in ('.', '?', '#', '"'):
+            break
+
+    return description
+
 def noun_chunks(text: str) -> Iterator[str]:
     """Given some text, return the noun chunks"""
     doc = _NLP(text)

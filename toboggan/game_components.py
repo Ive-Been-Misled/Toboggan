@@ -2,6 +2,8 @@
 Components used to define the game object. Each component keeps
 track of an entity in the game.
 """
+from .text_generators import describe_item
+from .text_generators import describe_character
 
 class Character:
     """
@@ -18,6 +20,7 @@ class Character:
         self.current_room = starting_room
         self.current_room.enter(self)
         self.inventory = {}
+        self.description = None
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
@@ -28,6 +31,12 @@ class Character:
             f'Speed: {self.speed}\n'
             f'Inventory: {inv}\n'
         )
+
+    def generate_description(self):
+        if self.description is None:
+            self.description = describe_character(self.title)
+        
+        return self.description
 
     def move_to(self, room: object) -> bool:
         """
@@ -94,11 +103,15 @@ class Item:
     """
     Item class. Used to keep track of data about a specific item.
     """
-    def __init__(self, title, description, weight, item_type):
+    def __init__(self, title):
         self.title = title
-        self.description = description
-        self.weight = weight
-        self.item_type = item_type
+        self.description = None
+
+    def generate_description(self):
+        if self.description is None:
+            self.description = describe_item(self.title)
+        
+        return self.description
 
     def __str__(self):
         return 'This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.item_type

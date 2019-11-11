@@ -21,7 +21,7 @@ t {
 }
 
 @keyframes pulse {
-  from { opacity: 0.7; }
+  from { opacity: 1; }
   to { opacity: 0.2; }
 }
 
@@ -39,9 +39,9 @@ t {
 #card {
   display: flex;
   background-color: white;
-  opacity: 0.7;
-  width: 400px;
-  height: 500px;
+  opacity: 1;
+  width: 800px;
+  height: 600px;
   margin: auto;
   border-radius: 10px;
   flex-direction: column;
@@ -109,4 +109,25 @@ label {
   z-index: 99;
   font-size: 1.8em;
   font-family: monospace;
+}
+
+#imprompt {
+  margin: 0
+}
+
+@media (max-width: 850px) {
+  #card {
+    width: 600px;
+    height: 450px;
+  }
+
+  #scenario {
+    font-size: 1.2em;
+  }
+  textarea {
+    font-size: 1.4em;
+  }
+  #cont::before {
+    font-size: 1.4em;
+  }
 }

@@ -53,28 +53,14 @@ class ActionMapper:
             return None
 
         doc = self._nlp(input_string)
-        direct_object = None
-        prep_object = None
+        direct_or_prep_object = None
         for token in doc:
-            if token.dep_ == 'dobj' or token.dep_ == 'advmod':
-                direct_object = token.text
-                print(f'direct object: {direct_object}')
-            if token.dep_ == 'pobj':
-                prep_object = token.text
+            if token.dep_ in ['dobj', 'pobj', 'advmod']:
+                direct_or_prep_object = token.text
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
-        
-        if direct_object is None and action_class != 'Attack':
-            direct_object = prep_object
 
-        if action_class == 'Attack' and direct_object:
-            return vars(sys.modules[__name__])[action_class](direct_object, prep_object)
-
-        if len(intents[0]['intent'].split('_')) > 1:
-            param = intents[0]['intent'].split('_')[1]
-            return vars(sys.modules[__name__])[action_class](param)
-
-        return vars(sys.modules[__name__])[action_class](direct_object)
+        return vars(sys.modules[__name__])[action_class](direct_or_prep_object)
 
     @staticmethod
     def _has_previous_workspace():

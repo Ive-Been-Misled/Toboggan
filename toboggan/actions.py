@@ -75,7 +75,6 @@ class Drop:
 @dataclass
 class Perceive:
     target: Any=None
-    sense: Any=None
 
     @staticmethod
     def check_lists(target, character):

@@ -104,38 +104,48 @@ class Perceive:
 
     @staticmethod
     def check_lists(target, character):
-        if target in set(character.current_room.connected_rooms.keys()):
-            return 'room'
-        elif (target in set(character.current_room.item_list.keys()) or 
-              target in set(character.inventory.keys())):
-            return 'item'
-        elif target in set(character.current_room.characters.keys()):
-            return 'character'
+        print(target)
+        rooms = character.current_room.connected_rooms.keys()
+        items = list(character.current_room.item_list.keys()) + list(character.inventory.keys())
+        characters = character.current_room.characters.keys()
+        if target is not None:
+            room_matches = get_close_matches(target, rooms)
+            item_matches = get_close_matches(target, items)
+            character_matches = get_close_matches(target, characters)
         else:
-            return None
+            return None, None
+        if len(room_matches) > 0:
+            return room_matches[0], 'room'
+        elif len(item_matches) > 0:
+            return item_matches[0], 'item'
+        elif len(character_matches) > 0:
+            return character_matches[0],  'character'
+        else:
+            return None, None
 
     def execute(self, game, character):
-        list_id = self.check_lists(self.target, character)
+        match, list_id = self.check_lists(self.target, character)
         return_string = f'<center>You look around.</center><br>{str(character.current_room)}'
-        if (self.target is not None and
+        if (match is not None and
             list_id is not None and
-            self.target not in character.current_room.perceived_rooms):
+            match not in character.current_room.perceived_rooms):
             if list_id == 'room':
-                character.current_room.perceived_rooms.append(self.target)
+                character.current_room.perceived_rooms.append(match)
                 character.current_room.description = \
                     character.current_room.description + \
-                    f"<br><br>You look at the {self.target}.<br><br>" + \
-                    describe_location(self.target)
+                    f"<br><br>You look at the {match}.<br><br>" + \
+                    describe_location(match)
                 character.current_room.entered = False
                 character.current_room.enter(character)
                 return_string = str(character.current_room)
             elif list_id == 'item':
-                if self.target in set(character.inventory.keys()):
-                    return_string = character.inventory[self.target].generate_description()
+                if match in set(character.inventory.keys()):
+                    item = character.inventory[match]
                 else:
-                    return_string = character.current_room.item_list[self.target].generate_description()
+                    item = character.current_room.item_list[match]
+                return_string = str(item) + item.generate_description()
             elif list_id == 'character':
-                return_string = character.current_room.characters[self.target].generate_description()
+                return_string = character.current_room.characters[match].generate_description()
         return return_string
 
 

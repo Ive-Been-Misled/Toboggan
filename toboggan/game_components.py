@@ -13,7 +13,9 @@ class Character:
 
     def __init__(self, title, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
         self.title = title
+        self.base_combat_skill = combat_skill
         self.combat_skill = combat_skill
+        self.base_defense = defense
         self.defense = defense
         self.speed = speed
         self.hit_points = hit_points
@@ -27,7 +29,7 @@ class Character:
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
         return (
-            f'<center>[You]</center>\n'
+            f'<center>[{self.title}]</center>\n'
             f'HP: {self.hit_points}\n\n'
             f'Combat Skill: {self.combat_skill}\n'
             f'Defense: {self.defense}\n'
@@ -89,12 +91,14 @@ class Character:
             self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
 
         self.equipped_weapon = weapon
+        self.combat_skill = self.base_combat_skill + self.equipped_weapon.damage
 
     def equip_armor(self, armor: object) -> None:
         if self.equipped_armor is not None:
             self.inventory[self.equipped_armor.title] = copy.deepcopy(self.equipped_armor)
 
         self.equipped_armor = armor
+        self.defense = self.base_defense + self.equipped_armor.armor
 
     def attack(self, target: object, weapon: object) -> str:
         """
@@ -135,19 +139,38 @@ class Item:
         return self.title
 
 class FoodItem(Item):
+
     def __init__(self, title, hp=10):
         self.hp = hp
         super().__init__(title)
+
+    def __str__(self):
+        return (
+            f'<center>[{self.title.capitalize()}]</center>\n'
+            f'Effect: HP +{self.hp}\n\n'
+        )
 
 class WeaponItem(Item):
     def __init__(self, title, damage=10):
         self.damage = damage
         super().__init__(title)
 
+    def __str__(self):
+        return (
+            f'<center>[{self.title.capitalize()}]</center>\n'
+            f'Effect: Combat Skill +{self.damage}\n\n'
+        )
+
 class ArmorItem(Item):
     def __init__(self, title, armor=10):
         self.armor = armor
         super().__init__(title)
+
+    def __str__(self):
+        return (
+            f'<center>[{self.title.capitalize()}]</center>\n'
+            f'Effect: Defense +{self.armor}\n\n'
+        )
 
 class Combat:
     def __init__(self, participants: list):

@@ -7,6 +7,7 @@ from .text_generators import tokenize
 from .game_components import Character, FoodItem, WeaponItem, ArmorItem
 from .noun_key import NounKey
 import re
+import random
 
 def replacenth(string, sub, wanted, n):
     where = [m.start() for m in re.finditer(sub, string)][n-1]
@@ -144,7 +145,8 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                item = FoodItem(item_name)
+                hp = random.randint(1, 10) * self.room_generator.level
+                item = FoodItem(item_name, hp)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
 
@@ -160,7 +162,8 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                item = WeaponItem(item_name)
+                damage = random.randint(1, 10) * self.room_generator.level
+                item = WeaponItem(item_name, damage)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
                 
@@ -176,7 +179,8 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                item = ArmorItem(item_name)
+                armor = random.randint(1, 10) * self.room_generator.level
+                item = ArmorItem(item_name, armor)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)       
 

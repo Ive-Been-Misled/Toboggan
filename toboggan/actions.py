@@ -115,7 +115,7 @@ class Perceive:
 
 @dataclass
 class Attack:
-    target: Any=None
+    target: Any="nothing"
 
     def execute(self, game, character):
         room_characters = character.current_room.characters

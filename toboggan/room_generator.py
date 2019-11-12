@@ -10,7 +10,7 @@ import re
 import random
 
 def replacenth(string, sub, wanted, n):
-    where = [m.start() for m in re.finditer(sub, string)][n-1]
+    where = [m.start() for m in re.finditer(re.escape(sub), string)][n-1]
     before = string[:where]
     after = string[where:]
     after = after.replace(sub, wanted, 1)
@@ -103,7 +103,6 @@ class RoomGenerator:
                 if token.pos_ == 'NOUN' and token.text not in seen_words:
                     noun_occurance[token.text] = word_occurances[token.text]
                     seen_words.add(token.text)
-            print(noun_occurance)
             for chunk in self.description_tokens.noun_chunks:
                 found_root = False
                 for token in chunk:
@@ -163,7 +162,8 @@ class RoomGenerator:
             """
             for item_name in item_name_list:
                 damage = random.randint(1, 10) * self.room_generator.level
-                item = WeaponItem(item_name, damage)
+                combat_skill = random.randint(1, 5) * self.room_generator.level
+                item = WeaponItem(item_name, damage, combat_skill)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
                 
@@ -179,7 +179,7 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                armor = random.randint(1, 10) * self.room_generator.level
+                armor = random.randint(1, 5) * self.room_generator.level
                 item = ArmorItem(item_name, armor)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)       

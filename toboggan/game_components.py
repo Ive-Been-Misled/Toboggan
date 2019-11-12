@@ -23,8 +23,8 @@ class Character:
         self.current_room.enter(self)
         self.inventory = {}
         self.description = None
-        self.equipped_weapon = None
-        self.equipped_armor = None
+        self.equipped_weapon = WeaponItem('Empty', 0, 0)
+        self.equipped_armor = ArmorItem('Empty', 0, 0)
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
@@ -34,8 +34,8 @@ class Character:
             f'Combat Skill: {self.combat_skill}\n'
             f'Defense: {self.defense}\n'
             f'Speed: {self.speed}\n\n'
-            f'Equipped Weapon: {self.equipped_weapon}\n'
-            f'Equipped Armor: {self.equipped_armor}\n\n'
+            f'Equipped Weapon: {self.equipped_weapon.title}\n'
+            f'Equipped Armor: {self.equipped_armor.title}\n\n'
             f'Inventory: {inv}\n'
         )
 
@@ -87,14 +87,14 @@ class Character:
         self.hit_points = self.hit_points + hit_points
 
     def equip_weapon(self, weapon: object) -> None:
-        if self.equipped_weapon is not None:
+        if self.equipped_weapon.title != 'Empty':
             self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
 
         self.equipped_weapon = weapon
-        self.combat_skill = self.base_combat_skill + self.equipped_weapon.damage
+        self.combat_skill = self.base_combat_skill + self.equipped_weapon.combat_skill
 
     def equip_armor(self, armor: object) -> None:
-        if self.equipped_armor is not None:
+        if self.equipped_armor.title != 'Empty':
             self.inventory[self.equipped_armor.title] = copy.deepcopy(self.equipped_armor)
 
         self.equipped_armor = armor
@@ -135,9 +135,6 @@ class Item:
         
         return self.description
 
-    def __str__(self):
-        return self.title
-
 class FoodItem(Item):
 
     def __init__(self, title, hp=10):
@@ -147,18 +144,18 @@ class FoodItem(Item):
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: HP +{self.hp}\n\n'
+            f'Effect: HP +{self.hp}\n'
         )
 
 class WeaponItem(Item):
-    def __init__(self, title, damage=10):
+    def __init__(self, title, damage=0, combat_skill=0):
         self.damage = damage
         super().__init__(title)
 
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: Combat Skill +{self.damage}\n\n'
+            f'Effect: Combat Skill +{self.damage}\n'
         )
 
 class ArmorItem(Item):
@@ -169,7 +166,7 @@ class ArmorItem(Item):
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: Defense +{self.armor}\n\n'
+            f'Effect: Defense +{self.armor}\n'
         )
 
 class Combat:
@@ -177,6 +174,7 @@ class Combat:
         self.participants = participants
         self.initiative = list(self.participants.values())
         self.turn = 0
+    
     def combat_start(self):
         init_print = [char.title for char in self.initiative]
         init_print.remove('You')
@@ -186,6 +184,7 @@ class Combat:
                      )
         self.initiative.sort(key=lambda x: x.speed, reverse=True)
         return combat_str
+    
     def enemies_attack(self):
         combat_str = ''
         if self.initiative[self.turn].title is 'You':

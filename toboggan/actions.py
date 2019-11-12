@@ -123,7 +123,9 @@ class Attack:
         if self.target is not None and len(targets) > 0:
             target_key = targets[0]
             target_obj = room_characters[target_key]
-            character.attack(target_obj, 20) # TODO damage is hardcoded for now. this will need to change
+            weapon = lambda: None  # Default weapon for now
+            weapon.damage = 20
+            character.attack(target_obj, weapon)
             if target_obj.hit_points > 0:
                 return 'You attacked the ' + target_key + ' for 20 damage!'
             else:

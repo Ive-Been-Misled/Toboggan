@@ -159,13 +159,11 @@ class Attack:
         if self.target is not None and len(targets) > 0:
             target_key = targets[0]
             target_obj = room_characters[target_key]
-            weapon = lambda: None  # Default weapon for now
-            weapon.damage = 20
-            character.attack(target_obj, weapon)
+            attack_str = character.attack(target_obj)
             if target_obj.hit_points > 0:
-                return 'You attacked the ' + target_key + ' for 20 damage!'
+                return attack_str
             else:
                 character.current_room.characters.pop(target_key)
-                return 'You killed the ' + target_key + '!'
+                return attack_str + '<br><br>You killed the ' + target_key + '!'
         else:
             return 'There is no ' + str(self.target) + ' to attack.'

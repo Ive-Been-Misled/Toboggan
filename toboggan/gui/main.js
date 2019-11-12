@@ -6,8 +6,8 @@ async function initiateGUI() {
   input.value = '';  // clear input textarea
   input.addEventListener('keydown', processEnter);
   text = await sendInput('look around')
-  await displayScenario('<center>[Welcome to Toboggan]</center> <br>' + text);
-  imprompt.innerHTML = "What do you do?";
+  await displayScenario('' + text);
+  //imprompt.innerHTML = "What do you do?";
 }
 
 async function processEnter(e) {
@@ -55,7 +55,7 @@ async function displayScenario(text) {
   input.minLength = 0;
   input.maxLength = 0;
 
-  imprompt.innerHTML = "What do you do?";
+  //imprompt.innerHTML = "What do you do?";
   skipTextCrawl = false;
 
   let len = text.length;

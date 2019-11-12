@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Any
 from difflib import get_close_matches
 from .text_generators import describe_location, describe_item
-
+from .game_components import FoodItem, WeaponItem, ArmorItem
 
 @dataclass
 class Introspect:
@@ -52,6 +52,32 @@ class Pickup:
         
         return return_string
 
+
+@dataclass
+class Use:
+    thing: Any=None
+
+    def execute(self, game, character):
+        items = character.inventory
+        return_string = f'<center>You do not have a {self.thing}.</center><br>{str(character.current_room)}'
+        if self.thing is not None:
+            things = get_close_matches(self.thing, items.keys())
+            if len(things) > 0:
+                item = character.inventory[things[0]]
+                if type(item) is FoodItem:
+                    character.gain_hp(item.hp)
+                    return_string = f'<center>You used the {things[0]} and gained {item.hp} hit points.</center><br>{str(character.current_room)}'
+                elif type(item) is WeaponItem:
+                    character.equip_weapon(item)
+                    return_string = f'<center>You equipped the {things[0]}.</center><br>{str(character.current_room)}'
+                elif type(item) is ArmorItem:
+                    character.equip_armor(item)
+                    return_string = f'<center>You equipped the {things[0]}.</center><br>{str(character.current_room)}'
+                del character.inventory[things[0]]                
+        else:
+            return_string = f'<center>You must specifify an object to use.</center><br>{str(character.current_room)}'
+        
+        return return_string
 
 @dataclass
 class Drop:

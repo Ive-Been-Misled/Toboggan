@@ -2,7 +2,9 @@ from enum import Enum
 class NounKey(Enum):
     LOCATIONS = ['place']
     CHARACTERS = ['character']
-    ITEMS = ['object']
+    FOOD_ITEMS = ['food', 'potion']
+    WEAPON_ITEMS = ['weapon']
+    ARMOR_ITEMS = ['armor']
     MISC = ['']
 
     @classmethod

@@ -387,6 +387,83 @@
           "text": "use sword"
         }
       ]
+    },
+    {
+      "intent": "use",
+      "examples": [
+        {
+          "text": "I use"
+        },
+        {
+          "text": "I use the apple"
+        },
+        {
+          "text": "I eat the apple"
+        },
+        {
+          "text": "I consume the food"
+        },
+        {
+          "text": "I eat the banana"
+        },
+        {
+          "text": "I drink the potion"
+        },
+        {
+          "text": "I use the potion"
+        },
+        {
+          "text": "use the potion"
+        },
+        {
+          "text": "eat the apple"
+        },
+        {
+          "text": "drink the water"
+        },
+        {
+          "text": "consume the burger"
+        },
+        {
+          "text": "I equip the armor"
+        },
+        {
+          "text": "I put on the chestplate"
+        },
+        {
+          "text": "equip the shirt"
+        },
+        {
+          "text": "put on the pants"
+        },
+        {
+          "text": "wear the armor"
+        },
+        {
+          "text": "i am wearing the hat"
+        },
+        {
+          "text": "brandish the sword"
+        },
+        {
+          "text": "pull out the axe"
+        },
+        {
+          "text": "equip the weapon"
+        },
+        {
+          "text": "use the knife"
+        },
+        {
+          "text": "unsheath the sword"
+        },
+        {
+          "text": "whip out my weapon"
+        },
+        {
+          "text": "put on the shoes"
+        }
+      ]
     }
   ],
   "entities": [],

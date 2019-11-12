@@ -4,7 +4,7 @@ track of an entity in the game.
 """
 from .text_generators import describe_item
 from .text_generators import describe_character
-
+import copy
 class Character:
     """
     Default class used for creating game characters
@@ -21,14 +21,19 @@ class Character:
         self.current_room.enter(self)
         self.inventory = {}
         self.description = None
+        self.equipped_weapon = None
+        self.equipped_armor = None
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
         return (
+            f'<center>[You]</center>\n'
             f'HP: {self.hit_points}\n\n'
             f'Combat Skill: {self.combat_skill}\n'
             f'Defense: {self.defense}\n'
-            f'Speed: {self.speed}\n'
+            f'Speed: {self.speed}\n\n'
+            f'Equipped Weapon: {self.equipped_weapon}\n'
+            f'Equipped Armor: {self.equipped_armor}\n\n'
             f'Inventory: {inv}\n'
         )
 
@@ -79,6 +84,18 @@ class Character:
         """
         self.hit_points = self.hit_points + hit_points
 
+    def equip_weapon(self, weapon: object) -> None:
+        if self.equipped_weapon is not None:
+            self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
+
+        self.equipped_weapon = weapon
+
+    def equip_armor(self, armor: object) -> None:
+        if self.equipped_armor is not None:
+            self.inventory[self.equipped_armor.title] = copy.deepcopy(self.equipped_armor)
+
+        self.equipped_armor = armor
+
     def attack(self, target: object, weapon: object) -> str:
         """
         Inflicts damage on another given character.
@@ -115,7 +132,22 @@ class Item:
         return self.description
 
     def __str__(self):
-        return 'This item weighs ' + str(self.weight) +' lbs.' + '\nIt is a ' + self.item_type
+        return self.title
+
+class FoodItem(Item):
+    def __init__(self, title, hp=10):
+        self.hp = hp
+        super().__init__(title)
+
+class WeaponItem(Item):
+    def __init__(self, title, damage=10):
+        self.damage = damage
+        super().__init__(title)
+
+class ArmorItem(Item):
+    def __init__(self, title, armor=10):
+        self.armor = armor
+        super().__init__(title)
 
 class Combat:
     def __init__(self, participants: list):

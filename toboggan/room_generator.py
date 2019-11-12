@@ -4,7 +4,7 @@ Room generation and room data storage.
 from .text_generators import describe_location
 from .text_generators import room_noun_generator
 from .text_generators import tokenize
-from .game_components import Character, Item
+from .game_components import Character, FoodItem, WeaponItem, ArmorItem
 from .noun_key import NounKey
 import re
 
@@ -26,6 +26,7 @@ class RoomGenerator:
         self.starting_room.description_tokens = tokenize(self.starting_room.description)
         self.room_list = []
         self.room_list.append(self.starting_room)
+        self.level = 1
 
     def generate_connected_rooms(self, current_room: object, connected_room_titles: []) -> None:
         """
@@ -86,7 +87,11 @@ class RoomGenerator:
             seen_words = set()
             place_set = set(room_entities[NounKey.LOCATIONS])
             character_set = set(room_entities[NounKey.CHARACTERS])
-            item_set = set(room_entities[NounKey.ITEMS])
+            item_set = set(
+                room_entities[NounKey.FOOD_ITEMS] +
+                room_entities[NounKey.ARMOR_ITEMS] +
+                room_entities[NounKey.WEAPON_ITEMS] 
+            )
 
             for token in self.description_tokens:
                 if token.text in word_occurances.keys():
@@ -112,26 +117,6 @@ class RoomGenerator:
                         self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<c>' + chunk.text + '</c>', noun_occurance[root])
                     elif chunk.text in item_set:
                         self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<t>' + chunk.text + '</t>', noun_occurance[root])
-           
-            # self.formatted_desc = ''
-            # chunks = set(self.description_tokens.noun_chunks)
-            # for token in self.description_tokens.noun_chunks:
-            #     if token.text not in seen_words:
-            #         if token.text in place_set:
-            #             word = '<r>' + token.text_with_ws + '</r>'
-            #         elif token.text in character_set:
-            #             word = '<c>' + token.text_with_ws + '</c>'
-            #         elif token.text in item_set:
-            #             word = '<t>' + token.text_with_ws + '</t>'
-            #         else:
-            #             word = token.text_with_ws
-            #         seen_words.add(token.text)
-            #     else:
-            #         word = token.text_with_ws
-            #     self.formatted_desc += word
-            
-            # self.formatted_desc = re.sub('><', '> <', self.formatted_desc)
-
 
         def generate_room_characters(self, char_name_list: []) -> None:
             """
@@ -147,7 +132,7 @@ class RoomGenerator:
             for char_name in char_name_list:
                 Character(char_name, self, 1, 1, 1)
 
-        def generate_room_items(self, item_name_list: []) -> None:
+        def generate_food_items(self, item_name_list: []) -> None:
             """
             Generates the items that are inside the room
             given a list of nouns.
@@ -159,11 +144,41 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                item = Item(item_name)
+                item = FoodItem(item_name)
+                self.item_list[item_name] = item
+                self.original_items.add(item_name)
+
+        def generate_weapon_items(self, item_name_list: []) -> None:
+            """
+            Generates the items that are inside the room
+            given a list of nouns.
+
+            Args:
+                item_name_list: List of item names
+
+            Returns:
+                None
+            """
+            for item_name in item_name_list:
+                item = WeaponItem(item_name)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
                 
-                
+        def generate_armor_items(self, item_name_list: []) -> None:
+            """
+            Generates the items that are inside the room
+            given a list of nouns.
+
+            Args:
+                item_name_list: List of item names
+
+            Returns:
+                None
+            """
+            for item_name in item_name_list:
+                item = ArmorItem(item_name)
+                self.item_list[item_name] = item
+                self.original_items.add(item_name)       
 
         def add_item(self, item: object) -> None:
             """
@@ -217,7 +232,9 @@ class RoomGenerator:
                 room_entities = room_noun_generator(self.description)
                 self.room_generator.generate_connected_rooms(self, room_entities[NounKey.LOCATIONS])
                 self.generate_room_characters(room_entities[NounKey.CHARACTERS])
-                self.generate_room_items(room_entities[NounKey.ITEMS])
+                self.generate_food_items(room_entities[NounKey.FOOD_ITEMS])
+                self.generate_weapon_items(room_entities[NounKey.WEAPON_ITEMS])
+                self.generate_armor_items(room_entities[NounKey.ARMOR_ITEMS])
 
                 self.format_description(room_entities)
 

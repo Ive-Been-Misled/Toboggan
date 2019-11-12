@@ -60,7 +60,10 @@ class ActionMapper:
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()
 
-        return vars(sys.modules[__name__])[action_class](direct_or_prep_object)
+        if direct_or_prep_object:
+            return vars(sys.modules[__name__])[action_class](direct_or_prep_object)
+
+        return vars(sys.modules[__name__])[action_class]()
 
     @staticmethod
     def _has_previous_workspace():

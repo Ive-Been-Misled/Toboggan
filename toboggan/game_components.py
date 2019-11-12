@@ -2,9 +2,12 @@
 Components used to define the game object. Each component keeps
 track of an entity in the game.
 """
+import random
+import copy
 from .text_generators import describe_item
 from .text_generators import describe_character
-import copy
+
+
 class Character:
     """
     Default class used for creating game characters
@@ -24,7 +27,7 @@ class Character:
         self.inventory = {}
         self.description = None
         self.equipped_weapon = WeaponItem('Empty', 0, 0)
-        self.equipped_armor = ArmorItem('Empty', 0, 0)
+        self.equipped_armor = ArmorItem('Empty', 0)
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
@@ -100,7 +103,7 @@ class Character:
         self.equipped_armor = armor
         self.defense = self.base_defense + self.equipped_armor.armor
 
-    def attack(self, target: object, weapon: object) -> str:
+    def attack(self, target: object) -> str:
         """
         Inflicts damage on another given character.
 
@@ -111,8 +114,16 @@ class Character:
         Returns:
             None
         """
-        target.lose_hp(weapon.damage)
-        return ''
+        attack_str = ''
+        if random.randint(1, 20)+self.combat_skill < 10 + target.defense:
+            return f'Drat the attack missed'
+        if self.equipped_weapon.title == 'Empty':
+            target.lose_hp(3)
+            attack_str = f'{self.title} struck {target.title} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
+        else:
+            target.lose_hp(self.equipped_weapon.damage)
+            attack_str = f'{self.title} struck {target.title} with {self.equipped_weapon} dealing {self.equipped_weapon.damage}.'
+        return attack_str
 
 class Player(Character):
     """
@@ -175,6 +186,7 @@ class Combat:
         self.participants = participants
         self.initiative = list(self.participants.values())
         self.turn = 0
+        self.player = self.participants['You']
     
     def combat_start(self):
         init_print = [char.title for char in self.initiative]
@@ -191,7 +203,7 @@ class Combat:
         if self.initiative[self.turn].title is 'You':
             combat_str = 'You have a chance to act against the enemies.  What will you do?'
         else:
-            combat_str = f'{self.initiative[self.turn].title} attacks you dealing alotta damage.'
+            combat_str = f'{self.initiative[self.turn].title} attacks you. <br>' + self.initiative[self.turn].attack(self.player)
         self.turn += 1
         self.turn %= len(self.initiative)
         return combat_str

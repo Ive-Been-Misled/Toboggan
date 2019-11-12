@@ -14,7 +14,7 @@ class Character:
     (i.e. enemies, the player, npcs).
     """
 
-    def __init__(self, title, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
+    def __init__(self, title, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100, level=1):
         self.title = title
         self.base_combat_skill = combat_skill
         self.combat_skill = combat_skill
@@ -22,11 +22,12 @@ class Character:
         self.defense = defense
         self.speed = speed
         self.hit_points = hit_points
+        self.level = level
         self.current_room = starting_room
         self.current_room.enter(self)
         self.inventory = {}
         self.description = None
-        self.equipped_weapon = WeaponItem('Empty', 0, 0)
+        self.equipped_weapon = WeaponItem('Unarmed', 3, 0)
         self.equipped_armor = ArmorItem('Empty', 0)
 
     def __str__(self):
@@ -90,7 +91,7 @@ class Character:
         self.hit_points = self.hit_points + hit_points
 
     def equip_weapon(self, weapon: object) -> None:
-        if self.equipped_weapon.title != 'Empty':
+        if self.equipped_weapon.title != 'Unarmed':
             self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
 
         self.equipped_weapon = weapon
@@ -122,16 +123,21 @@ class Character:
             attack_str = f'{self.title} struck {target.title} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
         else:
             target.lose_hp(self.equipped_weapon.damage)
-            attack_str = f'{self.title} struck {target.title} with {self.equipped_weapon} dealing {self.equipped_weapon.damage}.'
+            attack_str = f'{self.title} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
         return attack_str
 
 class Player(Character):
     """
     Character class specific to the player. Inherits Character.
     """
-    def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100):
-        super().__init__('You', starting_room, combat_skill, defense, speed, hit_points)
-
+    def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100, level=1):
+        super().__init__('You', starting_room, combat_skill, defense, speed, hit_points, level)
+class Enemy(Character):
+    """
+    Enemy class specific to enemies. Inherits Character.
+    """
+    def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points, level):
+        super().__init__(title, starting_room, combat_skill, defense, speed, hit_points, level)
 class Item:
     """
     Item class. Used to keep track of data about a specific item.
@@ -196,14 +202,19 @@ class Combat:
                      )
         self.initiative.sort(key=lambda x: x.speed, reverse=True)
         return combat_str
-    
+    def refresh_init(self, participants):
+        diff = set(participants) - set(self.participants)
+        while len(diff) > 0:
+            part = diff.pop()
+            self.initiative.remove(part[:len(part)-1])
+        self.participants = participants
     def enemies_attack(self):
         combat_str = ''
+        self.turn %= len(self.initiative)
         if self.initiative[self.turn].title is 'You':
             combat_str = 'You have a chance to act against the enemies.  What will you do?'
         else:
             combat_str = f'{self.initiative[self.turn].title} attacks you. <br>' + self.initiative[self.turn].attack(self.player)
         self.turn += 1
-        self.turn %= len(self.initiative)
         return combat_str
         

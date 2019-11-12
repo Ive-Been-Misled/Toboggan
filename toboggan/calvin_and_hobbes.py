@@ -70,6 +70,7 @@ class Calvin:
             paragraphs.append(self._game.combat.combat_start())
             self.combat = True
         elif self.combat:
+            self._game.combat.refresh_init(self._game.player.current_room.characters)
             paragraphs.append(self._game.combat.enemies_attack())
 
         

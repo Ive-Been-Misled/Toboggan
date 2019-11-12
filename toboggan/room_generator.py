@@ -4,8 +4,9 @@ Room generation and room data storage.
 from .text_generators import describe_location
 from .text_generators import room_noun_generator
 from .text_generators import tokenize
-from .game_components import Character, FoodItem, WeaponItem, ArmorItem
+from .game_components import Character, Enemy, FoodItem, WeaponItem, ArmorItem
 from .noun_key import NounKey
+from .character_generation import enemy_gen
 import re
 import random
 
@@ -130,7 +131,7 @@ class RoomGenerator:
                 None
             """
             for char_name in char_name_list:
-                Character(char_name, self, 1, 1, 1, 20)
+                enemy_gen(char_name, self.characters['You'].level, self)
 
         def generate_food_items(self, item_name_list: []) -> None:
             """
@@ -144,7 +145,7 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                hp = random.randint(1, 10) * self.room_generator.level
+                hp = random.randint(1, 10) * self.characters['You'].level
                 item = FoodItem(item_name, hp)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
@@ -161,8 +162,8 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                damage = random.randint(1, 10) * self.room_generator.level
-                combat_skill = random.randint(1, 5) * self.room_generator.level
+                damage = random.randint(1, 10) * self.characters['You'].level
+                combat_skill = random.randint(1, 5) * self.characters['You'].level
                 item = WeaponItem(item_name, damage, combat_skill)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)
@@ -179,7 +180,7 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                armor = random.randint(1, 5) * self.room_generator.level
+                armor = random.randint(1, 5) * self.characters['You'].level
                 item = ArmorItem(item_name, armor)
                 self.item_list[item_name] = item
                 self.original_items.add(item_name)       

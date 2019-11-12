@@ -163,6 +163,7 @@ class Attack:
             if target_obj.hit_points > 0:
                 return attack_str
             else:
+                character.current_room.formatted_desc = character.current_room.formatted_desc.replace("<c>" + target_key + "</c>", "<s>" + target_key + "</s>")
                 character.current_room.characters.pop(target_key)
                 return attack_str + '<br><br>You killed the ' + target_key + '!'
         else:

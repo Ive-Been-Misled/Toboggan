@@ -155,19 +155,22 @@ class FoodItem(Item):
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: HP +{self.hp}\n'
+            f'Food Item\n'
+            f'Effect: HP +{self.hp}'
         )
 
 class WeaponItem(Item):
     def __init__(self, title, damage=0, combat_skill=0):
         self.damage = damage
+        self.combat_skill = combat_skill
         super().__init__(title)
 
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
+            f'Weapon\n'
             f'Effect: Combat Skill +{self.combat_skill}\n'
-            f'Effect: Damage {self.damage}\n'
+            f'Effect: Damage {self.damage}'
         )
 
 class ArmorItem(Item):
@@ -178,7 +181,8 @@ class ArmorItem(Item):
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: Defense +{self.armor}\n'
+            f'Armor Item\n'
+            f'Effect: Defense +{self.armor}'
         )
 
 class Combat:

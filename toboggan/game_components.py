@@ -155,7 +155,8 @@ class WeaponItem(Item):
     def __str__(self):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
-            f'Effect: Combat Skill +{self.damage}\n'
+            f'Effect: Combat Skill +{self.combat_skill}\n'
+            f'Effect: Damage {self.damage}\n'
         )
 
 class ArmorItem(Item):

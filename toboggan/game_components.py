@@ -7,6 +7,8 @@ import copy
 from .text_generators import describe_item
 from .text_generators import describe_character
 
+DEFAULT_WEAPON = 'Unarmed'
+DEFAULT_ARMOR = 'Empty'
 
 class Character:
     """
@@ -27,8 +29,8 @@ class Character:
         self.current_room.enter(self)
         self.inventory = {}
         self.description = None
-        self.equipped_weapon = WeaponItem('Unarmed', 3, 0)
-        self.equipped_armor = ArmorItem('Empty', 0)
+        self.equipped_weapon = WeaponItem(DEFAULT_WEAPON, 3, 0)
+        self.equipped_armor = ArmorItem(DEFAULT_ARMOR, 0)
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
@@ -91,14 +93,14 @@ class Character:
         self.hit_points = self.hit_points + hit_points
 
     def equip_weapon(self, weapon: object) -> None:
-        if self.equipped_weapon.title != 'Unarmed':
+        if self.equipped_weapon.title != DEFAULT_WEAPON:
             self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
 
         self.equipped_weapon = weapon
         self.combat_skill = self.base_combat_skill + self.equipped_weapon.combat_skill
 
     def equip_armor(self, armor: object) -> None:
-        if self.equipped_armor.title != 'Empty':
+        if self.equipped_armor.title != DEFAULT_ARMOR:
             self.inventory[self.equipped_armor.title] = copy.deepcopy(self.equipped_armor)
 
         self.equipped_armor = armor
@@ -118,7 +120,7 @@ class Character:
         attack_str = ''
         if random.randint(1, 20)+self.combat_skill < 10 + target.defense:
             return f'Drat the attack missed'
-        if self.equipped_weapon.title == 'Empty':
+        if self.equipped_weapon.title == DEFAULT_WEAPON:
             target.lose_hp(3)
             attack_str = f'{self.title} struck {target.title} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
         else:

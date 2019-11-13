@@ -54,6 +54,7 @@ class ActionMapper:
 
         doc = self._nlp(input_string)
         direct_or_prep_object = None
+        direct_or_prep_object_sub = None
         for token in doc:
             if token.text.lower() == 'back':
                 direct_or_prep_object = 'back'

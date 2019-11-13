@@ -5,6 +5,9 @@
       "intent": "perceive",
       "examples": [
         {
+          "text": "look around"
+        },
+        {
           "text": "Where am I"
         },
         {
@@ -15,9 +18,6 @@
         },
         {
           "text": "I check my surroundings"
-        },
-        {
-          "text": "I smell the thing"
         },
         {
           "text": "What is around me"
@@ -65,6 +65,9 @@
         },
         {
           "text": "display hp"
+        },
+        {
+          "text": "check self"
         }
       ]
     },
@@ -186,25 +189,13 @@
           "text": "climb the staircase"
         },
         {
-          "text": "run away from the monster"
-        },
-        {
-          "text": "flee the crime scene"
-        },
-        {
-          "text": "disembark the cruise"
+          "text": "embark on the cruise"
         },
         {
           "text": "sail across the ocean"
         },
         {
           "text": "descend the stairs"
-        },
-        {
-          "text": "dodge the attack"
-        },
-        {
-          "text": "sidestep the attack"
         },
         {
           "text": "start heading east"
@@ -278,25 +269,10 @@
           "text": "I acquire the jewels"
         },
         {
-          "text": "remove the idol"
-        },
-        {
           "text": "take the last cookie from the cookie jar"
         },
         {
-          "text": "eat a cucumber"
-        },
-        {
           "text": "put the key in my pocket"
-        },
-        {
-          "text": "break the window"
-        },
-        {
-          "text": "attach bag to self"
-        },
-        {
-          "text": "drink soda"
         },
         {
           "text": "I grab the object"
@@ -306,6 +282,18 @@
         },
         {
           "text": "I take the thing"
+        },
+        {
+          "text": "pick up the sword"
+        },
+        {
+          "text": "pick up the chestplate"
+        },
+        {
+          "text": "acquire the pants"
+        },
+        {
+          "text": "grab the weapon"
         }
       ]
     },
@@ -341,6 +329,15 @@
         },
         {
           "text": "clear inventory"
+        },
+        {
+          "text": "drop the pants"
+        },
+        {
+          "text": "get rid of the apple"
+        },
+        {
+          "text": "toss the sword"
         }
       ]
     },
@@ -382,9 +379,6 @@
         },
         {
           "text": "shoot an arrow at its head"
-        },
-        {
-          "text": "use sword"
         }
       ]
     },

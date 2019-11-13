@@ -55,6 +55,8 @@ class ActionMapper:
         doc = self._nlp(input_string)
         direct_or_prep_object = None
         for token in doc:
+            if token.text.lower() == 'back':
+                direct_or_prep_object = 'back'
             if token.dep_ in ['dobj', 'pobj', 'advmod']:
                 direct_or_prep_object_sub = token.text
 

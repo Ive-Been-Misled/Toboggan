@@ -45,6 +45,7 @@ async function processEnter(e) {
 
   let inputText = input.value;
   consoleHistory.unshift(inputText)
+  commandIndex = -1
   input.value = '';  // clear input textarea
 
   card.classList.add("loading");

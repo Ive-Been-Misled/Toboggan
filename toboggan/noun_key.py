@@ -10,6 +10,11 @@ class NounKey(Enum):
         'monster',
         'brother',
         'mother',
+        'people',
+        'horror',
+        'slayer',
+        'spirit',
+        'ghost',
         ]
 
     FOOD_ITEMS = [
@@ -18,6 +23,8 @@ class NounKey(Enum):
         'burger',
         'potion',
         'drink',
+        'heart',
+        'carcasses',
         ]
 
     WEAPON_ITEMS = [
@@ -25,6 +32,8 @@ class NounKey(Enum):
         'box',
         'axe',
         'key',
+        'flame',
+        'fire',
         ]
 
     ARMOR_ITEMS = [
@@ -45,7 +54,11 @@ class NounKey(Enum):
         ]
 
     MISC = [
-        '',
+        'time',
+        'thought',
+        'shapes',
+        'sizes',
+        'set',
         ]
 
     #MISC_TIME = ['day', 'time', 'hour', 'time']

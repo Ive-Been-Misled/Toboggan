@@ -192,34 +192,41 @@ class ArmorItem(Item):
         )
 
 class Combat:
-    def __init__(self, participants: list):
+    def __init__(self, participants):
         self.participants = participants
+        self.player = self.participants.pop('You')
         self.initiative = list(self.participants.values())
-        self.turn = 0
-        self.player = self.participants['You']
+        self.turn = None
+        
     
     def combat_start(self):
         init_print = [char.title for char in self.initiative]
-        init_print.remove('You')
         combat_str = ('COMBAT BEGINS:<br>'
                       'You find yourself staring down '+ ', '.join(init_print) +
                       '<br>They appear hostile and intent to attack you.'
                      )
         self.initiative.sort(key=lambda x: x.speed, reverse=True)
+        self.turn = self.initiative[0]
         return combat_str
-    def refresh_init(self, participants):
-        diff = set(participants) - set(self.participants)
-        while len(diff) > 0:
-            part = diff.pop()
-            self.initiative.remove(part[:len(part)-1])
-        self.participants = participants
+    def refresh_init(self, participant):
+        # diff = set(self.participants) - set(participant)
+        # stri = ''+len(diff)
+        # while len(diff) > 0:
+        #     part = diff.pop()
+        #     stri = stri+part+'test'
+        #     self.initiative.remove(part)
+        # self.participants = participant
+        turn_neighbor = self.initiative[(self.initiative.index(self.turn)+1)%len(self.initiative)]
+        self.participants = participant
+        if 'You' in self.participants:
+            self.player = self.participants.pop('You')
+        self.initiative = list(self.participants.values())
+        self.initiative.sort(key=lambda x: x.speed, reverse=True)
+        if not (self.turn in self.initiative):
+            self.turn = turn_neighbor
+        return len(self.initiative) > 0
     def enemies_attack(self):
-        combat_str = ''
-        self.turn %= len(self.initiative)
-        if self.initiative[self.turn].title is 'You':
-            combat_str = 'You have a chance to act against the enemies.  What will you do?'
-        else:
-            combat_str = f'{self.initiative[self.turn].title} attacks you. <br>' + self.initiative[self.turn].attack(self.player)
-        self.turn += 1
+        combat_str = f'{self.turn.title} attacks you. <br><br>' + self.turn.attack(self.player)
+        turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
+        self.turn = self.initiative[turn_num]
         return combat_str
-        

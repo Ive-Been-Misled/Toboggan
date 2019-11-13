@@ -3,6 +3,7 @@ from .game_class import game_controller
 from .watson_action_mapper import ActionMapper
 from .character_generation import char_gen
 from .game_components import Combat
+from .actions import Move
 
 
 class Calvin:
@@ -13,6 +14,7 @@ class Calvin:
         self._game = game_controller
         self._ac = ActionMapper()
         self.combat = False
+        self.can_move = True
 
     def generate_char_gen_response(self, input_string):
         if self._game.init == 0 and input_string == 'continue':
@@ -92,16 +94,22 @@ class Calvin:
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
-
         if self._game.init < 3:
             return self.generate_char_gen_response(input_string)
-        
         paragraphs = []
-        #paragraphs.append(f'You {input_string}.')
-
         action = self._ac.map(input_string)
         if action:
-            output = action.execute(self._game, self._game.player) \
+            if len(self._game.player.current_room.characters) > 1 and isinstance(action, Move) and self._game.player.speed <= self._game.combat.initiative[0].speed:
+                output = (f'You attempt to escape to another room, but alas {self._game.combat.initiative[0].title} is too fast and prevents you from escaping.'
+                          '<br><br>It seems you must face your enemies or die trying.'
+                         )
+            elif len(self._game.player.current_room.characters) > 1  and isinstance(action, Move) and self._game.player.speed > self._game.combat.initiative[0].speed:
+                output = action.execute(self._game, self._game.player) \
+                           .replace('\n', '<br>')
+                output += 'You manage to escape your foes in the previous room through your superior speed. <br><br>'
+                self.combat = False
+            else:
+                output = action.execute(self._game, self._game.player) \
                            .replace('\n', '<br>')
             paragraphs.append(output)
         else:
@@ -114,9 +122,13 @@ class Calvin:
             paragraphs.append(self._game.combat.combat_start())
             self.combat = True
         elif self.combat:
-            self._game.combat.refresh_init(self._game.player.current_room.characters)
-            paragraphs.append(self._game.combat.enemies_attack())
+            self.combat = self._game.combat.refresh_init(self._game.player.current_room.characters)
+            if not self.combat:
+                paragraphs.append('<br><br>Combat is over and you stand victorious among your fallen foes.')
+            else:
+                paragraphs.append(self._game.combat.enemies_attack())
 
+ 
         
 
         return '<br><br>'.join(paragraphs)

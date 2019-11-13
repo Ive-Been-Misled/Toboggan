@@ -134,12 +134,14 @@ class Player(Character):
     """
     def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100, level=1):
         super().__init__('You', starting_room, combat_skill, defense, speed, hit_points, level)
+
 class Enemy(Character):
     """
     Enemy class specific to enemies. Inherits Character.
     """
     def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points, level):
         super().__init__(title, starting_room, combat_skill, defense, speed, hit_points, level)
+
 class Item:
     """
     Item class. Used to keep track of data about a specific item.
@@ -178,7 +180,7 @@ class WeaponItem(Item):
             f'<center>[{self.title.capitalize()}]</center>\n'
             f'Weapon\n'
             f'Effect: Combat Skill +{self.combat_skill}\n'
-            f'Effect: Damage {self.damage}'
+            f'Effect: Damage {self.damage}\n\n'
         )
 
 class ArmorItem(Item):
@@ -190,18 +192,19 @@ class ArmorItem(Item):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
             f'Armor Item\n'
-            f'Effect: Defense +{self.armor}'
+            f'Effect: Defense +{self.armor}\n\n'
         )
 
 class Combat:
     def __init__(self, participants):
-        self.participants = participants
-        self.player = self.participants.pop('You')
+        self.participants = copy.deepcopy(participants)
+        self.participants.pop('You')
+        self.player = participants['You']
         self.initiative = list(self.participants.values())
         self.turn = None
-        
-    
+           
     def combat_start(self):
+        
         init_print = [char.title for char in self.initiative]
         combat_str = ('COMBAT BEGINS:<br>'
                       'You find yourself staring down '+ ', '.join(init_print) +
@@ -210,25 +213,36 @@ class Combat:
         self.initiative.sort(key=lambda x: x.speed, reverse=True)
         self.turn = self.initiative[0]
         return combat_str
-    def refresh_init(self, participant):
-        # diff = set(self.participants) - set(participant)
-        # stri = ''+len(diff)
-        # while len(diff) > 0:
-        #     part = diff.pop()
-        #     stri = stri+part+'test'
-        #     self.initiative.remove(part)
-        # self.participants = participant
-        turn_neighbor = self.initiative[(self.initiative.index(self.turn)+1)%len(self.initiative)]
-        self.participants = participant
-        if 'You' in self.participants:
-            self.player = self.participants.pop('You')
-        self.initiative = list(self.participants.values())
-        self.initiative.sort(key=lambda x: x.speed, reverse=True)
-        if not (self.turn in self.initiative):
-            self.turn = turn_neighbor
+
+    def continue_init(self):
+        [self.initiative.remove(char) for char in self.initiative if char.title not in self.player.current_room.characters.keys()]
+        if self.initiative:
+            current_turn = self.initiative.pop(0)
+            self.initiative.append(current_turn)
+            self.turn = self.initiative[0]
+        
         return len(self.initiative) > 0
+
+    # def refresh_init(self, participant):
+    #     # diff = set(self.participants) - set(participant)
+    #     # stri = ''+len(diff)
+    #     # while len(diff) > 0:
+    #     #     part = diff.pop()
+    #     #     stri = stri+part+'test'
+    #     #     self.initiative.remove(part)
+    #     # self.participants = participant
+    #     turn_neighbor = self.initiative[(self.initiative.index(self.turn)+1)%len(self.initiative)]
+    #     self.participants = participant
+    #     if 'You' in self.participants:
+    #         self.player = self.participants.pop('You')
+    #     self.initiative = list(self.participants.values())
+    #     self.initiative.sort(key=lambda x: x.speed, reverse=True)
+    #     if self.turn not in self.initiative:
+    #         self.turn = turn_neighbor
+    #     return len(self.initiative) > 0
+
     def enemies_attack(self):
         combat_str = f'{self.turn.title} attacks you. <br><br>' + self.turn.attack(self.player)
-        turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
-        self.turn = self.initiative[turn_num]
+        #turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
+        #self.turn = self.initiative[turn_num]
         return combat_str

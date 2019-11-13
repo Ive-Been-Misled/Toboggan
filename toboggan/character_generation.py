@@ -43,6 +43,7 @@ def char_gen(stat_list: list, start_room: object) -> Player:
     stat_final = stat_gen(stat_prec, 1)
     char = Player(start_room, stat_final['combat'], stat_final['def'], stat_final['speed'])
     return char
+
 def enemy_gen(name: str, level: int, start_room: object) -> Enemy:
     stats = [1, 2, 3]
     random.shuffle(stats)

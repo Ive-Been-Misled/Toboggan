@@ -63,7 +63,7 @@ class ActionMapper:
 
         for token in doc.noun_chunks:
             chunk_text = token.text
-            if direct_or_prep_object_sub in chunk_text:
+            if direct_or_prep_object_sub is not None and direct_or_prep_object_sub in chunk_text:
                 direct_or_prep_object = chunk_text
 
         action_class = intents[0]['intent'].split('_')[0].capitalize()

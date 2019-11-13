@@ -22,6 +22,7 @@ class Game:
         }
         self.stat_list = []
         self.combat = None
+        self.active_combat = False
 
     # def generate_storyboard(self):
     #     pass

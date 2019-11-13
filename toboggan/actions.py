@@ -20,7 +20,7 @@ class Move:
 
     def execute(self, game, character):
         rooms = character.current_room.connected_rooms
-        return_string = f'<center>There is no {self.destination} to move to.</center><br>{str(character.current_room)}'
+        return_string = f'<center>There is no {self.destination} to move to.</center>'
         if self.destination is not None:
             destinations = get_close_matches(self.destination, rooms.keys())
             
@@ -32,13 +32,33 @@ class Move:
                 destinations = get_close_matches(new_destination, rooms.keys())
 
             if len(destinations) > 0:
-                character.move_to(character.current_room.connected_rooms[destinations[0]])
-                if destinations[0] != 'back':
-                    return_string = f'<center>You move to the {destinations[0]}.</center><br>{str(character.current_room)}'
+                if len(character.current_room.characters) > 1 and character.speed <= game.combat.initiative[0].speed:
+                    return_string = (
+                        f'<center>You attempt to escape to another room, but alas {game.combat.initiative[0].title} is too fast and prevents you from escaping.</center>'
+                          '<center>It seems you must face your enemies or die trying.</center>'
+                    )
+                elif len(character.current_room.characters) > 1 and character.speed > game.combat.initiative[0].speed:
+                    
+                    return_string = (
+                        f'<center>You manage to escape your foes in the previous room through your superior speed.</center>'
+                          
+                    )
+                    game.active_combat = False
+                    character.move_to(character.current_room.connected_rooms[destinations[0]])
+                    if destinations[0] != 'back':
+                        return_string += f'<center>You move to the {destinations[0]}.</center>'
+                    else:
+                        return_string += f'<center>You move back.</center>'
                 else:
-                    return_string = f'<center>You move back.</center><br>{str(character.current_room)}'
+                    game.active_combat = False
+                    character.move_to(character.current_room.connected_rooms[destinations[0]])
+                    if destinations[0] != 'back':
+                        return_string = f'<center>You move to the {destinations[0]}.</center>'
+                    else:
+                        return_string = f'<center>You move back.</center>'
         else:
-            return_string = f'<center>You must specify a location to move to.</center><br>{str(character.current_room)}'
+            return_string = f'<center>You must specify a location to move to.</center>'
+        return_string += f'<br>{str(character.current_room)}'
         return return_string
 
 
@@ -137,7 +157,6 @@ class Perceive:
 
     @staticmethod
     def check_lists(target, character):
-        print(target)
         rooms = character.current_room.connected_rooms.keys()
         items = list(character.current_room.item_list.keys()) + list(character.inventory.keys())
         characters = character.current_room.characters.keys()
@@ -172,14 +191,15 @@ class Perceive:
             list_id is not None and
             match not in character.current_room.perceived_rooms):
             if list_id == 'room':
-                character.current_room.perceived_rooms.append(match)
-                character.current_room.description = \
-                    character.current_room.description + \
-                    f"<br><br>You look at the {match}.<br><br>" + \
-                    describe_location(match)
-                character.current_room.entered = False
-                character.current_room.enter(character)
-                return_string = str(character.current_room)
+                # character.current_room.perceived_rooms.append(match)
+                # character.current_room.description = \
+                #     character.current_room.description + \
+                #     f"<br><br>You look at the {match}.<br><br>" + \
+                #     describe_location(match)
+                # character.current_room.entered = False
+                # character.current_room.enter(character)
+                # return_string = str(character.current_room)
+                pass
             elif list_id == 'item':
                 if match in set(character.inventory.keys()):
                     item = character.inventory[match]
@@ -205,7 +225,7 @@ class Attack:
                 new_target = ''
                 for token in _NLP(self.target):
                     if token.text != 'the' and token.text != 'a' and token.text != 'an':
-                        new_thing += token.text_with_ws
+                        new_target += token.text_with_ws
                 targets = get_close_matches(new_target, room_characters.keys())
             
             if len(targets) > 0:
@@ -218,5 +238,7 @@ class Attack:
                     character.current_room.formatted_desc = character.current_room.formatted_desc.replace("<c>" + target_key + "</c>", "<s>" + target_key + "</s>")
                     character.current_room.characters.pop(target_key)
                     return f'<center>{attack_str}</center><center>You killed the {target_key}!</center><br>{str(character.current_room)}'
+            else:
+                return f'<center>There is no {str(self.target)} to attack.</center><br>{str(character.current_room)}'
         else:
-            return f'There is no {str(self.target)} to attack.<br>{str(character.current_room)}'
+            return f'<center>You must specify a target to attack.</center><br>{str(character.current_room)}'

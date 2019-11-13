@@ -17,6 +17,11 @@ class Calvin:
         self.can_move = True
 
     def generate_char_gen_response(self, input_string):
+        if self._game.player is not None and self._game.player <= 0:
+            return (
+                'You died dummy!'
+            )
+
         if self._game.init == 0 and input_string == 'continue':
             self._game.init += 1
         
@@ -94,7 +99,8 @@ class Calvin:
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
-        if self._game.init < 3:
+
+        if self._game.init < 4:
             return self.generate_char_gen_response(input_string)
         paragraphs = []
         action = self._ac.map(input_string)

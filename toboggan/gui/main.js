@@ -10,7 +10,32 @@ async function initiateGUI() {
   //imprompt.innerHTML = "What do you do?";
 }
 
+consoleHistory = []
+commandIndex = -1
+
 async function processEnter(e) {
+  if (e.code === 'ArrowUp') {
+    if(commandIndex < consoleHistory.length - 1) {
+      commandIndex++;
+    }
+    if(consoleHistory.length > 0) {
+      input.value = consoleHistory[commandIndex]
+    }
+  }
+
+  if (e.code === 'ArrowDown') {
+    if(commandIndex > -1) {
+      commandIndex--;
+    }
+    if(commandIndex == -1) {
+      input.value = ''
+    } else {
+      if(consoleHistory.length > 0) {
+        input.value = consoleHistory[commandIndex]
+      }
+    }
+  }
+
   if (e.code !== 'Enter') return;
 
   skipTextCrawl = true;
@@ -19,6 +44,7 @@ async function processEnter(e) {
   if (!input.validity.valid) return; // don't allow empty input (minLength = 2)
 
   let inputText = input.value;
+  consoleHistory.unshift(inputText)
   input.value = '';  // clear input textarea
 
   card.classList.add("loading");

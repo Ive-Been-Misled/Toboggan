@@ -161,10 +161,10 @@ class Attack:
             target_obj = room_characters[target_key]
             attack_str = character.attack(target_obj)
             if target_obj.hit_points > 0:
-                return attack_str
+                return f'<center>{attack_str}</center><br>{str(character.current_room)}'
             else:
                 character.current_room.formatted_desc = character.current_room.formatted_desc.replace("<c>" + target_key + "</c>", "<s>" + target_key + "</s>")
                 character.current_room.characters.pop(target_key)
-                return attack_str + '<br><br>You killed the ' + target_key + '!'
+                return f'<center>{attack_str}</center><center>You killed the {target_key}!</center><br>{str(character.current_room)}'
         else:
-            return 'There is no ' + str(self.target) + ' to attack.'
+            return f'There is no {str(self.target)} to attack.<br>{str(character.current_room)}'

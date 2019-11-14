@@ -81,7 +81,11 @@ def room_noun_generator(text: str) -> dict:
     for token in doc.noun_chunks:
         for word in _NLP(token.text):
             singular_word = singularize(word.text).lower()
-            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back' and singular_word not in seen_nouns and token.text.find('no ') != 0:
+            if (word.pos_ in ('NOUN', 'PROPN') and
+                    word.dep_ == 'ROOT' and
+                    word.text != 'back' and
+                    singular_word not in seen_nouns and
+                    token.text.find('no ') != 0):
                 noun = noun_classifier(word.text)
                 title_list[noun].append(token.text)
                 seen_nouns.add(singular_word)

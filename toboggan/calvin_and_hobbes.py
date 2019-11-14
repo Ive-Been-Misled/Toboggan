@@ -1,5 +1,5 @@
 """Declare some top-level classes for managing all other objects."""
-from .game_class import game_controller
+from .game_class import Game
 from .watson_action_mapper import ActionMapper
 from .character_generation import char_gen
 from .game_components import Combat
@@ -11,16 +11,11 @@ class Calvin:
 
     def __init__(self):
         """Initialize all other objects needed for the game."""
-        self._game = game_controller
+        self._game = Game('room')
         self._ac = ActionMapper()
         self.can_move = True
 
     def generate_char_gen_response(self, input_string):
-        if self._game.player is not None and self._game.player <= 0:
-            return (
-                'You died dummy!'
-            )
-
         skill_scores = {}
         for skill in self._game.skills:
             idx = input_string.lower().find(skill)
@@ -103,11 +98,27 @@ class Calvin:
             'To start playing Toboggan, you first need to enter a setting. '
             'The setting you enter will generally control what your random '
             'adventure will be about.<br><br>Can\'t think of anything? Try:<br>'
-            ' - Middle Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
+            ' - Middle-Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
         )
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
+        if self._game.player is not None and input_string == 'kill self':
+            self._game.player.hit_points = 0
+
+        if self._game.player is not None and self._game.player.hit_points <= 0:
+            if input_string == 'start over':
+                self._game = Game("room")
+                return self.generate_tutorial_response(input_string)
+
+            return (
+                '<center>[Game Over]</center><br>'
+                'Thanks for playing! Here\'s your game stats:<br><br>'
+                f'Number of enemies killed: {self._game.player.xp}<br>'
+                f'Number of rooms explored: {len(self._game.room_controller.room_list)}<br>'
+                f'Your final stats: {self._game.player}<br>'
+                f'Type \'start over\' to play again!'
+            ).replace('\n', '<br>')
 
         if self._game.init == 0:
             return self.generate_tutorial_response(input_string)
@@ -119,6 +130,12 @@ class Calvin:
 
         if self._game.init < 5:
             return self.generate_char_gen_response(input_string)
+
+        if self._game.init == 5:
+            if input_string != 'look around':
+                return self.generate_char_gen_response(input_string)
+            else:
+                self._game.init += 1
 
         paragraphs = []
 

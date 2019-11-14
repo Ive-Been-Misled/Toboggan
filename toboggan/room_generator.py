@@ -53,7 +53,6 @@ class RoomGenerator:
             connected_room = RoomGenerator.Room(self, title, None)
             current_room.connected_rooms[title] = connected_room
             connected_room.connected_rooms["back"] = current_room
-            self.room_list.append(connected_room)
     
     class Room:
         """
@@ -124,11 +123,11 @@ class RoomGenerator:
                         self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<t>' + chunk.text + '</t>', noun_occurance[root])
                 else:
                     if chunk.text in place_set:
-                        self.formatted_desc.replace(chunk.text, '<r>' + chunk.text + '</r>')
+                        self.formatted_desc = self.formatted_desc.replace(chunk.text, '<r>' + chunk.text + '</r>')
                     elif chunk.text in character_set:
-                        self.formatted_desc.replace(chunk.text, '<c>' + chunk.text + '</c>')
+                        self.formatted_desc = self.formatted_desc.replace(chunk.text, '<c>' + chunk.text + '</c>')
                     elif chunk.text in item_set:
-                        self.formatted_desc.replace(chunk.text, '<t>' + chunk.text + '</t>')
+                        self.formatted_desc = self.formatted_desc.replace(chunk.text, '<t>' + chunk.text + '</t>')
                     
 
         def generate_room_characters(self, char_name_list: []) -> None:
@@ -252,8 +251,9 @@ class RoomGenerator:
                 self.generate_food_items(room_entities[NounKey.FOOD_ITEMS])
                 self.generate_weapon_items(room_entities[NounKey.WEAPON_ITEMS])
                 self.generate_armor_items(room_entities[NounKey.ARMOR_ITEMS])
-
                 self.format_description(room_entities)
+                if self not in self.room_generator.room_list:
+                    self.room_generator.room_list.append(self)
 
         def exit(self, character: object) -> None:
             """

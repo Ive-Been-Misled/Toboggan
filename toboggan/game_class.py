@@ -35,6 +35,3 @@ class Game:
 
     # def get_state(self):
     #     pass
-
-game_controller = Game("room")
-

@@ -5,6 +5,7 @@ from difflib import get_close_matches
 from .text_generators import describe_location, describe_item
 from .game_components import FoodItem, WeaponItem, ArmorItem
 from .text_generators import _NLP
+from operator import attrgetter
 
 @dataclass
 class Introspect:
@@ -42,12 +43,13 @@ class Move:
                         destinations.append(room)
             
             if len(destinations) > 0:
-                if len(character.current_room.characters) > 1 and character.speed <= game.combat.initiative[0].speed:
+
+                if len(character.current_room.characters) > 1 and character.speed <= max(game.combat.initiative, key=attrgetter('speed')).speed:
                     return_string = (
                         f'<center>You attempt to escape to another room, but alas {game.combat.initiative[0].title} is too fast and prevents you from escaping.</center>'
                           '<center>It seems you must face your enemies or die trying.</center>'
                     )
-                elif len(character.current_room.characters) > 1 and character.speed > game.combat.initiative[0].speed:
+                elif len(character.current_room.characters) > 1 and character.speed > max(game.combat.initiative, key=attrgetter('speed')).speed:
                     
                     return_string = (
                         f'<center>You manage to escape your foes in the previous room through your superior speed.</center>'
@@ -216,7 +218,7 @@ class Perceive:
                 room_matches = get_close_matches(new_target, rooms)
                 item_matches = get_close_matches(new_target, items)
                 character_matches = get_close_matches(new_target, characters)
-        
+
             if len(room_matches + item_matches + character_matches) == 0:
                 tokens = _NLP(target)
                 word = ''
@@ -235,6 +237,7 @@ class Perceive:
                         character_matches.append(elem)
         else:
             return None, None
+
         if len(room_matches) > 0:
             return room_matches[0], 'room'
         elif len(item_matches) > 0:
@@ -265,9 +268,9 @@ class Perceive:
                     item = character.inventory[match]
                 else:
                     item = character.current_room.item_list[match]
-                return_string = str(item) + item.generate_description()
+                return_string = str(item) + item.generate_description() + '<br><br>' + str(character.current_room)
             elif list_id == 'character':
-                return_string = character.current_room.characters[match].generate_description()
+                return_string = character.current_room.characters[match].generate_description() + '<br><br>' + str(character.current_room)
         return return_string
 
 

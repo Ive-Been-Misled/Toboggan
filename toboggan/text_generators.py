@@ -30,7 +30,7 @@ def describe_location(location: str) -> str:
         print(f"DEBUG: {token}")
         if current_length >= min_length and token in ('.', '?', '#', '"', '<|endoftext|>'):
             break
-
+    description = description.replace('<|endoftext|>', ' ')
     return description
 
 def describe_item(item: str) -> str:
@@ -81,7 +81,7 @@ def room_noun_generator(text: str) -> dict:
     for token in doc.noun_chunks:
         for word in _NLP(token.text):
             singular_word = singularize(word.text)
-            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back' and singular_word not in seen_nouns:
+            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back' and singular_word not in seen_nouns and token.text.find('no ') != 0:
                 noun = noun_classifier(word.text)
                 title_list[noun].append(token.text)
                 seen_nouns.add(singular_word)

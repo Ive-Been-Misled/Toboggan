@@ -11,7 +11,7 @@ class Calvin:
 
     def __init__(self):
         """Initialize all other objects needed for the game."""
-        self._game = Game('room')
+        self._game = Game()
         self._ac = ActionMapper()
         self.can_move = True
 
@@ -42,7 +42,7 @@ class Calvin:
         for skill in self._game.skills:
             statement = statement + self._game.skill_definitions[skill]
 
-        if self._game.init < 5:
+        if self._game.init < 6:
             return statement
         else:
             self._game.player = char_gen(self._game.stat_list, self._game.starting_room)
@@ -93,13 +93,26 @@ class Calvin:
 
     def generate_user_variables_response(self, input_string):
         self._game.init += 1
-        return (
-            '<center>[Adventure Setting]</center><br>'
-            'To start playing Toboggan, you first need to enter a setting. '
-            'The setting you enter will generally control what your random '
-            'adventure will be about.<br><br>Can\'t think of anything? Try:<br>'
-            ' - Middle-Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
-        )
+        if self._game.init == 1:
+            return (
+                '<center>[Adventure Setting]</center><br>'
+                'To start playing Toboggan, you first need to enter a setting. '
+                'The setting you enter will generally control what your random '
+                'adventure will be about.<br><br>Can\'t think of anything? Try:<br>'
+                ' - Middle-Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
+            )
+        
+        if self._game.init == 2:
+            return (
+                '<center>[First Room]</center><br>'
+                'Now that you\'ve entered a setting, enter the room you would like '
+                'to start in. This doesn\'t have to be a traditional room per se. Here '
+                'are some examples of interesting starting room ideas:<br>'
+                '- A large cavern<br>'
+                '- An old, haunted house<br>'
+                '- A space ship<br>'
+                '- The top floor of a skyscrapper'
+            )
 
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
@@ -108,7 +121,7 @@ class Calvin:
 
         if self._game.player is not None and self._game.player.hit_points <= 0:
             if input_string == 'start over':
-                self._game = Game("room")
+                self._game = Game()
                 return self.generate_tutorial_response(input_string)
 
             return (
@@ -124,14 +137,18 @@ class Calvin:
             return self.generate_tutorial_response(input_string)
 
         if self._game.init == 1:
-            self._game.init += 1
             setting_instance.universe_setting = input_string
+            return self.generate_user_variables_response(input_string)
+
+        if self._game.init == 2:
+            self._game.init += 1
+            self._game.generate_starting_room(input_string)
             return self.generate_char_gen_response(input_string)
 
-        if self._game.init < 5:
+        if self._game.init < 6:
             return self.generate_char_gen_response(input_string)
 
-        if self._game.init == 5:
+        if self._game.init == 6:
             if input_string != 'look around':
                 return self.generate_char_gen_response(input_string)
             else:

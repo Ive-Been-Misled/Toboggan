@@ -43,7 +43,8 @@ class Move:
                         destinations.append(room)
             
             if len(destinations) > 0:
-
+                article = ''
+                if _NLP(destinations[0])[0].text not in ['the', 'an', 'a']: article = 'the'
                 if len(character.current_room.characters) > 1 and character.speed <= max(game.combat.initiative, key=attrgetter('speed')).speed:
                     return_string = (
                         f'<center>You attempt to escape to another room, but alas {game.combat.initiative[0].title} is too fast and prevents you from escaping.</center>'
@@ -56,16 +57,17 @@ class Move:
                           
                     )
                     game.active_combat = False
+                    
                     character.move_to(character.current_room.connected_rooms[destinations[0]])
                     if destinations[0] != 'back':
-                        return_string += f'<center>You move to the {destinations[0]}.</center>'
+                        return_string += f'<center>You move to {article} {destinations[0]}.</center>'
                     else:
                         return_string += f'<center>You move back.</center>'
                 else:
                     game.active_combat = False
                     character.move_to(character.current_room.connected_rooms[destinations[0]])
                     if destinations[0] != 'back':
-                        return_string = f'<center>You move to the {destinations[0]}.</center>'
+                        return_string = f'<center>You move to {article} {destinations[0]}.</center>'
                     else:
                         return_string = f'<center>You move back.</center>'
         else:
@@ -103,10 +105,12 @@ class Pickup:
                         things.append(item)
             
             if len(things) > 0:
+                article = ''
+                if _NLP(things[0])[0].text not in ['the', 'an', 'a']: article = 'the'
                 item = character.current_room.item_list[things[0]]
                 character.inventory[things[0]] = item
                 character.current_room.remove_item(item)
-                return_string = f'<center>You picked up the {things[0]}</center><br>{str(character.current_room)}'
+                return_string = f'<center>You picked up {article} {things[0]}</center><br>{str(character.current_room)}'
         else:
             return_string = f'<center>You must specifify an object to pick up.</center><br>{str(character.current_room)}'
         
@@ -142,17 +146,19 @@ class Use:
                         things.append(item)
 
             if len(things) > 0:
+                article = ''
+                if _NLP(things[0])[0].text not in ['the', 'an', 'a']: article = 'the'
                 item = character.inventory[things[0]]
                 if type(item) is FoodItem:
                     character.gain_hp(item.hp)
-                    return_string = f'<center>You used the {things[0]} and gained {item.hp} hit points.</center><br>{str(character.current_room)}'
+                    return_string = f'<center>You used {article} {things[0]} and gained {item.hp} hit points.</center><br>{str(character.current_room)}'
                 elif type(item) is WeaponItem:
                     character.equip_weapon(item)
-                    return_string = f'<center>You equipped the {things[0]} in your weapon slot.</center><br>{str(character.current_room)}'
+                    return_string = f'<center>You equipped {article} {things[0]} in your weapon slot.</center><br>{str(character.current_room)}'
                 elif type(item) is ArmorItem:
                     character.equip_armor(item)
-                    return_string = f'<center>You equipped the {things[0]} in your armor slot.</center><br>{str(character.current_room)}'
-                del character.inventory[things[0]]                
+                    return_string = f'<center>You equipped {article} {things[0]} in your armor slot.</center><br>{str(character.current_room)}'
+                del character.inventory[things[0]]          
         else:
             return_string = f'<center>You must specifify an object to use.</center><br>{str(character.current_room)}'
         
@@ -187,10 +193,12 @@ class Drop:
                         things.append(item)
 
             if len(things) > 0:
+                article = ''
+                if _NLP(things[0])[0].text not in ['the', 'an', 'a']: article = 'the'
                 item = character.inventory[things[0]]
                 del character.inventory[things[0]]
                 character.current_room.add_item(item)
-                return_string = f'<center>You dropped the {things[0]}.</center><br>{str(character.current_room)}'
+                return_string = f'<center>You dropped  {article} {things[0]}.</center><br>{str(character.current_room)}'
         else:
             return_string = f'<center>You must specifiy an object to drop.</center><br>{str(character.current_room)}'
 

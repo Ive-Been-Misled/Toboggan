@@ -121,15 +121,31 @@ class Character:
         Returns:
             None
         """
+        player_attack_words = ['Bang!', 'Boom!', 'Pow!', 'Nice!', 'Impressive!', 'Killer!', 'Great Hit!']
+        enemy_attack_words = ['Ouch!', 'That\'s gotta hurt!', 'Oh no!', 'Yikes!', 'Aw man!']
         attack_str = ''
         if random.randint(1, 20)+self.combat_skill < 10 + target.defense:
-            return f'Drat the attack missed'
-        if self.equipped_weapon.title == DEFAULT_WEAPON and isinstance(self, Player):
-            target.lose_hp(3)
-            attack_str = f'{self.title.capitalize()} struck {target.title.lower()} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
+            return f'The attack missed'
+
+        if isinstance(self, Player):
+            random.shuffle(player_attack_words)
+            attack_word = player_attack_words[0]
+            if self.equipped_weapon.title == DEFAULT_WEAPON:
+                target.lose_hp(3)
+                attack_str = f'You struck {target.title.lower()} while unarmed and dealt 3 damage. ' + attack_word
+            else:
+                target.lose_hp(self.equipped_weapon.damage)
+                attack_str = f'You struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage} damage. ' + attack_word
         else:
-            target.lose_hp(self.equipped_weapon.damage)
-            attack_str = f'{self.title.capitalize()} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage} damage.'
+            random.shuffle(enemy_attack_words)
+            attack_word = enemy_attack_words[0]
+            if self.equipped_weapon.title == DEFAULT_WEAPON:
+                target.lose_hp(3)
+                f'{self.title.capitalize()} struck you for 3 damage. ' + attack_word
+            else:
+                target.lose_hp(self.equipped_weapon.damage)
+                attack_str = f'{self.title.capitalize()} struck you with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage} damage. ' + attack_word
+            
         if target.hit_points <= 0:
             self.xp+=1
         if self.xp >= self.next_level:
@@ -158,9 +174,12 @@ class Enemy(Character):
     """
     Enemy class specific to enemies. Inherits Character.
     """
+    
     def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points, level):
+        RANDOM_WEAPON_NAMES = ['a decent strike', 'a painful hit', 'a strong blow']
+        random.shuffle(RANDOM_WEAPON_NAMES)
         super().__init__(title, starting_room, combat_skill, defense, speed, hit_points, level)
-        self.equipped_weapon = WeaponItem(f'{self.title} strike', random.randint(1+level, 3*level), 0)
+        self.equipped_weapon = WeaponItem(RANDOM_WEAPON_NAMES[0], random.randint(1+level, 3*level), 0)
 
 class Item:
     """

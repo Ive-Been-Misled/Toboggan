@@ -98,7 +98,7 @@ async function displayScenario(text) {
     await new Promise(resolve => setTimeout(resolve, 8)); // sleep for x ms
   }
 
-  input.maxLength = 61;
+  input.maxLength = 120;
   input.minLength = 2;
   imprompt.classList.remove("hidden");
 }

@@ -27,7 +27,7 @@ def describe_location(location: str) -> str:
         description += token
         current_length += 1
         print(f"DEBUG: {token}")
-        if current_length >= min_length and token in ('.', '?', '#', '"'):
+        if current_length >= min_length and token in ('.', '?', '#', '"', '<|endoftext|>'):
             break
 
     return description
@@ -44,7 +44,7 @@ def describe_item(item: str) -> str:
         description += token
         current_length += 1
         print(f"DEBUG: {token}")
-        if current_length >= min_length and token in ('.', '?', '#', '"'):
+        if current_length >= min_length and token in ('.', '?', '#', '"', '<|endoftext|>'):
             break
 
     return description
@@ -61,7 +61,7 @@ def describe_character(character: str) -> str:
         description += token
         current_length += 1
         print(f"DEBUG: {token}")
-        if current_length >= min_length and token in ('.', '?', '#', '"'):
+        if current_length >= min_length and token in ('.', '?', '#', '"', '<|endoftext|>'):
             break
 
     return description

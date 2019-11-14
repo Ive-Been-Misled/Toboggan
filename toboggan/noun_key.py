@@ -59,7 +59,8 @@ class NounKey(Enum):
         'halls',
         'lairs',
         'structure',
-        'road'
+        'road',
+        'ship'
         ]
 
     MISC = [

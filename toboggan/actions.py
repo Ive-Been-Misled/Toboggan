@@ -17,7 +17,7 @@ class Introspect:
 @dataclass
 class Move:
     destination: Any=None
-
+    
     def execute(self, game, character):
         rooms = character.current_room.connected_rooms
         return_string = f'<center>There is no {self.destination} to move to.</center>'

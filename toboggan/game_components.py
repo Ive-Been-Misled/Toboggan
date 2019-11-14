@@ -129,7 +129,7 @@ class Character:
             attack_str = f'{self.title} struck {target.title} while unarmed and dealt 3 damage.'
         else:
             target.lose_hp(self.equipped_weapon.damage)
-            attack_str = f'{self.title.capitalize()} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
+            attack_str = f'{self.title.capitalize()} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage} damage.'
         if target.hit_points <= 0:
             self.xp+=1
         if self.xp >= self.next_level:

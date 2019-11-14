@@ -12,7 +12,7 @@ import random
 
 def replacenth(string, sub, wanted, n):
     choices = [m.start() for m in re.finditer(re.escape(sub), string)]
-    if len(choices) >= n-1:
+    if len(choices) > n-1:
         where = choices[n-1]
         before = string[:where]
         after = string[where:]

@@ -27,9 +27,9 @@ class RoomGenerator:
     Generates rooms and room connections.
     """
     def __init__(self, starting_room_title):
-        starting_room_desc = describe_location(starting_room_title)
-        self.starting_room = RoomGenerator.Room(self, starting_room_title, starting_room_desc)
-        self.starting_room.description_tokens = tokenize(self.starting_room.description)
+        #starting_room_desc = describe_location(starting_room_title)
+        self.starting_room = RoomGenerator.Room(self, starting_room_title, None)
+        #self.starting_room.description_tokens = tokenize(self.starting_room.description)
         self.room_list = []
         self.room_list.append(self.starting_room)
         self.level = 1

@@ -3,8 +3,8 @@ from .game_class import game_controller
 from .watson_action_mapper import ActionMapper
 from .character_generation import char_gen
 from .game_components import Combat
+from .setting import setting_instance
 from .actions import Move
-
 
 class Calvin:
     """A precocious, mischievous and adventurous six-year-old boy."""
@@ -47,7 +47,7 @@ class Calvin:
         for skill in self._game.skills:
             statement = statement + self._game.skill_definitions[skill]
 
-        if self._game.init < 4:
+        if self._game.init < 5:
             return statement
         else:
             self._game.player = char_gen(self._game.stat_list, self._game.starting_room)
@@ -58,8 +58,7 @@ class Calvin:
 
     def generate_tutorial_response(self, input_string):
         if input_string == 'continue':
-            self._game.init += 1
-            return self.generate_char_gen_response(input_string)
+            return self.generate_user_variables_response(input_string)
         
         if self._game.init == 0:
             return (
@@ -97,29 +96,34 @@ class Calvin:
                 'Enter \'continue\' below to move on to character creation!'
             )
 
+    def generate_user_variables_response(self, input_string):
+        self._game.init += 1
+        return (
+            '<center>[Adventure Setting]</center><br>'
+            'To start playing Toboggan, you first need to enter a setting. '
+            'The setting you enter will generally control what your random '
+            'adventure will be about.<br><br>Can\'t think of anything? Try:<br>'
+            ' - Middle Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
+        )
+
     def generate_response(self, input_string):
         """Return a string respresenting a response to a input string"""
 
         if self._game.init == 0:
             return self.generate_tutorial_response(input_string)
 
-        if self._game.init < 4:
+        if self._game.init == 1:
+            self._game.init += 1
+            setting_instance.universe_setting = input_string
             return self.generate_char_gen_response(input_string)
-        
+
+        if self._game.init < 5:
+            return self.generate_char_gen_response(input_string)
+
         paragraphs = []
 
         action = self._ac.map(input_string)
         if action:
-            # if len(self._game.player.current_room.characters) > 1 and isinstance(action, Move) and self._game.player.speed <= self._game.combat.initiative[0].speed:
-            #     output = (f'You attempt to escape to another room, but alas {self._game.combat.initiative[0].title} is too fast and prevents you from escaping.'
-            #               '<br><br>It seems you must face your enemies or die trying.'
-            #              )
-            # elif len(self._game.player.current_room.characters) > 1  and isinstance(action, Move) and self._game.player.speed > self._game.combat.initiative[0].speed:
-            #     output = action.execute(self._game, self._game.player) \
-            #                .replace('\n', '<br>')
-            #     output += 'You manage to escape your foes in the previous room through your superior speed. <br><br>'
-            #     self.combat = False
-            # else:
             print(f'ACTION: {type(action).__name__}')
             output = action.execute(self._game, self._game.player) \
                            .replace('\n', '<br>')

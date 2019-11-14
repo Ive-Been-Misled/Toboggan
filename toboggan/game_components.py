@@ -122,7 +122,7 @@ class Character:
             return f'Drat the attack missed'
         if self.equipped_weapon.title == DEFAULT_WEAPON:
             target.lose_hp(3)
-            attack_str = f'{self.title} struck {target.title} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
+            attack_str = f'{self.title} struck {target.title} while unarmed and dealt 3 damage.'
         else:
             target.lose_hp(self.equipped_weapon.damage)
             attack_str = f'{self.title} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
@@ -223,26 +223,6 @@ class Combat:
         
         return len(self.initiative) > 0
 
-    # def refresh_init(self, participant):
-    #     # diff = set(self.participants) - set(participant)
-    #     # stri = ''+len(diff)
-    #     # while len(diff) > 0:
-    #     #     part = diff.pop()
-    #     #     stri = stri+part+'test'
-    #     #     self.initiative.remove(part)
-    #     # self.participants = participant
-    #     turn_neighbor = self.initiative[(self.initiative.index(self.turn)+1)%len(self.initiative)]
-    #     self.participants = participant
-    #     if 'You' in self.participants:
-    #         self.player = self.participants.pop('You')
-    #     self.initiative = list(self.participants.values())
-    #     self.initiative.sort(key=lambda x: x.speed, reverse=True)
-    #     if self.turn not in self.initiative:
-    #         self.turn = turn_neighbor
-    #     return len(self.initiative) > 0
-
     def enemies_attack(self):
         combat_str = f'{self.turn.title} attacks you. <br><br>' + self.turn.attack(self.player)
-        #turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
-        #self.turn = self.initiative[turn_num]
         return combat_str

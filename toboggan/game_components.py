@@ -126,10 +126,10 @@ class Character:
             return f'Drat the attack missed'
         if self.equipped_weapon.title == DEFAULT_WEAPON and isinstance(self, Player):
             target.lose_hp(3)
-            attack_str = f'{self.title.capitalize()} struck {target.title} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
+            attack_str = f'{self.title.capitalize()} struck {target.title.lower()} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
         else:
             target.lose_hp(self.equipped_weapon.damage)
-            attack_str = f'{self.title.capitalize()} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
+            attack_str = f'{self.title.capitalize()} struck {target.title.lower()} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
         if target.hit_points <= 0:
             self.xp+=1
         if self.xp >= self.next_level:
@@ -262,7 +262,7 @@ class Combat:
     #     return len(self.initiative) > 0
 
     def enemies_attack(self):
-        combat_str = f'{self.turn.title} attacks you. <br><br>' + self.turn.attack(self.player)
+        combat_str = f'{self.turn.title.capitalize()} attacks you. <br><br>' + self.turn.attack(self.player)
         #turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
         #self.turn = self.initiative[turn_num]
         return combat_str

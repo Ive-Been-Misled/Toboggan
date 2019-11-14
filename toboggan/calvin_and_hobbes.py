@@ -99,7 +99,7 @@ class Calvin:
                 'To start playing Toboggan, you first need to enter a setting. '
                 'The setting you enter will generally control what your random '
                 'adventure will be about.<br><br>Can\'t think of anything? Try:<br>'
-                ' - Middle-Earth<br> - A Lovecraftian horror story<br> - Shadowrun'
+                ' - Middle-Earth<br> - A Lovecraftian horror story<br> - Cyberpunk'
             )
         
         if self._game.init == 2:

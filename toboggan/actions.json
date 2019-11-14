@@ -32,6 +32,9 @@
           "text": "look through the"
         },
         {
+          "text": "examine the eyes"
+        },
+        {
           "text": "perceive my environment"
         }
       ]
@@ -256,6 +259,9 @@
         },
         {
           "text": "run into the corridor"
+        },
+        {
+          "text": "go to the world"
         }
       ]
     },
@@ -297,6 +303,9 @@
         },
         {
           "text": "grab the weapon"
+        },
+        {
+          "text": "take the leg"
         }
       ]
     },

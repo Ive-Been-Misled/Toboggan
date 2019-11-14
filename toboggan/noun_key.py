@@ -13,6 +13,7 @@ class NounKey(Enum):
         'people',
         'horror',
         'slayer',
+        'elf',
         'spirit',
         'ghost'
         ]
@@ -52,6 +53,11 @@ class NounKey(Enum):
         'place',
         'door',
         'window',
+        'mines',
+        'vaults',
+        'dungeon',
+        'halls',
+        'lairs',
         'structure',
         'road'
         ]
@@ -64,6 +70,7 @@ class NounKey(Enum):
         'shapes',
         'sizes',
         'set',
+        'alot',
         'lot',
         'eye',
         'industry'

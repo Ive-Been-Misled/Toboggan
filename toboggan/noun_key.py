@@ -65,6 +65,7 @@ class NounKey(Enum):
         'shapes',
         'sizes',
         'set',
+        'alot',
         ]
 
     #MISC_TIME = ['day', 'time', 'hour', 'time']

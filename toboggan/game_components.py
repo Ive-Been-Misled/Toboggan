@@ -247,7 +247,7 @@ class Combat:
         init_print = [char.title for char in self.initiative]
         combat_str = ('COMBAT BEGINS:<br>'
                       'You find yourself staring down: <br> - '+ '<br> - '.join(init_print) +
-                      '<br>They appear hostile and intent to attack you.'
+                      '<br>They appear hostile and intent on attacking you.'
                      )
         self.initiative.sort(key=lambda x: x.speed, reverse=True)
         self.turn = self.initiative[0]

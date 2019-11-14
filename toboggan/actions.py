@@ -114,10 +114,10 @@ class Use:
                     return_string = f'<center>You used the {things[0]} and gained {item.hp} hit points.</center><br>{str(character.current_room)}'
                 elif type(item) is WeaponItem:
                     character.equip_weapon(item)
-                    return_string = f'<center>You equipped the {things[0]} in your armor slot.</center><br>{str(character.current_room)}'
+                    return_string = f'<center>You equipped the {things[0]} in your weapon slot.</center><br>{str(character.current_room)}'
                 elif type(item) is ArmorItem:
                     character.equip_armor(item)
-                    return_string = f'<center>You equipped the {things[0]} in your weapon slot.</center><br>{str(character.current_room)}'
+                    return_string = f'<center>You equipped the {things[0]} in your armor slot.</center><br>{str(character.current_room)}'
                 del character.inventory[things[0]]                
         else:
             return_string = f'<center>You must specifify an object to use.</center><br>{str(character.current_room)}'

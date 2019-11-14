@@ -11,12 +11,16 @@ import re
 import random
 
 def replacenth(string, sub, wanted, n):
-    where = [m.start() for m in re.finditer(re.escape(sub), string)][n-1]
-    before = string[:where]
-    after = string[where:]
-    after = after.replace(sub, wanted, 1)
-    newString = before + after
-    return newString
+    choices = [m.start() for m in re.finditer(re.escape(sub), string)]
+    if len(choices) >= n-1:
+        where = choices[n-1]
+        before = string[:where]
+        after = string[where:]
+        after = after.replace(sub, wanted, 1)
+        newString = before + after
+        return newString
+    else:
+        return string
 
 class RoomGenerator:
     """

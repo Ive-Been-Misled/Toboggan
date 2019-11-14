@@ -31,18 +31,22 @@ class Character:
         self.description = None
         self.equipped_weapon = WeaponItem(DEFAULT_WEAPON, 3, 0)
         self.equipped_armor = ArmorItem(DEFAULT_ARMOR, 0)
+        self.xp = 0
+        self.next_level = self.level*5
 
     def __str__(self):
         inv = ', '.join(self.inventory.keys())
         return (
             f'<center>[{self.title}]</center>\n'
             f'HP: {self.hit_points}\n\n'
+            f'Level: {self.level}\n'
             f'Combat Skill: {self.combat_skill}\n'
             f'Defense: {self.defense}\n'
             f'Speed: {self.speed}\n\n'
             f'Equipped Weapon: {self.equipped_weapon.title}\n'
             f'Equipped Armor: {self.equipped_armor.title}\n\n'
             f'Inventory: {inv}\n'
+            
         )
 
     def generate_description(self):
@@ -120,12 +124,27 @@ class Character:
         attack_str = ''
         if random.randint(1, 20)+self.combat_skill < 10 + target.defense:
             return f'Drat the attack missed'
-        if self.equipped_weapon.title == DEFAULT_WEAPON:
+        if self.equipped_weapon.title == DEFAULT_WEAPON and isinstance(self, Player):
             target.lose_hp(3)
             attack_str = f'{self.title} struck {target.title} while unarmed and dealt 3 damage.'
         else:
             target.lose_hp(self.equipped_weapon.damage)
-            attack_str = f'{self.title} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
+            attack_str = f'{self.title.capitalize()} struck {target.title} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
+        if target.hit_points <= 0:
+            self.xp+=1
+        if self.xp >= self.next_level:
+            self.level += 1
+            self.next_level = self.level*5
+            up = [random.randint(1, int(self.level * (1 + random.random()))) for x in range(3)]
+            up_text = [f'Combat Skill: {self.combat_skill} + {up[0]} = {self.combat_skill + up[0]}',
+                       f'Defense: {self.defense} + {up[1]} = {self.defense + up[1]}',
+                       f'Speed: {self.speed} + {up[2]} = {self.speed + up[2]}']
+            self.base_combat_skill += up[0]
+            self.combat_skill += up[0]
+            self.base_defense += up[1]
+            self.defense += up[1]
+            self.speed += up[2]
+            attack_str += '<br><br> You levelled up your stats increased: <br> - ' + '<br> - '.join(up_text)
         return attack_str
 
 class Player(Character):
@@ -141,6 +160,7 @@ class Enemy(Character):
     """
     def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points, level):
         super().__init__(title, starting_room, combat_skill, defense, speed, hit_points, level)
+        self.equipped_weapon = WeaponItem(f'{self.title} strike', random.randint(1+level, 3*level), 0)
 
 class Item:
     """
@@ -207,7 +227,7 @@ class Combat:
         
         init_print = [char.title for char in self.initiative]
         combat_str = ('COMBAT BEGINS:<br>'
-                      'You find yourself staring down '+ ', '.join(init_print) +
+                      'You find yourself staring down: <br> - '+ '<br> - '.join(init_print) +
                       '<br>They appear hostile and intent to attack you.'
                      )
         self.initiative.sort(key=lambda x: x.speed, reverse=True)

@@ -237,7 +237,7 @@ class Attack:
                 else:
                     character.current_room.formatted_desc = character.current_room.formatted_desc.replace("<c>" + target_key + "</c>", "<s>" + target_key + "</s>")
                     character.current_room.characters.pop(target_key)
-                    return f'<center>{attack_str}</center><center>You killed the {target_key}!</center><br>{str(character.current_room)}'
+                    return f'<center>{attack_str}</center><center>You killed {target_key}!</center><br>{str(character.current_room)}'
             else:
                 return f'<center>There is no {str(self.target)} to attack.</center><br>{str(character.current_room)}'
         else:

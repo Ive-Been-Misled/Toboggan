@@ -11,7 +11,7 @@ class Introspect:
     placeholder: Any=None
 
     def execute(self, game, character):
-        return str(character)
+        return str(character) + '<br><br>' + str(character.current_room)
 
 
 @dataclass
@@ -23,7 +23,7 @@ class Move:
         return_string = f'<center>There is no {self.destination} to move to.</center>'
         if self.destination is not None:
             destinations = get_close_matches(self.destination, rooms.keys())
-            
+
             if len(destinations) == 0:
                 new_destination = ''
                 for token in _NLP(self.destination):
@@ -31,6 +31,16 @@ class Move:
                         new_destination += token.text_with_ws
                 destinations = get_close_matches(new_destination, rooms.keys())
 
+            if len(destinations) == 0:
+                tokens = _NLP(self.destination)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+                for room in rooms.keys():
+                    if word in room:
+                        destinations.append(room)
+            
             if len(destinations) > 0:
                 if len(character.current_room.characters) > 1 and character.speed <= game.combat.initiative[0].speed:
                     return_string = (
@@ -78,6 +88,17 @@ class Pickup:
                     if token.text != 'the' and token.text != 'a' and token.text != 'an':
                         new_thing += token.text_with_ws
                 things = get_close_matches(new_thing, items.keys())
+
+            if len(things) == 0:
+                tokens = _NLP(self.thing)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+                
+                for item in items.keys():
+                    if word in item:
+                        things.append(item)
             
             if len(things) > 0:
                 item = character.current_room.item_list[things[0]]
@@ -106,6 +127,17 @@ class Use:
                     if token.text != 'the' and token.text != 'a' and token.text != 'an':
                         new_thing += token.text_with_ws
                 things = get_close_matches(new_thing, items.keys())
+
+            if len(things) == 0:
+                tokens = _NLP(self.thing)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+
+                for item in items.keys():
+                    if word in item:
+                        things.append(item)
 
             if len(things) > 0:
                 item = character.inventory[things[0]]
@@ -140,7 +172,18 @@ class Drop:
                     if token.text != 'the' and token.text != 'a' and token.text != 'an':
                         new_thing += token.text_with_ws
                 things = get_close_matches(new_thing, items.keys())
-            
+
+            if len(things) == 0:
+                tokens = _NLP(self.thing)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+                
+                for item in items.keys():
+                    if word in item:
+                        things.append(item)
+
             if len(things) > 0:
                 item = character.inventory[things[0]]
                 del character.inventory[things[0]]
@@ -173,6 +216,23 @@ class Perceive:
                 room_matches = get_close_matches(new_target, rooms)
                 item_matches = get_close_matches(new_target, items)
                 character_matches = get_close_matches(new_target, characters)
+        
+            if len(room_matches + item_matches + character_matches) == 0:
+                tokens = _NLP(target)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+                
+                for elem in rooms:
+                    if word in elem:
+                        room_matches.append(elem)
+                for elem in items:
+                    if word in elem:
+                        item_matches.append(elem)
+                for elem in characters:
+                    if word in elem:
+                        character_matches.append(elem)
         else:
             return None, None
         if len(room_matches) > 0:
@@ -228,6 +288,17 @@ class Attack:
                         new_target += token.text_with_ws
                 targets = get_close_matches(new_target, room_characters.keys())
             
+            if len(targets) == 0:
+                tokens = _NLP(self.target)
+                word = ''
+                for token in tokens:
+                    if token.text != 'the' and token.text != 'an' and token.text != 'a':
+                        word += token.text_with_ws
+                
+                for elem in room_characters:
+                    if word in elem:
+                        targets.append(elem)
+
             if len(targets) > 0:
                 target_key = targets[0]
                 target_obj = room_characters[target_key]

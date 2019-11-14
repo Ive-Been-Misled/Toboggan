@@ -36,5 +36,5 @@ class Game:
     # def get_state(self):
     #     pass
 
-game_controller = Game("A Lovecraftian Horror Story")
+game_controller = Game("room")
 

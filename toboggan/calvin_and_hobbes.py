@@ -85,7 +85,7 @@ class Calvin:
                 'Enemies are highlighted in red'
                 '<br><br><center>[Actions]</center><br>'
                 'In Toboggan you can use the following actions to do '
-                'different things. Use an action by typing it (or something) '
+                'different things. Use an action by typing it or something '
                 'similar in the text entry below.<br><br>'
                 'Perceive: Look at a room, item, or character.<br>'
                 'Move: Move to a new room.<br>'

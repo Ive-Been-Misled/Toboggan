@@ -141,5 +141,5 @@ class Calvin:
                 paragraphs.append('Combat is over and you stand victorious among your fallen foes.')
             else:
                 paragraphs.append(self._game.combat.enemies_attack())
-
+        
         return '<br><br>'.join(paragraphs)

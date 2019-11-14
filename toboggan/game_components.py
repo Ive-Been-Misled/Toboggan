@@ -197,7 +197,7 @@ class ArmorItem(Item):
 
 class Combat:
     def __init__(self, participants):
-        self.participants = copy.deepcopy(participants)
+        self.participants = copy.copy(participants)
         self.participants.pop('You')
         self.player = participants['You']
         self.initiative = list(self.participants.values())

@@ -118,6 +118,14 @@ class RoomGenerator:
                         self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<c>' + chunk.text + '</c>', noun_occurance[root])
                     elif chunk.text in item_set:
                         self.formatted_desc = replacenth(self.formatted_desc, chunk.text, '<t>' + chunk.text + '</t>', noun_occurance[root])
+                else:
+                    if chunk.text in place_set:
+                        self.formatted_desc.replace(chunk.text, '<r>' + chunk.text + '</r>')
+                    elif chunk.text in character_set:
+                        self.formatted_desc.replace(chunk.text, '<c>' + chunk.text + '</c>')
+                    elif chunk.text in item_set:
+                        self.formatted_desc.replace(chunk.text, '<t>' + chunk.text + '</t>')
+                    
 
         def generate_room_characters(self, char_name_list: []) -> None:
             """

@@ -32,6 +32,9 @@
           "text": "look through the window"
         },
         {
+          "text": "examine the eyes"
+        },
+        {
           "text": "perceive my environment"
         }
       ]
@@ -297,6 +300,9 @@
         },
         {
           "text": "grab the weapon"
+        },
+        {
+          "text": "take the leg"
         }
       ]
     },

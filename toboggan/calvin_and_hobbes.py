@@ -65,7 +65,7 @@ class Calvin:
                 '<center>[Welcome to Toboggan]</center> <br>'
                 'Toboggan is a text-based game generator. '
                 'It builds a network of visitable rooms filled '
-                'with friends, enemies, and items. You can pick up '
+                'with enemies, items, and other rooms. You can pick up '
                 'items to become stronger and fight enemies to '
                 'level up. The game ends when you reach 0 hit points.'
                 '<br><br><center>[How to play]</center><br>'

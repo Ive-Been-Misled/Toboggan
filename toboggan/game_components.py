@@ -126,7 +126,11 @@ class Character:
             return f'Drat the attack missed'
         if self.equipped_weapon.title == DEFAULT_WEAPON and isinstance(self, Player):
             target.lose_hp(3)
+<<<<<<< HEAD
             attack_str = f'{self.title.capitalize()} struck {target.title.lower()} while unarmed and managed to hurt them dealing 3 damage.  Impressive!'
+=======
+            attack_str = f'{self.title} struck {target.title} while unarmed and dealt 3 damage.'
+>>>>>>> e84201549c0205ada28c4b512d08e961d1b99bfa
         else:
             target.lose_hp(self.equipped_weapon.damage)
             attack_str = f'{self.title.capitalize()} struck {target.title.lower()} with {self.equipped_weapon.title} dealing {self.equipped_weapon.damage}.'
@@ -243,26 +247,12 @@ class Combat:
         
         return len(self.initiative) > 0
 
-    # def refresh_init(self, participant):
-    #     # diff = set(self.participants) - set(participant)
-    #     # stri = ''+len(diff)
-    #     # while len(diff) > 0:
-    #     #     part = diff.pop()
-    #     #     stri = stri+part+'test'
-    #     #     self.initiative.remove(part)
-    #     # self.participants = participant
-    #     turn_neighbor = self.initiative[(self.initiative.index(self.turn)+1)%len(self.initiative)]
-    #     self.participants = participant
-    #     if 'You' in self.participants:
-    #         self.player = self.participants.pop('You')
-    #     self.initiative = list(self.participants.values())
-    #     self.initiative.sort(key=lambda x: x.speed, reverse=True)
-    #     if self.turn not in self.initiative:
-    #         self.turn = turn_neighbor
-    #     return len(self.initiative) > 0
-
     def enemies_attack(self):
+<<<<<<< HEAD
         combat_str = f'{self.turn.title.capitalize()} attacks you. <br><br>' + self.turn.attack(self.player)
         #turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
         #self.turn = self.initiative[turn_num]
+=======
+        combat_str = f'{self.turn.title} attacks you. <br><br>' + self.turn.attack(self.player)
+>>>>>>> e84201549c0205ada28c4b512d08e961d1b99bfa
         return combat_str

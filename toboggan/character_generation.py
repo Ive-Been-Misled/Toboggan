@@ -41,7 +41,7 @@ def char_gen(stat_list: list, start_room: object) -> Player:
     speed = 10-2*(stat_list.index('speed')+1)
     stat_prec = {'combat':combat, 'def':defense, 'speed':speed}
     stat_final = stat_gen(stat_prec, 1)
-    char = Player(start_room, stat_final['combat'], stat_final['def'], stat_final['speed'])
+    char = Player(start_room, stat_final['combat'], stat_final['def'], stat_final['speed'], hit_points=15)
     return char
 
 def enemy_gen(name: str, level: int, start_room: object) -> Enemy:

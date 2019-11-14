@@ -4,6 +4,8 @@ from typing import Iterator
 from toboggan.noun_key import NounKey
 import spacy
 from pattern.text.en import singularize
+from .setting import setting_instance
+
 
 if 'FAKE_GPT2' in environ:
     from .gpt2_fake import GPT2
@@ -11,12 +13,11 @@ else:
     from .gpt2 import GPT2
 
 _NLP = spacy.load('en_core_web_lg')
-COMPARE_WORDS = ['place', 'object', 'character']
 
 def describe_location(location: str) -> str:
     """Given a location, returns a description of location"""
     prompt = f"""\
-    You are in {location}. You look around. You see
+    You are in the world of {setting_instance.universe_setting}. You are in {location}. You look around. You see
     """
     description = 'You see'
 
@@ -29,7 +30,7 @@ def describe_location(location: str) -> str:
         print(f"DEBUG: {token}")
         if current_length >= min_length and token in ('.', '?', '#', '"', '<|endoftext|>'):
             break
-
+    description = description.replace('<|endoftext|>', ' ')
     return description
 
 def describe_item(item: str) -> str:
@@ -79,8 +80,8 @@ def room_noun_generator(text: str) -> dict:
     seen_nouns = set()
     for token in doc.noun_chunks:
         for word in _NLP(token.text):
-            singular_word = singularize(word.text)
-            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back' and singular_word not in seen_nouns:
+            singular_word = singularize(word.text).lower()
+            if word.pos_ == 'NOUN' and word.dep_ == 'ROOT' and word.text != 'back' and singular_word not in seen_nouns and token.text.find('no ') != 0:
                 noun = noun_classifier(word.text)
                 title_list[noun].append(token.text)
                 seen_nouns.add(singular_word)

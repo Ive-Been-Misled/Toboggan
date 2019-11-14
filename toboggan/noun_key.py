@@ -15,7 +15,7 @@ class NounKey(Enum):
         'slayer',
         'elf',
         'spirit',
-        'ghost',
+        'ghost'
         ]
 
     FOOD_ITEMS = [
@@ -25,7 +25,7 @@ class NounKey(Enum):
         'potion',
         'drink',
         'heart',
-        'carcasses',
+        'carcasses'
         ]
 
     WEAPON_ITEMS = [
@@ -34,13 +34,14 @@ class NounKey(Enum):
         'axe',
         'key',
         'flame',
-        'fire',
+        'fire'
         ]
 
     ARMOR_ITEMS = [
         'chestplate',
         'hat',
-        'pants'
+        'pants',
+        'helmet'
         ]
 
     LOCATIONS = [
@@ -57,15 +58,22 @@ class NounKey(Enum):
         'dungeon',
         'halls',
         'lairs',
+        'structure',
+        'road'
         ]
 
     MISC = [
         'time',
+        'day',
+        'emotion',
         'thought',
         'shapes',
         'sizes',
         'set',
         'alot',
+        'lot',
+        'eye',
+        'industry'
         ]
 
     #MISC_TIME = ['day', 'time', 'hour', 'time']

@@ -6,7 +6,7 @@ A CSE 5914 Knowledge Systems Capstone Project
 
 ## Requirements
 
-- Python 3.7 or later
+- Python 3.7
 - IBM Cloud account (free)
 
 ## How to Run
@@ -26,7 +26,7 @@ source venv/bin/activate
 
 # install dependencies
 pip install .
-spacy download en_core_web_sm
+spacy download en_core_web_lg
 
 # set api key environment variable
 export API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -50,7 +50,6 @@ pip3 install torch==1.3.0+cpu torchvision==0.4.1+cpu -f https://download.pytorch
 # install dependencies
 pip install poetry
 poetry install
-spacy download en_core_web_sm
 spacy download en_core_web_lg
 
 # set api key environment variable

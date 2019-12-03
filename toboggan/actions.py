@@ -118,7 +118,7 @@ class Use:
         if _NLP(item_match)[0].text not in ['the', 'an', 'a']: article = 'the'
 
         item_functions = {
-            FoodItem: character.gain_hp,
+            FoodItem: character.use_food_item,
             WeaponItem: character.equip_weapon,
             ArmorItem: character.equip_armor
         }

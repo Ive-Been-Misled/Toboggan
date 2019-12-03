@@ -173,7 +173,7 @@ class RoomGenerator:
                 None
             """
             for item_name in item_name_list:
-                damage = random.randint(1, 10) * self.characters['You'].level
+                damage = 2 + (random.randint(1, 8) * self.characters['You'].level)
                 combat_skill = random.randint(1, 5) * self.characters['You'].level
                 item = WeaponItem(item_name, damage, combat_skill)
                 self.item_list[item_name] = item

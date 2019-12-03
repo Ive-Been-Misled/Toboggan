@@ -1,5 +1,7 @@
 import random
-from .game_components import Player, Enemy
+from .game_components import Player, Enemy, WeaponItem, ArmorItem, FoodItem
+from .text_generators import room_noun_generator
+from .noun_key import NounKey
 
 def stat_gen(stat_precedence: dict, level: int) -> dict:
     """
@@ -50,4 +52,14 @@ def enemy_gen(name: str, level: int, start_room: object) -> Enemy:
     stat_prec = {'combat':stats[0], 'def':stats[1], 'speed':stats[2]}
     stat_final = stat_gen(stat_prec, level)
     enem = Enemy(name, start_room, stat_final['combat'], stat_final['def'], stat_final['speed'], 5*level, level)
+
+    enem.generate_description()
+    nouns = room_noun_generator(enem.description)
+    if nouns[NounKey.WEAPON_ITEMS]:
+        enem.equipped_weapon = WeaponItem(nouns[NounKey.WEAPON_ITEMS][0], enem.equipped_weapon.damage, random.randint(1,4) * enem.level)
+    if nouns[NounKey.ARMOR_ITEMS]:
+        enem.equipped_armor = ArmorItem(nouns[NounKey.ARMOR_ITEMS][0], enem.equipped_armor.armor)
+    if nouns[NounKey.FOOD_ITEMS]:
+        for noun in nouns[NounKey.FOOD_ITEMS]:
+            enem.inventory[noun] = FoodItem(noun, random.randint(1, 10) * enem.level)
     return enem

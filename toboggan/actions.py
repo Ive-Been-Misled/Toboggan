@@ -6,6 +6,7 @@ from .text_generators import describe_location, describe_item
 from .game_components import FoodItem, WeaponItem, ArmorItem
 from .text_generators import _NLP
 from operator import attrgetter
+import copy
 
 def find_match(key_list, elem):
     elems = get_close_matches(elem, key_list)
@@ -113,7 +114,13 @@ class Use:
 
     @staticmethod
     def use_item(item_match, character):
-        item = character.inventory[item_match]
+        in_inventory = False
+        if item_match in character.inventory.keys():
+            item = character.inventory[item_match]
+            in_inventory = True
+        else:
+            item = character.current_room.item_list[item_match]
+        
         article = ''
         if _NLP(item_match)[0].text not in ['the', 'an', 'a']: article = 'the'
 
@@ -124,14 +131,18 @@ class Use:
         }
         
         response = item_functions[type(item)](item)
-        del character.inventory[item_match]
+        if in_inventory:
+            del character.inventory[item_match]
+        else:
+            character.current_room.remove_item(item)
+        
         return center_string(response).replace(item_match, f'{article} {item_match}') + f'<br>{str(character.current_room)}'
 
     def execute(self, game, character):
         if self.thing is None:
             return center_string(f'You must specifify an object to use.') + f'<br>{str(character.current_room)}'
-
-        item_match = find_match(character.inventory.keys(), self.thing)
+        item_keys = list(character.inventory.keys()) + list(character.current_room.item_list.keys())
+        item_match = find_match(item_keys, self.thing)
 
         if item_match is None:
             return center_string(f'You do not have a {self.thing}.') + f'<br>{str(character.current_room)}'
@@ -174,11 +185,16 @@ class Perceive:
             return None
 
         current_room = character.current_room
-
+        character_items = copy.copy(character.inventory)
+        if character.equipped_weapon.title != 'Unarmed':
+            character_items[character.equipped_weapon.title] = character.equipped_weapon
+        if character.equipped_armor.title != 'Empty':
+            character_items[character.equipped_armor.title] = character.equipped_armor
+        
         entity_groups = [
             #current_room.connected_rooms,
             current_room.item_list,
-            character.inventory,
+            character_items,
             current_room.characters
         ]
         for group in entity_groups:
@@ -216,6 +232,15 @@ class Attack:
         if target_obj.hit_points > 0:
             return center_string(attack_str) + f'<br>{str(character.current_room)}'
         else:
+            dead_enemy = character.current_room.characters[target_key]
             character.current_room.formatted_desc = character.current_room.formatted_desc.replace("<c>" + target_key + "</c>", "<s>" + target_key + "</s>")
+            
+            for _, item in dead_enemy.inventory.items():
+                character.current_room.add_item(item)
+            if dead_enemy.equipped_weapon.title not in dead_enemy.RANDOM_WEAPON_NAMES:
+                character.current_room.add_item(dead_enemy.equipped_weapon)
+            if dead_enemy.equipped_armor.title != 'Empty':
+                character.current_room.add_item(dead_enemy.equipped_armor)
+            
             character.current_room.characters.pop(target_key)
             return center_string(f'{attack_str}<br>You killed {target_key}!') + f'<br>{str(character.current_room)}'

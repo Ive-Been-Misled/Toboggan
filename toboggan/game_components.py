@@ -189,10 +189,10 @@ class Enemy(Character):
     """
     
     def __init__(self, title, starting_room, combat_skill, defense, speed, hit_points, level):
-        RANDOM_WEAPON_NAMES = ['a decent strike', 'a painful hit', 'a strong blow']
-        random.shuffle(RANDOM_WEAPON_NAMES)
+        self.RANDOM_WEAPON_NAMES = ['a decent strike', 'a painful hit', 'a strong blow']
+        random.shuffle(self.RANDOM_WEAPON_NAMES)
         super().__init__(title, starting_room, combat_skill, defense, speed, hit_points, level)
-        self.equipped_weapon = WeaponItem(RANDOM_WEAPON_NAMES[0], random.randint(1+level, 3*level), 0)
+        self.equipped_weapon = WeaponItem(self.RANDOM_WEAPON_NAMES[0], random.randint(1+level, 3*level), 0)
 
 class Item:
     """

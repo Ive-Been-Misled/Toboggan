@@ -38,15 +38,7 @@ class Character:
         inv = ', '.join(self.inventory.keys())
         return (
             f'<center>[{self.title}]</center>\n'
-            f'HP: {self.hit_points}\n\n'
-            f'Level: {self.level}\n'
-            f'Combat Skill: {self.combat_skill}\n'
-            f'Defense: {self.defense}\n'
-            f'Speed: {self.speed}\n\n'
-            f'Equipped Weapon: {self.equipped_weapon.title}\n'
-            f'Equipped Armor: {self.equipped_armor.title}\n\n'
-            f'Inventory: {inv}\n'
-            
+            f'{self.description}'
         )
 
     def generate_description(self):
@@ -96,19 +88,25 @@ class Character:
         """
         self.hit_points = self.hit_points + hit_points
 
-    def equip_weapon(self, weapon: object) -> None:
+    def use_food_item(self, item: object) -> str:
+        self.gain_hp(item.hp)
+        return f'You used {item.title} and gained {item.hp} hit points.'
+
+    def equip_weapon(self, weapon: object) -> str:
         if self.equipped_weapon.title != DEFAULT_WEAPON:
             self.inventory[self.equipped_weapon.title] = copy.deepcopy(self.equipped_weapon)
 
         self.equipped_weapon = weapon
         self.combat_skill = self.base_combat_skill + self.equipped_weapon.combat_skill
+        return f'You equipped {weapon.title} in your weapon slot.'
 
-    def equip_armor(self, armor: object) -> None:
+    def equip_armor(self, armor: object) -> str:
         if self.equipped_armor.title != DEFAULT_ARMOR:
             self.inventory[self.equipped_armor.title] = copy.deepcopy(self.equipped_armor)
 
         self.equipped_armor = armor
         self.defense = self.base_defense + self.equipped_armor.armor
+        return f'You equipped {armor.title} in your armor slot.'
 
     def attack(self, target: object) -> str:
         """
@@ -169,6 +167,21 @@ class Player(Character):
     """
     def __init__(self, starting_room, combat_skill=100, defense=100, speed=100, hit_points=100, level=1):
         super().__init__('You', starting_room, combat_skill, defense, speed, hit_points, level)
+    
+    def __str__(self):
+        inv = ', '.join(self.inventory.keys())
+        return (
+            f'<center>[{self.title}]</center>\n'
+            f'HP: {self.hit_points}\n\n'
+            f'Level: {self.level}\n'
+            f'Combat Skill: {self.combat_skill}\n'
+            f'Defense: {self.defense}\n'
+            f'Speed: {self.speed}\n\n'
+            f'Equipped Weapon: {self.equipped_weapon.title}\n'
+            f'Equipped Armor: {self.equipped_armor.title}\n\n'
+            f'Inventory: {inv}\n'
+            
+        )
 
 class Enemy(Character):
     """
@@ -205,7 +218,8 @@ class FoodItem(Item):
         return (
             f'<center>[{self.title.capitalize()}]</center>\n'
             f'Food Item\n'
-            f'Effect: HP +{self.hp}'
+            f'Effect: HP +{self.hp}\n\n'
+            f'{self.description}'
         )
 
 class WeaponItem(Item):
@@ -220,6 +234,7 @@ class WeaponItem(Item):
             f'Weapon\n'
             f'Effect: Combat Skill +{self.combat_skill}\n'
             f'Effect: Damage {self.damage}\n\n'
+            f'{self.description}'
         )
 
 class ArmorItem(Item):
@@ -232,6 +247,7 @@ class ArmorItem(Item):
             f'<center>[{self.title.capitalize()}]</center>\n'
             f'Armor Item\n'
             f'Effect: Defense +{self.armor}\n\n'
+            f'{self.description}'
         )
 
 class Combat:
@@ -243,7 +259,6 @@ class Combat:
         self.turn = None
            
     def combat_start(self):
-        
         init_print = [char.title for char in self.initiative]
         combat_str = ('COMBAT BEGINS:<br>'
                       'You find yourself staring down: <br> - '+ '<br> - '.join(init_print) +
@@ -264,6 +279,4 @@ class Combat:
 
     def enemies_attack(self):
         combat_str = f'{self.turn.title.capitalize()} attacks you. <br><br>' + self.turn.attack(self.player)
-        #turn_num = (self.initiative.index(self.turn)+1)%len(self.initiative)
-        #self.turn = self.initiative[turn_num]
         return combat_str

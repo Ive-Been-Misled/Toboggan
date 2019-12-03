@@ -36,7 +36,7 @@ def describe_location(location: str) -> str:
 def describe_item(item: str) -> str:
     prompt = f"You have a {item}. Here is a description of the {item}:"
 
-    description = f''
+    description = ''
 
     current_length = 0
     min_length = 42
@@ -53,7 +53,7 @@ def describe_item(item: str) -> str:
 def describe_character(character: str) -> str:
     prompt = f"You encounter a {character}. Here is a description of the {character}:"
 
-    description = f'<center>[{character.capitalize()}]</center>'
+    description = ''
 
     current_length = 0
     min_length = 42

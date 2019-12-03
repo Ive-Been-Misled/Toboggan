@@ -78,6 +78,14 @@ async function sendInput(inputText) {
 async function displayScenario(text) {
   if (text === undefined) return;
 
+  // for image background
+  let splits = text.split("@@@@@");
+  text = splits[0];
+  if (splits[1] !== undefined) {
+    let bg_url = splits[1].replace(/<br><br>/g, '').trim();
+    document.body.setAttribute("style", `background-image: url("${bg_url}")`);
+  }
+
   imprompt.classList.add("hidden");
   input.minLength = 0;
   input.maxLength = 0;

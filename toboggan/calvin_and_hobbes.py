@@ -5,6 +5,8 @@ from .character_generation import char_gen
 from .game_components import Combat
 from .setting import setting_instance
 from .actions import Move
+from os import environ
+from google_images_search import GoogleImagesSearch
 
 class Calvin:
     """A precocious, mischievous and adventurous six-year-old boy."""
@@ -14,6 +16,13 @@ class Calvin:
         self._game = Game()
         self._ac = ActionMapper()
         self.can_move = True
+        try:
+            self._gis = GoogleImagesSearch(
+                    environ['google_api_key'],
+                    environ['project_cx']
+                    )
+        except:
+            print('Google images disabled')
 
     def generate_char_gen_response(self, input_string):
         skill_scores = {}
@@ -179,5 +188,17 @@ class Calvin:
                 paragraphs.append('Combat is over and you stand victorious among your fallen foes.')
             else:
                 paragraphs.append(self._game.combat.enemies_attack())
+
+        try:
+            self._gis.search(search_params={
+                'q': f'{self._game.player.current_room.title} background',
+                'num': 1,
+                'safe': 'high',
+                'imgSize': 'huge'
+                })
+            paragraphs.append("@@@@@")
+            paragraphs.append(self._gis.results()[-1].url)
+        except:
+            print("Google Image search failed................")
         
         return '<br><br>'.join(paragraphs)
